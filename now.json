@@ -1,0 +1,10 @@
+{
+  "name": "neighborhood",
+  "version": 2,
+  "routes": [
+    {
+      "src": "/",
+      "dest": "/views/index.html"
+    }
+  ]
+}

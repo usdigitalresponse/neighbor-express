@@ -1,5 +1,5 @@
 {
-  "name": "airtable-example",
+  "name": "neighborhood-cms",
   "version": "0.0.1",
   "description": "Display data from an Airtable base",
   "main": "server.js",
@@ -7,8 +7,10 @@
     "start": "node server.js"
   },
   "dependencies": {
+    "@now/node": "^1.5.0",
+    "airtable": "^0.8.1",
     "express": "^4.12.4",
-    "airtable": "^0.8.1"
+    "now": "^17.1.1"
   },
   "engines": {
     "node": "10"
