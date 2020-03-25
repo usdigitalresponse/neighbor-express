@@ -3,7 +3,7 @@ $(function () {
    * VERY BASIC templating system, that pulls from airtable.
    * Would want to move to ejs/handlebars/vue for a production version of this
    */
-  $.getJSON("/data", function (data) {
+  $.getJSON("/api/get-cms", function (data) {
     if (data.error) {
       return;
     }
@@ -42,7 +42,7 @@ $(function () {
       lastName: form.elements["lastName"].value
     };
 
-    $.post("/submit", data, res => {
+    $.post("/api/post-cms", data, res => {
       document.getElementById(`name_submit`).disabled = true;
       document.getElementById(`name_submit`).value = "Submitted!";
     });
