@@ -20,8 +20,7 @@ export default (req, res) => {
     // Select the first 10 records from the view.
     base(tableName)
       .select({
-        maxRecords: 10,
-        view: viewName
+        maxRecords: 10
       })
       .firstPage(function (error, records) {
         if (error) {
@@ -29,10 +28,11 @@ export default (req, res) => {
         } else {
           cachedResponse = {
             records: records.map(record => {
+              console.log(record.fields.body);
               return {
                 key: record.get("key"),
                 title: record.get("title"),
-                body: record.get("body"),
+                body: record.fields.body,
                 picture: record.get("picture") || []
               };
             })

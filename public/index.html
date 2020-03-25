@@ -76,13 +76,12 @@
       <div class="grid-row grid-gap">
         <div class="tablet:grid-col-4">
           <h2 class="font-heading-xl margin-top-0 tablet:margin-bottom-0" id="front_page_title">
-            The headline is GRAND
+            {{ title }}
           </h2>
         </div>
         <div class="tablet:grid-col-8 usa-prose" id="front_page_body">
           <p>
-            There is a flash here, that can easily be fixed by making these
-            shadow elements until the data is fetched from the CMS.
+            {{ body }}
           </p>
         </div>
       </div>
@@ -193,6 +192,7 @@
   <!-- Your web-app is https, so your scripts need to be too -->
   <script src="https://code.jquery.com/jquery-2.2.1.min.js"
     integrity="sha256-gvQgAFzTH6trSrAWoH1iPo9Xc96QxSZ3feW6kem+O00=" crossorigin="anonymous"></script>
+  <script src="https://mozilla.github.io/nunjucks/files/nunjucks.min.js"></script>
   <script src="/client.js"></script>
 </body>
 

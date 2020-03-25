@@ -1,4 +1,5 @@
 {
+  "name": "neighborhood",
   "version": 2,
   "env": {
     "AIRTABLE_API_KEY": "@airtable_api_key",
