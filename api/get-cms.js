@@ -15,7 +15,7 @@ let cachedResponseDate = null;
 
 export default (req, res) => {
   if (cachedResponse && new Date() - cachedResponseDate < cacheTimeoutMs) {
-    res.send(cachedResponse);
+    return res.send(cachedResponse);
   } else {
     // Select the first 10 records from the view.
     base(tableName)
@@ -25,7 +25,7 @@ export default (req, res) => {
       })
       .firstPage(function (error, records) {
         if (error) {
-          res.send({ error: error });
+          return res.send({ error: error });
         } else {
           cachedResponse = {
             records: records.map(record => {
@@ -39,7 +39,7 @@ export default (req, res) => {
           };
           cachedResponseDate = new Date();
 
-          res.send(cachedResponse);
+          return res.send(cachedResponse);
         }
       });
   }

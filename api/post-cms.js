@@ -5,27 +5,28 @@ const base = new Airtable({
 const tableName = "Names";
 const viewName = "";
 
-
-base(tableName).create(
-  [
-    {
-      fields: {
-        title: req.body.title,
-        first: req.body.firstName,
-        middle: req.body.middleName,
-        last: req.body.lastName,
+export default (req, res) => {
+  base(tableName).create(
+    [
+      {
+        fields: {
+          title: req.body.title,
+          first: req.body.firstName,
+          middle: req.body.middleName,
+          last: req.body.lastName,
+        }
       }
+    ],
+    function (err, records) {
+      if (err) {
+        console.error(err);
+        return;
+      }
+      records.forEach(function (record) {
+        console.log(record.getId());
+      });
     }
-  ],
-  function (err, records) {
-    if (err) {
-      console.error(err);
-      return;
-    }
-    records.forEach(function (record) {
-      console.log(record.getId());
-    });
-  }
-);
+  );
 
-response.send("success");
+  res.send("success");
+};
