@@ -19,7 +19,6 @@ window.addEventListener('load', (event) => {
       // const article = document.getElementById(record.key);
       const article = target.querySelector(`#${record.key}`);
       // First, lets check for a title
-      console.log(record);
       if (article) {
         let render = Mustache.render(article.innerHTML, { ...record, image: record.picture.length > 0 && record.picture[0].url });
         article.innerHTML = render;

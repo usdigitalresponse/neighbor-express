@@ -1,4 +1,6 @@
 const Airtable = require("airtable");
+const mmd = require('micromarkdown');
+
 const base = new Airtable({
   apiKey: process.env.AIRTABLE_API_KEY
 }).base(process.env.AIRTABLE_BASE_ID);
@@ -30,7 +32,7 @@ export default (req, res) => {
               return {
                 key: record.get("key"),
                 title: record.get("title"),
-                body_en: nl2br(record.fields.body_en),
+                body_en: mmd.parse(nl2br(record.fields.body_en)),
                 body_es: nl2br(record.fields.body_es),
                 picture: record.get("picture") || []
               };
