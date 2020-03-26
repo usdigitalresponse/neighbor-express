@@ -58,30 +58,31 @@
   </header>
 
     <main id="main-content">
-      <section class="usa-hero" aria-label="Introduction" id="hero">
-        <div class="grid-container" style="background-image: url({{picture}})">
-          <div class="usa-hero__callout">
-            <h1 class="usa-hero__heading">
-              <span class="usa-hero__heading--alt">{{ title }}</span>
-            </h1>
-            <p>
-              {{ body_en }}
-              {{ testing}}
-            </p>
-            <a class="usa-button" href="javascript:void(0)">Sign Up to Volunteer</a>
+      <section aria-label="Introduction" id="hero">
+        <div class="usa-hero" style="background-image: url({{image}})" >
+          <div class="grid-container">
+            <div class="usa-hero__callout">
+              <h1 class="usa-hero__heading">
+                <span class="usa-hero__heading--alt">{{ title }}</span>
+              </h1>
+              <p>
+                {{ body_en }}
+              </p>
+              <a class="usa-button" href="javascript:void(0)">Sign Up to Volunteer</a>
+            </div>
           </div>
         </div>
       </section>
-      <section class="grid-container usa-section" id="front_page">
+      <section class="grid-container usa-section" id="how_does_this_work">
         <div class="grid-row grid-gap">
           <div class="tablet:grid-col-4">
-            <h2 class="font-heading-xl margin-top-0 tablet:margin-bottom-0" id="front_page_title">
+            <h2 class="font-heading-xl margin-top-0 tablet:margin-bottom-0">
               {{ title }}
             </h2>
           </div>
-          <div class="tablet:grid-col-8 usa-prose" id="front_page_body">
+          <div class="tablet:grid-col-8 usa-prose">
             <p>
-              {{ body_en }}
+              {{{ body_en }}}
             </p>
           </div>
         </div>
@@ -89,66 +90,60 @@
       <section class="usa-graphic-list usa-section usa-section--dark">
         <div class="grid-container">
           <div class="usa-graphic-list__row grid-row grid-gap">
-            <div class="usa-media-block tablet:grid-col" id="example_1">
+            <div class="usa-media-block tablet:grid-col" id="list-1">
               <img class="usa-media-block__img height-card"
-                src="https://generative-placeholders.glitch.me/image?width=124&height=124&style=tiles" alt="Alt text"
+                src="{{image}}" alt="Alt text"
                 id="example_1_picture" />
               <div class="usa-media-block__body">
                 <h2 class="usa-graphic-list__heading" id="example_1_title">
-                  Graphic headings can vary.
+                  {{title}}
                 </h2>
                 <p id="example_1_body">
-                  Graphic headings can be used a few different ways, depending
-                  on what your landing page is for. Highlight your values,
-                  specific program areas, or results.
+                  {{body_en}}
                 </p>
               </div>
             </div>
-            <div class="usa-media-block tablet:grid-col" id="example_2">
-              <img class="usa-media-block__img height-card"
-                src="https://generative-placeholders.glitch.me/image?width=124&height=124&style=tiles" alt="Alt text"
-                id="example_2_picture" />
+            <div class="usa-media-block tablet:grid-col" id="list-2">
+              {{ #image }} 
+                <img class="usa-media-block__img height-card"
+                src="{{image}}" alt="Alt text"
+                id="example_1_picture" />
+              {{/image}}
               <div class="usa-media-block__body">
-                <h2 class="usa-graphic-list__heading" id="example_2_title">
-                  Graphic headings can vary.
+                <h2 class="usa-graphic-list__heading" id="example_1_title">
+                  {{title}}
                 </h2>
-                <p id="example_2_body">
-                  Graphic headings can be used a few different ways, depending
-                  on what your landing page is for. Highlight your values,
-                  specific program areas, or results.
+                <p id="example_1_body">
+                  {{body_en}}
                 </p>
               </div>
             </div>
           </div>
           <div class="usa-graphic-list__row grid-row grid-gap">
-            <div class="usa-media-block tablet:grid-col" id="example_3">
+            <div class="usa-media-block tablet:grid-col" id="list-3">
               <img class="usa-media-block__img height-card"
-                src="https://generative-placeholders.glitch.me/image?width=124&height=124&style=tiles" alt="Alt text"
-                id="example_3_picture" />
+                src="{{image}}" alt="Alt text"
+                id="example_1_picture" />
               <div class="usa-media-block__body">
-                <h2 class="usa-graphic-list__heading" id="example_3_title">
-                  Graphic headings can vary.
+                <h2 class="usa-graphic-list__heading" id="example_1_title">
+                  {{title}}
                 </h2>
-                <p id="example_3_body">
-                  Graphic headings can be used a few different ways, depending
-                  on what your landing page is for. Highlight your values,
-                  specific program areas, or results.
+                <p id="example_1_body">
+                  {{body_en}}
                 </p>
               </div>
             </div>
 
-            <div class="usa-media-block tablet:grid-col" id="example_4">
+            <div class="usa-media-block tablet:grid-col" id="list-4">
               <img class="usa-media-block__img height-card"
-                src="https://generative-placeholders.glitch.me/image?width=124&height=124&style=tiles" alt="Alt text"
-                id="example_4_picture" />
+                src="{{image}}" alt="Alt text"
+                id="example_1_picture" />
               <div class="usa-media-block__body">
-                <h2 class="usa-graphic-list__heading" id="example_4_title">
-                  Graphic headings can vary.
+                <h2 class="usa-graphic-list__heading" id="example_1_title">
+                  {{title}}
                 </h2>
-                <p id="example_4_body">
-                  Graphic headings can be used a few different ways, depending
-                  on what your landing page is for. Highlight your values,
-                  specific program areas, or results.
+                <p id="example_1_body">
+                  {{body_en}}
                 </p>
               </div>
             </div>

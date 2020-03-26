@@ -30,8 +30,8 @@ export default (req, res) => {
               return {
                 key: record.get("key"),
                 title: record.get("title"),
-                body_en: record.fields.body_en,
-                body_es: record.fields.body_es,
+                body_en: nl2br(record.fields.body_en),
+                body_es: nl2br(record.fields.body_es),
                 picture: record.get("picture") || []
               };
             })
@@ -42,4 +42,12 @@ export default (req, res) => {
         }
       });
   }
+}
+
+// utilities
+function nl2br(str, replaceMode, isXhtml) {
+
+  var breakTag = (isXhtml) ? '<br />' : '<br>';
+  var replaceStr = (replaceMode) ? '$1' + breakTag : '$1' + breakTag + '$2';
+  return (str + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, replaceStr);
 }

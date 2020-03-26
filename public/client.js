@@ -21,7 +21,7 @@ window.addEventListener('load', (event) => {
       // First, lets check for a title
       console.log(record);
       if (article) {
-        let render = Mustache.render(article.innerHTML, { ...record });
+        let render = Mustache.render(article.innerHTML, { ...record, image: record.picture.length > 0 && record.picture[0].url });
         article.innerHTML = render;
         body.classList.remove('hidden');
       }
