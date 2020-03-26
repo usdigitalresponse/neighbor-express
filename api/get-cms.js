@@ -2,7 +2,7 @@ const Airtable = require("airtable");
 const base = new Airtable({
   apiKey: process.env.AIRTABLE_API_KEY
 }).base(process.env.AIRTABLE_BASE_ID);
-const tableName = "Pages";
+const tableName = "CMS";
 const viewName = "";
 
 // Cache the records in case we get a lot of traffic.
@@ -10,8 +10,6 @@ const viewName = "";
 const cacheTimeoutMs = 5 * 1000; // Cache for 5 seconds.
 let cachedResponse = null;
 let cachedResponseDate = null;
-
-
 
 export default (req, res) => {
   if (cachedResponse && new Date() - cachedResponseDate < cacheTimeoutMs) {
@@ -32,7 +30,8 @@ export default (req, res) => {
               return {
                 key: record.get("key"),
                 title: record.get("title"),
-                body: record.fields.body,
+                body_en: record.fields.body_en,
+                body_es: record.fields.body_es,
                 picture: record.get("picture") || []
               };
             })

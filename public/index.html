@@ -16,14 +16,15 @@
   <link rel="stylesheet" href="/reset.css" />
 </head>
 
-<body>
+<body id="body" class="hidden">
+  <script id="template" type="x-tmpl-mustache">
   <a class="usa-skipnav" href="#main-content">Skip to main content</a>
   <div class="usa-overlay"></div>
   <header class="usa-header usa-header--basic ">
     <div class="usa-nav-container maxw-widescreen">
       <div class="usa-navbar">
-        <div class="usa-logo" id="basic-logo">
-          <em class="usa-logo__text"><a href="/" title="Home" aria-label="Home">Neighbor Express</a></em>
+        <div class="usa-logo" id="brand">
+          <em class="usa-logo__text"><a href="/" title="Home" aria-label="Home">{{ body_en }}</a></em>
         </div>
         <button class="usa-menu-btn">Menu</button>
       </div>
@@ -56,143 +57,139 @@
     </div>
   </header>
 
-  <main id="main-content">
-    <section class="usa-hero" aria-label="Introduction" id="header">
-      <div class="grid-container">
-        <div class="usa-hero__callout">
-          <h1 class="usa-hero__heading">
-            <span class="usa-hero__heading--alt" id="header_title">Free, safe deliveries from one neighbor to
-              another</span>
-          </h1>
-          <p id="header_body">
-            Take care of our community members most vulnerable to COVID-19
+    <main id="main-content">
+      <section class="usa-hero" aria-label="Introduction" id="hero">
+        <div class="grid-container" style="background-image: url({{picture}})">
+          <div class="usa-hero__callout">
+            <h1 class="usa-hero__heading">
+              <span class="usa-hero__heading--alt">{{ title }}</span>
+            </h1>
+            <p>
+              {{ body_en }}
+              {{ testing}}
+            </p>
+            <a class="usa-button" href="javascript:void(0)">Sign Up to Volunteer</a>
+          </div>
+        </div>
+      </section>
+      <section class="grid-container usa-section" id="front_page">
+        <div class="grid-row grid-gap">
+          <div class="tablet:grid-col-4">
+            <h2 class="font-heading-xl margin-top-0 tablet:margin-bottom-0" id="front_page_title">
+              {{ title }}
+            </h2>
+          </div>
+          <div class="tablet:grid-col-8 usa-prose" id="front_page_body">
+            <p>
+              {{ body_en }}
+            </p>
+          </div>
+        </div>
+      </section>
+      <section class="usa-graphic-list usa-section usa-section--dark">
+        <div class="grid-container">
+          <div class="usa-graphic-list__row grid-row grid-gap">
+            <div class="usa-media-block tablet:grid-col" id="example_1">
+              <img class="usa-media-block__img height-card"
+                src="https://generative-placeholders.glitch.me/image?width=124&height=124&style=tiles" alt="Alt text"
+                id="example_1_picture" />
+              <div class="usa-media-block__body">
+                <h2 class="usa-graphic-list__heading" id="example_1_title">
+                  Graphic headings can vary.
+                </h2>
+                <p id="example_1_body">
+                  Graphic headings can be used a few different ways, depending
+                  on what your landing page is for. Highlight your values,
+                  specific program areas, or results.
+                </p>
+              </div>
+            </div>
+            <div class="usa-media-block tablet:grid-col" id="example_2">
+              <img class="usa-media-block__img height-card"
+                src="https://generative-placeholders.glitch.me/image?width=124&height=124&style=tiles" alt="Alt text"
+                id="example_2_picture" />
+              <div class="usa-media-block__body">
+                <h2 class="usa-graphic-list__heading" id="example_2_title">
+                  Graphic headings can vary.
+                </h2>
+                <p id="example_2_body">
+                  Graphic headings can be used a few different ways, depending
+                  on what your landing page is for. Highlight your values,
+                  specific program areas, or results.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="usa-graphic-list__row grid-row grid-gap">
+            <div class="usa-media-block tablet:grid-col" id="example_3">
+              <img class="usa-media-block__img height-card"
+                src="https://generative-placeholders.glitch.me/image?width=124&height=124&style=tiles" alt="Alt text"
+                id="example_3_picture" />
+              <div class="usa-media-block__body">
+                <h2 class="usa-graphic-list__heading" id="example_3_title">
+                  Graphic headings can vary.
+                </h2>
+                <p id="example_3_body">
+                  Graphic headings can be used a few different ways, depending
+                  on what your landing page is for. Highlight your values,
+                  specific program areas, or results.
+                </p>
+              </div>
+            </div>
+
+            <div class="usa-media-block tablet:grid-col" id="example_4">
+              <img class="usa-media-block__img height-card"
+                src="https://generative-placeholders.glitch.me/image?width=124&height=124&style=tiles" alt="Alt text"
+                id="example_4_picture" />
+              <div class="usa-media-block__body">
+                <h2 class="usa-graphic-list__heading" id="example_4_title">
+                  Graphic headings can vary.
+                </h2>
+                <p id="example_4_body">
+                  Graphic headings can be used a few different ways, depending
+                  on what your landing page is for. Highlight your values,
+                  specific program areas, or results.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="test-section-id" class="usa-section">
+        <div class="grid-container">
+          <h2 class="font-heading-xl margin-y-0">Submit a Form</h2>
+          <p class="usa-intro">
+            This is a very simple example of submitting a form through this
+            project, would obviously need to backup validation, etc, but this is
+            the basics.
           </p>
-          <a class="usa-button" href="javascript:void(0)">Sign Up to Volunteer</a>
+          <form id="name_form" class="usa-form">
+            <fieldset class="usa-fieldset">
+              <legend class="usa-legend">Name</legend>
+              <label class="usa-label" for="title">Title <span class="usa-hint">(optional)</span></label>
+              <input class="usa-input usa-input--small" id="title" name="title" type="text" />
+
+              <label class="usa-label" for="firstName">First name</label>
+              <input class="usa-input" id="firstName" name="firstName" type="text" required aria-required="true" />
+
+              <label class="usa-label" for="middleName">Middle name <span class="usa-hint">(optional)</span></label>
+              <input class="usa-input" id="middleName" name="middleName" type="text" />
+
+              <label class="usa-label" for="lastName">Last name</label>
+              <input class="usa-input" id="lastName" name="lastName" type="text" required aria-required="true" />
+            </fieldset>
+            <input class="usa-button" id="name_submit" type="submit" value="Submit">
+          </form>
         </div>
-      </div>
-    </section>
-
-    <section class="grid-container usa-section" id="front_page">
-      <div class="grid-row grid-gap">
-        <div class="tablet:grid-col-4">
-          <h2 class="font-heading-xl margin-top-0 tablet:margin-bottom-0" id="front_page_title">
-            {{ title }}
-          </h2>
-        </div>
-        <div class="tablet:grid-col-8 usa-prose" id="front_page_body">
-          <p>
-            {{ body }}
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <section class="usa-graphic-list usa-section usa-section--dark">
-      <div class="grid-container">
-        <div class="usa-graphic-list__row grid-row grid-gap">
-          <div class="usa-media-block tablet:grid-col" id="example_1">
-            <img class="usa-media-block__img height-card"
-              src="https://generative-placeholders.glitch.me/image?width=124&height=124&style=tiles" alt="Alt text"
-              id="example_1_picture" />
-            <div class="usa-media-block__body">
-              <h2 class="usa-graphic-list__heading" id="example_1_title">
-                Graphic headings can vary.
-              </h2>
-              <p id="example_1_body">
-                Graphic headings can be used a few different ways, depending
-                on what your landing page is for. Highlight your values,
-                specific program areas, or results.
-              </p>
-            </div>
-          </div>
-          <div class="usa-media-block tablet:grid-col" id="example_2">
-            <img class="usa-media-block__img height-card"
-              src="https://generative-placeholders.glitch.me/image?width=124&height=124&style=tiles" alt="Alt text"
-              id="example_2_picture" />
-            <div class="usa-media-block__body">
-              <h2 class="usa-graphic-list__heading" id="example_2_title">
-                Graphic headings can vary.
-              </h2>
-              <p id="example_2_body">
-                Graphic headings can be used a few different ways, depending
-                on what your landing page is for. Highlight your values,
-                specific program areas, or results.
-              </p>
-            </div>
-          </div>
-        </div>
-        <div class="usa-graphic-list__row grid-row grid-gap">
-          <div class="usa-media-block tablet:grid-col" id="example_3">
-            <img class="usa-media-block__img height-card"
-              src="https://generative-placeholders.glitch.me/image?width=124&height=124&style=tiles" alt="Alt text"
-              id="example_3_picture" />
-            <div class="usa-media-block__body">
-              <h2 class="usa-graphic-list__heading" id="example_3_title">
-                Graphic headings can vary.
-              </h2>
-              <p id="example_3_body">
-                Graphic headings can be used a few different ways, depending
-                on what your landing page is for. Highlight your values,
-                specific program areas, or results.
-              </p>
-            </div>
-          </div>
-
-          <div class="usa-media-block tablet:grid-col" id="example_4">
-            <img class="usa-media-block__img height-card"
-              src="https://generative-placeholders.glitch.me/image?width=124&height=124&style=tiles" alt="Alt text"
-              id="example_4_picture" />
-            <div class="usa-media-block__body">
-              <h2 class="usa-graphic-list__heading" id="example_4_title">
-                Graphic headings can vary.
-              </h2>
-              <p id="example_4_body">
-                Graphic headings can be used a few different ways, depending
-                on what your landing page is for. Highlight your values,
-                specific program areas, or results.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="test-section-id" class="usa-section">
-      <div class="grid-container">
-        <h2 class="font-heading-xl margin-y-0">Submit a Form</h2>
-        <p class="usa-intro">
-          This is a very simple example of submitting a form through this
-          project, would obviously need to backup validation, etc, but this is
-          the basics.
-        </p>
-        <form id="name_form" class="usa-form">
-          <fieldset class="usa-fieldset">
-            <legend class="usa-legend">Name</legend>
-            <label class="usa-label" for="title">Title <span class="usa-hint">(optional)</span></label>
-            <input class="usa-input usa-input--small" id="title" name="title" type="text" />
-
-            <label class="usa-label" for="firstName">First name</label>
-            <input class="usa-input" id="firstName" name="firstName" type="text" required aria-required="true" />
-
-            <label class="usa-label" for="middleName">Middle name <span class="usa-hint">(optional)</span></label>
-            <input class="usa-input" id="middleName" name="middleName" type="text" />
-
-            <label class="usa-label" for="lastName">Last name</label>
-            <input class="usa-input" id="lastName" name="lastName" type="text" required aria-required="true" />
-          </fieldset>
-          <input class="usa-button" id="name_submit" type="submit" value="Submit">
-        </form>
-      </div>
-    </section>
-  </main>
-  <main id="data-container">
-    Loading...
-  </main>
-
+      </section>
+    </main>
+  </script>
+  <div id="target"></div>
   <!-- Your web-app is https, so your scripts need to be too -->
   <script src="https://code.jquery.com/jquery-2.2.1.min.js"
     integrity="sha256-gvQgAFzTH6trSrAWoH1iPo9Xc96QxSZ3feW6kem+O00=" crossorigin="anonymous"></script>
-  <script src="https://mozilla.github.io/nunjucks/files/nunjucks.min.js"></script>
+  <script src="https://unpkg.com/mustache@latest"></script>
   <script src="/client.js"></script>
 </body>
 
