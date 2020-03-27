@@ -1,4 +1,5 @@
 const Airtable = require("airtable");
+
 const base = new Airtable({
   apiKey: process.env.AIRTABLE_API_KEY
 }).base(process.env.AIRTABLE_BASE_ID);
@@ -6,27 +7,28 @@ const tableName = "Names";
 const viewName = "";
 
 export default (req, res) => {
-  base(tableName).create(
+  console.log("HI??", req.body);
+  const created = base(tableName).create(
     [
       {
         fields: {
-          title: req.body.title,
-          first: req.body.firstName,
-          middle: req.body.middleName,
-          last: req.body.lastName,
+          firstName: req.body.firstName,
+          lastName: req.body.lastName
         }
       }
     ],
     function (err, records) {
       if (err) {
-        console.error(err);
+        console.error('error', err);
         return;
       }
+      console.log('submitted', records);
       records.forEach(function (record) {
         console.log(record.getId());
       });
     }
   );
+  console.log(created);
 
-  res.send("success");
+  res.send("success", created);
 };

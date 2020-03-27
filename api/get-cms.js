@@ -28,7 +28,6 @@ export default (req, res) => {
         } else {
           cachedResponse = {
             records: records.map(record => {
-              console.log(record.fields.body);
               return {
                 key: record.get("key"),
                 title: record.get("title"),

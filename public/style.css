@@ -2,6 +2,76 @@
   /* background-image: url('https://images.squarespace-cdn.com/content/v1/5e7494c953980d7786e71297/1584701934923-4GLASRH7ODNCF0GW1H7V/ke17ZwdGBToddI8pDm48kHH9S2ID7_bpupQnTdrPcoF7gQa3H78H3Y0txjaiv_0fDoOvxcdMmMKkDsyUqMSsMWxHk725yiiHCCLfrh8O1z4YTzHvnKhyp6Da-NYroOW3ZGjoBKy3azqku80C789l0nQwvinDXPV4EYh2MRzm-RRB5rUELEv7EY2n0AZOrEupxpSyqbqKSgmzcCPWV5WMiQ/markus-spiske-ezYZfFnzARM-unsplash.jpg') */
 }
 
+/*
+* We're going to make our bootstrap CSS == our USWDS. This isn't pretty, but works
+*/
+.usa-form {
+  font-family: Source Sans Pro Web,Helvetica Neue,Helvetica,Roboto,Arial,sans-serif;
+  font-size: 1.06rem;
+  line-height: 1.3;
+  max-width: 50%;
+}
+
+.col-form-label {
+  display: block;
+  line-height: 1.1;
+  margin-top: 1.5rem;
+  max-width: 30rem;
+}
+
+.form-control {
+  border-radius: 0;
+  color: #1b1b1b;
+  display: block;
+  margin-top: .5rem;
+  max-width: 30rem;
+  padding: .5rem;
+  border-width: 1px;
+  border-color: #565c65;
+  border-style: solid;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  height: 2.5rem;
+  width: 100%;
+}
+
+.btn-primary {
+  font-family: Source Sans Pro Web,Helvetica Neue,Helvetica,Roboto,Arial,sans-serif;
+  font-size: 1.06rem;
+  line-height: .9;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-color: #005ea2;
+  border: 0;
+  border-radius: .25rem;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  font-weight: 700;
+  margin-right: .5rem;
+  padding: .75rem 1.25rem;
+  text-align: center;
+  text-decoration: none;
+  width: 100%;
+  margin-top: 4px;
+}
+
+.autocomplete  {
+  background-color: white;
+}
+
+.autocomplete div {
+  margin: 4px;
+  border: 1px solid #565c65;
+}
+
+.autocomplete .selected {
+  background-color: #005ea2;
+}
 
 .hidden {
   visibility: hidden;

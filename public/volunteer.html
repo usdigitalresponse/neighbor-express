@@ -44,7 +44,7 @@
             </button>
           </li>
           <li class="usa-nav__primary-item">
-            <a class="usa-nav__link" href="javascript:void(0)"><span>Volunteer Link</span></a>
+            <a class="usa-nav__link usa-current" href="javascript:void(0)"><span>Volunteer Link</span></a>
           </li>
           <li class="usa-nav__primary-item">
             <a class="usa-nav__link" href="javascript:void(0)"><span>Sign Up to Volunteer</span></a>
@@ -58,54 +58,13 @@
   </header>
 
     <main id="main-content">
-      <section aria-label="Introduction" id="hero">
-        <div class="usa-hero" style="background-image: url({{image}})" >
-          <div class="grid-container">
-            <div class="usa-hero__callout">
-              <h1 class="usa-hero__heading">
-                <span class="usa-hero__heading--alt">{{ title }}</span>
-              </h1>
-              <p>
-                {{ body_en }}
-              </p>
-              <a class="usa-button" href="javascript:void(0)">Sign Up to Volunteer</a>
-            </div>
-          </div>
-        </div>
-      </section>
-      <section class="grid-container usa-section" id="how_does_this_work">
-        <div class="grid-row grid-gap">
-          <div class="tablet:grid-col-4">
-            <h2 class="font-heading-xl margin-top-0 tablet:margin-bottom-0">
-              {{ title }}
-            </h2>
-          </div>
-          <div class="tablet:grid-col-8 usa-prose">
-            <p>
-              {{{ body_en }}}
-            </p>
-          </div>
-        </div>
-      </section>
-      <section class="usa-section usa-section--dark" id="cta">
+      <section id="test-section-id" class="usa-section">
         <div class="grid-container">
-          <h2 class="font-heading-xl margin-y-0">{{title}}</h2>
-          <a class="usa-button usa-button--big" href="/volunteer.html">Sign up to Volunteer</a>
-        </div>
-      </section>
-      <section class="grid-container usa-section" id="currently_serving">
-        <div class="grid-row grid-gap">
-          <div class="tablet:grid-col-4">
-            <img src={{image}}>
-          </div>
-          <div class="tablet:grid-col-8 usa-prose">
-            <h2 class="font-heading-xl margin-top-0 tablet:margin-bottom-0">
-              {{ title }}
-            </h2>
-            <p>
-              {{{ body_en }}}
-            </p>
-          </div>
+          <h2 class="font-heading-xl margin-y-0">Submit a Form</h2>
+          <p class="usa-intro">
+            Here we go!
+          </p>
+          <form id="formio" class="usa-form"></form>
         </div>
       </section>
     </main>
