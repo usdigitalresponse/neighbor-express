@@ -4,5 +4,26 @@
   "env": {
     "AIRTABLE_API_KEY": "@airtable_api_key",
     "AIRTABLE_BASE_ID": "@airtable_base_id"
-  }
+  },
+  "routes": [
+    {
+      "src": "/custom-page",
+      "headers": {
+        "cache-control": "s-maxage=1000"
+      },
+      "dest": "/index.html"
+    },
+    {
+      "src": "/request",
+      "dest": "/request.html"
+    },
+    {
+      "src": "/volunteer",
+      "dest": "/volunteer.html"
+    },
+    {
+      "src": "/.*",
+      "dest": "/index.html"
+    }
+  ]
 }
