@@ -8,15 +8,15 @@
   "routes": [
     {
       "src": "/request",
-      "dest": "/public/request.html"
+      "dest": "/request.html"
     },
     {
       "src": "/volunteer",
-      "dest": "/public/volunteer.html"
+      "dest": "/volunteer.html"
     },
     {
       "src": "/",
-      "dest": "/public/index.html"
+      "dest": "/index.html"
     },
     {
       "src": "/.*",

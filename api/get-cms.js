@@ -3,7 +3,7 @@ const mmd = require('micromarkdown');
 
 const base = new Airtable({
   apiKey: process.env.AIRTABLE_API_KEY
-}).base(process.env.AIRTABLE_BASE_ID);
+}).base('app31VI2AVaaByh4o');
 const tableName = "CMS";
 const viewName = "";
 
@@ -33,7 +33,10 @@ export default (req, res) => {
                 title: record.get("title"),
                 body_en: mmd.parse(nl2br(record.fields.body_en)),
                 body_es: nl2br(record.fields.body_es),
-                picture: record.get("picture") || []
+                picture: record.get("picture") || [],
+                secondary_en: record.get("secondary_en"),
+                secondary_es: record.get("secondary_es"),
+                href: record.get("href")
               };
             })
           };
