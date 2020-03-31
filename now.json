@@ -15,6 +15,10 @@
       "dest": "/volunteer.html"
     },
     {
+      "src": "/pledge",
+      "dest": "/pledge.html"
+    },
+    {
       "src": "/",
       "dest": "/index.html"
     },

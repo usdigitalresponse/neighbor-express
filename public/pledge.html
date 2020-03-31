@@ -1,0 +1,77 @@
+<!-- This is a static file -->
+<!-- served from your routes in server.js -->
+
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta name="description" content="Rendering Airtable data in a web page" />
+  <link id="favicon" rel="icon" href="https://glitch.com/favicon.ico" type="image/x-icon" />
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uswds/2.6.0/css/uswds.min.css" />
+  <link rel="stylesheet" href="/style.css" />
+  <link rel="stylesheet" href="/reset.css" />
+</head>
+
+<body id="body" class="hidden">
+  <script id="template" type="x-tmpl-mustache">
+    <title id="title">{{title}}</title>
+  <a class="usa-skipnav" href="#main-content">Skip to main content</a>
+  <div class="usa-overlay"></div>
+  <header class="usa-header usa-header--basic ">
+    <div class="usa-nav-container maxw-widescreen">
+      <div class="usa-navbar">
+        <div class="usa-logo" id="brand">
+          <em class="usa-logo__text"><a href="/" title="Home" aria-label="Home">{{ body_en }}</a></em>
+        </div>
+        <button class="usa-menu-btn">Menu</button>
+      </div>
+      <nav aria-label="Primary navigation" class="usa-nav">
+        <button class="usa-nav__close">
+          <img src="/assets/img/close.svg" alt="close" />
+        </button>
+        <ul class="usa-nav__primary usa-accordion">
+          <li class="usa-nav__primary-item">
+            <button class="usa-nav__link" aria-expanded="false" aria-controls="basic-nav-section-one">
+              <span>About</span>
+            </button>
+          </li>
+          <li class="usa-nav__primary-item">
+            <button class="usa-nav__link" aria-expanded="false" aria-controls="basic-nav-section-two">
+              <span>Share</span>
+            </button>
+          </li>
+          <li class="usa-nav__primary-item">
+            <a class="usa-nav__link" href="javascript:void(0)"><span>Volunteer Link</span></a>
+          </li>
+          <li class="usa-nav__primary-item">
+            <a class="usa-nav__link" href="/volunteer"><span>Sign Up to Volunteer</span></a>
+          </li>
+        </ul>
+        <a class="usa-button" href="/request">
+          Request a Delivery, Meal, or Helping Hand
+        </a>
+      </nav>
+    </div>
+  </header>
+
+    <main id="main-content">
+      <section id="pledge">
+        {{ body_en }}
+      </section>
+  </main>
+  </script>
+  <div id="target"></div>
+  <!-- Your web-app is https, so your scripts need to be too -->
+  <script src="https://code.jquery.com/jquery-2.2.1.min.js"
+    integrity="sha256-gvQgAFzTH6trSrAWoH1iPo9Xc96QxSZ3feW6kem+O00=" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/mustache@latest"></script>
+  <script type="text/javascript" src="//simonwaldherr.github.io/micromarkdown.js/dist/micromarkdown.min.js"></script>
+  <script src='https://unpkg.com/formiojs@latest/dist/formio.full.min.js'></script>
+  <script src="https://static.airtable.com/js/embed/embed_snippet_v1.js"></script>
+  <script src="/client.js"></script>
+</body>
+
+</html>
