@@ -58,8 +58,17 @@
   </header>
 
     <main id="main-content">
-      <section id="pledge">
-        {{ body_en }}
+      <section class="grid-container usa-section" id="pledge"">
+        <div class="grid-row grid-gap">
+          <div class="tablet:grid-col-8 usa-prose">
+            <h2 class="font-heading-xl margin-top-0 tablet:margin-bottom-0">
+              {{ title }}
+            </h2>
+            <p>
+              {{{ body_en }}}
+            </p>
+          </div>
+        </div>
       </section>
   </main>
   </script>
