@@ -7,6 +7,3 @@
 3. `now dev` will start the development server, pointing to the API correctly
 4. Make any changes you'd like to public/index.html and open a pull request
 5. Merging into master will automatically deploy to https://neighbor.now.sh
-
-## Setting Up
-tbd
