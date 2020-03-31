@@ -1,5 +1,5 @@
 # Neighborhood Express
-[![Deploy with ZEIT Now](https://zeit.co/button)](https://zeit.co/import/project?template=https://github.com/keithk/neighborhood)
+[![Deploy with ZEIT Now](https://zeit.co/button)](https://zeit.co/import/project?template=https://github.com/usdigitalresponse/neighbor-express)
 
 ## Developing Locally
 1. Clone this repo
