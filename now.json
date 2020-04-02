@@ -23,6 +23,14 @@
       "dest": "/index.html"
     },
     {
+      "src": "/about",
+      "dest": "/about.html"
+    },
+    {
+      "src": "/share",
+      "dest": "/share.html"
+    },
+    {
       "src": "/.*",
       "continue": true
     }

@@ -1,0 +1,42 @@
+{
+  "display": "form",
+  "components": [
+    {
+      "type": "button",
+      "label": "Submit",
+      "key": "submit",
+      "disableOnInvalid": true,
+      "input": true,
+      "tableView": false
+    },
+    {
+      "label": "First Name",
+      "spellcheck": true,
+      "tableView": true,
+      "calculateServer": false,
+      "validate": {
+        "required": true
+      },
+      "key": "firstName",
+      "type": "textfield",
+      "input": true
+    },
+    {
+      "label": "Last Name",
+      "spellcheck": true,
+      "tableView": true,
+      "calculateServer": false,
+      "key": "lastName",
+      "type": "textfield",
+      "input": true
+    },
+    {
+      "label": "Submit",
+      "showValidations": false,
+      "tableView": false,
+      "key": "submit1",
+      "type": "button",
+      "input": true
+    }
+  ]
+}

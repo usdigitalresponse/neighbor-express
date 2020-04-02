@@ -20,7 +20,7 @@ export default (req, res) => {
     // Select the first 10 records from the view.
     base(tableName)
       .select({
-        maxRecords: 10
+        maxRecords: 30
       })
       .firstPage(function (error, records) {
         if (error) {
