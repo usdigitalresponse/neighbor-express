@@ -57,7 +57,56 @@
       <section id="request_form">
         <iframe class="airtable-embed airtable-dynamic-height" src="https://airtable.com/embed/{{body_en}}" frameborder="0" onmousewheel="" width="100%" height="2316" style="background: transparent; border: 1px solid #ccc;"></iframe>
       </section>
+      <footer class="usa-footer">
+        <div class="grid-container usa-footer__return-to-top">
+          <a href="#">Return to top</a>
+        </div>
+        <div class="usa-footer__primary-section">
+          <nav class="usa-footer__nav" aria-label="Footer navigation">
+            <ul class="grid-row grid-gap">
+              <li class="mobile-lg:grid-col-4 desktop:grid-col-auto usa-footer__primary-content">
+                <a class="usa-footer__primary-link" href="/about">About</a>
+              </li>
+              <li class="mobile-lg:grid-col-4 desktop:grid-col-auto usa-footer__primary-content">
+                <a class="usa-footer__primary-link" href="/share">Share</a>
+              </li>
+              <li class="mobile-lg:grid-col-4 desktop:grid-col-auto usa-footer__primary-content">
+                <a class="usa-footer__primary-link" href="/pledge">Volunteer Pledge</a>
+              </li>
+              <li class="mobile-lg:grid-col-4 desktop:grid-col-auto usa-footer__primary-content">
+                <a class="usa-footer__primary-link" href="/volunteer">Sign up to volunteer</a>
+              </li>
+              <li class="mobile-lg:grid-col-4 desktop:grid-col-auto usa-footer__primary-content">
+                <a class="usa-footer__primary-link" href="/request">Request a delivery</a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      
+        <div class="usa-footer__secondary-section">
+          <div class="grid-container">
+            <div class="grid-row grid-gap">
+              <div class="usa-footer__logo grid-row mobile-lg:grid-col-6 mobile-lg:grid-gap-2">
+                <div class="mobile-lg:grid-col-auto" id="brand">
+                  <h3 class="usa-footer__logo-heading">Neighbor Express</h3>
+                </div>
+              </div>
+              <div class="usa-footer__contact-links mobile-lg:grid-col-6" id="contact">
+                <h3 class="usa-footer__contact-heading">{{title}}</h3>
+                <address class="usa-footer__address">
+                  <div class="usa-footer__contact-info grid-row grid-gap">
+                    <div class="grid-col-auto">
+                     {{body_en}}
+                    </div>
+                  </div>
+                </address>
+              </div>
+            </div>
+          </div>
+        </div>
+      </footer>
   </main>
+  
   </script>
   <div id="target"></div>
   <!-- Your web-app is https, so your scripts need to be too -->
@@ -65,8 +114,9 @@
     integrity="sha256-gvQgAFzTH6trSrAWoH1iPo9Xc96QxSZ3feW6kem+O00=" crossorigin="anonymous"></script>
   <script src="https://unpkg.com/mustache@latest"></script>
   <script type="text/javascript" src="//simonwaldherr.github.io/micromarkdown.js/dist/micromarkdown.min.js"></script>
-  <script src='https://unpkg.com/formiojs@latest/dist/formio.full.min.js'></script>
   <script src="https://static.airtable.com/js/embed/embed_snippet_v1.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/uswds/2.6.0/js/uswds.min.js"
+    integrity="sha256-Z8nSqW+Q0xnTMg12MCyeg0nGLTj6C4oa74tBt64EsFo=" crossorigin="anonymous"></script>
   <script src="/client.js"></script>
 </body>
 
