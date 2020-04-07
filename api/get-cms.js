@@ -3,7 +3,7 @@ const mmd = require('micromarkdown');
 
 const base = new Airtable({
   apiKey: process.env.AIRTABLE_API_KEY
-}).base('app31VI2AVaaByh4o');
+}).base(process.env.AIRTABLE_BASE_ID);
 const tableName = "CMS";
 const viewName = "";
 
