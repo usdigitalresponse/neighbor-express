@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import cmsContext from '../context/cms';
 import { getCmsRecordFromKey } from '../utils/cms';
 import Interweave from 'interweave';
+import { getLayout } from '../layouts/neighbor.jsx';
 
 const Pledge = () => {
   const cms = useContext(cmsContext);
@@ -20,5 +21,7 @@ const Pledge = () => {
     </div>
   </section>
 }
+
+Pledge.getLayout = getLayout;
 
 export default Pledge;

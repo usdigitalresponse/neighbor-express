@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import NeighborLayout from '../layouts/neighbor.jsx'
 import cmsContext from '../context/cms.js'
+import './styles.css'
 
 function MyApp({ Component, pageProps }) {
   const [cms, setcms] = useState([]);
@@ -12,7 +13,11 @@ function MyApp({ Component, pageProps }) {
   }, []);
 
   if (!cms) return null;
-  return <cmsContext.Provider value={cms}><NeighborLayout><Component {...pageProps} /></NeighborLayout></cmsContext.Provider>
+  return <cmsContext.Provider value={cms}>
+    <NeighborLayout>
+      <Component {...pageProps} />
+    </NeighborLayout>
+  </cmsContext.Provider>
 }
 
 // Only uncomment this method if you have blocking data requirements for

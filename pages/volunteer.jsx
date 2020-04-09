@@ -2,10 +2,12 @@ import React, { useContext } from 'react';
 import cmsContext from '../context/cms';
 import { getCmsRecordFromKey } from '../utils/cms';
 import Interweave from 'interweave';
+import { getLayout } from '../layouts/neighbor.jsx';
 
 const Volunteer = () => {
   const cms = useContext(cmsContext);
   const content = getCmsRecordFromKey('volunteer_form', cms);
+
 
   return <section className="grid-container usa-section" id="share">
     <div className="grid-row grid-gap">
@@ -15,12 +17,14 @@ const Volunteer = () => {
         </h2>
         <p>
           <section id="request_form">
-            <iframe class="airtable-embed airtable-dynamic-height" src={`https://airtable.com/embed/${content.body_en}`} frameborder="0" onmousewheel="" width="100%" height="2316"></iframe>
+            <iframe class="airtable-embed airtable-dynamic-height" src={`https://airtable.com/embed/${content.body_en}`} frameBorder="0" style={{ 'width': '100%' }} height="2316"></iframe>
           </section>
         </p>
       </div>
     </div>
   </section>
 }
+
+Volunteer.getLayout = getLayout;
 
 export default Volunteer;

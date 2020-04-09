@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import Head from 'next/head';
 import cmsContext from '../context/cms';
+import Link from 'next/Link';
 
 const getCmsRecordFromKey = (key, records) => {
   return records.filter(record => record.key === key)[0];
@@ -19,6 +20,7 @@ const NeighborLayout = ({ children }) => {
 
   return <>
     <Head>
+      <title>{title.body_en}</title>
       <meta name="description" content="Neighbor express" />
       <link id="favicon" rel="icon" href="https://glitch.com/favicon.ico" type="image/x-icon" />
       <meta charset="utf-8" />
@@ -34,7 +36,7 @@ const NeighborLayout = ({ children }) => {
       <div className="usa-nav-container maxw-widescreen">
         <div className="usa-navbar">
           <div className="usa-logo" id="brand">
-            <em className="usa-logo__text"><a href="/" title="Home" aria-label="Home">{title.body_en}</a></em>
+            <em className="usa-logo__text"><Link href="/"><a href="/" title="Home" aria-label="Home">{title.body_en}</a></Link></em>
           </div>
           <button className="usa-menu-btn">Menu</button>
         </div>
@@ -44,21 +46,22 @@ const NeighborLayout = ({ children }) => {
           </button>
           <ul className="usa-nav__primary usa-accordion">
             <li className="usa-nav__primary-item">
-              <a className="usa-nav__link" href="/about"><span>About</span></a>
+              <Link href="/about"><a className="usa-nav__link" href="/about"><span>About</span></a></Link>
             </li>
             <li className="usa-nav__primary-item">
-              <a className="usa-nav__link" href="/share"><span>Share</span></a>
+              <Link href="/share"><a className="usa-nav__link" href="/share"><span>Share</span></a></Link>
             </li>
             <li className="usa-nav__primary-item">
-              <a className="usa-nav__link" href="/pledge"><span>Volunteer Pledge</span></a>
+              <Link href="/pledge"><a className="usa-nav__link" href="/pledge"><span>Volunteer Pledge</span></a></Link>
             </li>
             <li className="usa-nav__primary-item">
-              <a className="usa-nav__link" href="/volunteer"><span>Sign Up to Volunteer</span></a>
+              <Link href="/volunteer"><a className="usa-nav__link" href="/volunteer"><span>Sign Up to Volunteer</span></a></Link>
             </li>
           </ul>
-          <a className="usa-button" href="/request">
+          <Link href="/request"><a className="usa-button" href="/request">
             Request a Delivery, Meal, or Helping Hand
         </a>
+          </Link>
         </nav>
       </div>
     </header>
@@ -117,5 +120,7 @@ const NeighborLayout = ({ children }) => {
       integrity="sha256-Z8nSqW+Q0xnTMg12MCyeg0nGLTj6C4oa74tBt64EsFo=" crossorigin="anonymous"></script>
   </>
 }
+
+export const getLayout = page => <NeighborLayout>{page}</NeighborLayout>
 
 export default NeighborLayout;
