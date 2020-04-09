@@ -4,11 +4,17 @@
   "description": "Display data from an Airtable base",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "dev": "next",
+    "build": "next build",
+    "start": "next start"
   },
   "dependencies": {
     "airtable": "^0.8.1",
-    "micromarkdown": "^0.3.4-a"
+    "interweave": "^12.5.0",
+    "micromarkdown": "^0.3.4-a",
+    "next": "^9.3.4",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
   },
   "engines": {
     "node": "10"
