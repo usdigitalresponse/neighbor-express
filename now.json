@@ -3,35 +3,5 @@
   "env": {
     "AIRTABLE_API_KEY": "@airtable_api_key",
     "AIRTABLE_BASE_ID": "@airtable_base_id"
-  },
-  "routes": [
-    {
-      "src": "/request",
-      "dest": "/request.html"
-    },
-    {
-      "src": "/volunteer",
-      "dest": "/volunteer.html"
-    },
-    {
-      "src": "/pledge",
-      "dest": "/pledge.html"
-    },
-    {
-      "src": "/",
-      "dest": "/index.html"
-    },
-    {
-      "src": "/about",
-      "dest": "/about.html"
-    },
-    {
-      "src": "/share",
-      "dest": "/share.html"
-    },
-    {
-      "src": "/.*",
-      "continue": true
-    }
-  ]
+  }
 }
