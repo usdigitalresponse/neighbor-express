@@ -1,5 +1,9 @@
 {
   "version": 2,
+  "env": {
+    "AIRTABLE_API_KEY": "@airtable_api_key",
+    "AIRTABLE_BASE_ID": "@airtable_base_id"
+  },
   "routes": [
     {
       "src": "/request",
