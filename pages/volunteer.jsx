@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
 import cmsContext from '../context/cms';
 import { getCmsRecordFromKey } from '../utils/cms';
-import Interweave from 'interweave';
 import { getLayout } from '../layouts/neighbor.jsx';
 
 const Volunteer = () => {
