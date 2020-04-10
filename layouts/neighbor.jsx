@@ -16,8 +16,6 @@ const NeighborLayout = ({ children }) => {
   const title = getCmsRecordFromKey('brand', cms);
   const footer = getCmsRecordFromKey('contact', cms);
 
-  console.log(cms);
-
   return <>
     <Head>
       <title>{title.body_en}</title>

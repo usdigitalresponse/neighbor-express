@@ -4,6 +4,5 @@ export const getCmsRecordFromKey = (key, records) => {
     record.image = record.picture[0]?.url;
     return record;
   });
-  console.log(records);
   return records.filter(record => record.key === key)[0];
 }
