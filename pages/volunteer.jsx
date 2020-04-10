@@ -16,7 +16,7 @@ const Volunteer = () => {
         </h2>
         <p>
           <section id="request_form">
-            <iframe class="airtable-embed airtable-dynamic-height" src={`https://airtable.com/embed/${content.body_en}`} frameBorder="0" style={{ 'width': '100%' }} height="2316"></iframe>
+            <iframe className="airtable-embed airtable-dynamic-height" src={`https://airtable.com/embed/${content.body_en}`} frameBorder="0" style={{ 'width': '100%' }} height="2316"></iframe>
           </section>
         </p>
       </div>

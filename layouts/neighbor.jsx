@@ -115,7 +115,7 @@ const NeighborLayout = ({ children }) => {
         </div>
       </footer></main>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/uswds/2.6.0/js/uswds.min.js"
-      integrity="sha256-Z8nSqW+Q0xnTMg12MCyeg0nGLTj6C4oa74tBt64EsFo=" crossorigin="anonymous"></script>
+      integrity="sha256-Z8nSqW+Q0xnTMg12MCyeg0nGLTj6C4oa74tBt64EsFo=" crossOrigin="anonymous"></script>
   </>
 }
 

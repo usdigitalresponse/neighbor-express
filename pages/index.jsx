@@ -12,54 +12,54 @@ const HomePage = () => {
   const serving = getCmsRecordFromKey('currently_serving', cms);
 
   return <><section aria-label="Introduction" id="hero">
-    <div class="usa-hero" style={{ backgroundImage: `url(${hero.image})` }}>
-      <div class="grid-container">
-        <div class="usa-hero__callout">
-          <h1 class="usa-hero__heading">
-            <span class="usa-hero__heading--alt">{hero.title}</span>
+    <div className="usa-hero" style={{ backgroundImage: `url(${hero.image})` }}>
+      <div className="grid-container">
+        <div className="usa-hero__callout">
+          <h1 className="usa-hero__heading">
+            <span className="usa-hero__heading--alt">{hero.title}</span>
           </h1>
           <p>
             {hero.body_en}
           </p>
           <p>
-            <a class="usa-button" href={hero.href}>{hero.secondary_en}</a>
+            <a className="usa-button" href={hero.href}>{hero.secondary_en}</a>
           </p>
         </div>
       </div>
     </div>
   </section>
-    <section class="grid-container usa-section">
-      <div class="grid-row grid-gap">
-        <div class="tablet:grid-col-4">
-          <h2 class="font-heading-xl margin-bottom-2 tablet:margin-bottom-2">
+    <section className="grid-container usa-section">
+      <div className="grid-row grid-gap">
+        <div className="tablet:grid-col-4">
+          <h2 className="font-heading-xl margin-bottom-2 tablet:margin-bottom-2">
             {how.title}
           </h2>
         </div>
-        <div class="tablet:grid-col-8 usa-prose">
-          <p>
+        <div className="tablet:grid-col-8 usa-prose">
+          <div>
             <Interweave content={how.body_en} />
-          </p>
+          </div>
         </div>
       </div>
     </section>
-    <section class="usa-section usa-section--dark">
-      <div class="grid-container">
-        <h2 class="font-heading-xl margin-y-0">{cta.title}</h2>
-        <a class="usa-button usa-button--big" href="/request">{cta.body_en}</a>
+    <section className="usa-section usa-section--dark">
+      <div className="grid-container">
+        <h2 className="font-heading-xl margin-y-0">{cta.title}</h2>
+        <a className="usa-button usa-button--big" href="/request">{cta.body_en}</a>
       </div>
     </section>
-    <section class="grid-container usa-section" id="currently_serving">
-      <div class="grid-row grid-gap">
-        <div class="tablet:grid-col-4">
+    <section className="grid-container usa-section" id="currently_serving">
+      <div className="grid-row grid-gap">
+        <div className="tablet:grid-col-4">
           <img src={serving.image} />
         </div>
-        <div class="tablet:grid-col-8 usa-prose">
-          <h2 class="font-heading-xl margin-top-0 tablet:margin-bottom-0">
+        <div className="tablet:grid-col-8 usa-prose">
+          <h2 className="font-heading-xl margin-top-0 tablet:margin-bottom-0">
             {serving.title}
           </h2>
-          <p>
+          <div>
             <Interweave content={serving.body_en} />
-          </p>
+          </div>
         </div>
       </div>
     </section>
