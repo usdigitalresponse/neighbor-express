@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import Head from 'next/head';
 import cmsContext from '../context/cms';
-import Link from 'next/Link';
+import Link from 'next/link'
 
 const getCmsRecordFromKey = (key, records) => {
   return records.filter(record => record.key === key)[0];
