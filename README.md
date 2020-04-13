@@ -62,6 +62,16 @@ If you already have your own data, you have two options:
 
 Watch the [5 minute video tour](https://www.loom.com/share/dabb2f47de454b8c86992db4fabae228) for more information on how to use the Airtable side of things.
 
+### Advanced Airtable features
+
+Setting up the advanced features (maps, SMS, vehicle routing) requires a little more technical work and may cost money. These instructions are still a work in progress, but here are some quick notes.
+
+All of the advanced features require using Airtable Blocks, a paid feature which allows for connecting APIs to the Airtable database.
+
+* Maps: set up the built-in Map block. You’ll need to create an account for the Google Maps API. Once you’ve set up the Map block, you can view a map of any table and color it by any single-select field. You can use this to view Volunteers or Deliveries on a map to help with matching people.
+* SMS: set up the built-in SMS block. You’ll need to create an account for the Twilio API. You can then send batch mail-merge-style SMS to any View.
+
+
 ## Developing Locally
 1. Clone this repo
 2. Install the Zeit Now CLI globally `npm i -g now`
