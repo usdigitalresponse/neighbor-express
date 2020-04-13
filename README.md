@@ -10,11 +10,21 @@ For more background on the product:
 
 ## Deploy a fork
 
-We recommend deploying this site through Zeit. It’s just a static site with a small dynamic component to load CMS data and submit form data, so you could also deploy it on other providers that allow for maintaining a secret API key.
+In just a few minutes you can deploy a Neighbor Express site for your city.
 
-To deploy through Zeit:
+This site is a static site with a small dynamic component to load CMS data, so you can deploy it on any static hosting provider that allows for maintaining a secret API key. We recommend hosting on [Zeit](https://zeit.co/). The rest of these instructions assume a Zeit deployment.
 
-Open the [Neighbor Express Airtable Template](https://airtable.com/shrUWmppqhdNK9Ij9), and click “Copy Base” in the top right. This will prompt you to create an Airtable account if you don’t already have one.
+#### Prerequisites
+
+Create accounts on [Airtable](https://airtable.com), [Zeit](https://zeit.co/), and [Github](https://github.com).
+
+#### Create an Airtable backend
+
+Open the [Neighbor Express Airtable Template](https://airtable.com/shrUWmppqhdNK9Ij9), and click “Copy Base” in the top right.
+
+This Airtable will serve as your CMS for the site content, and store your form submissions.
+
+#### Deploy a Zeit fork
 
 Click the button below to start a Zeit import. It will fork the Neighbor Express Github repo for you and deploy the fork to Zeit.
 
@@ -27,26 +37,28 @@ Click the button below to start a Zeit import. It will fork the Neighbor Express
   * Leave the build command and development command fields blank. Set the output directory to public.
 * That’s it! Now you have your own deployment of the Neighbor Express website. You can click the production deployment link in Zeit to see the live site.
 
+#### Change site content
+
 To edit content on the Public Facing Website through the CMS, [follow these visual instructions](https://whimsical.com/LE8KPDkxRb1gB9GzuX8Qz2#7YNFXnKbYjZZjCn41Cg3J) to edit the website content in Airtable.
 
 You can edit most text, pictures, and button names on the website pages. Forms are fully editable as well: add, remove, or edit any question. Changes made in Airtable update immediately.
 
-If you’d like to make further changes beyond what’s available in the Airtable CMS you can also just directly edit the site code in your fork of this repo, if you’re comfortable with HTML/CSS.
+If you’d like to make further changes beyond what’s available in the Airtable CMS you can also just directly edit the site code in your fork of this repo, if you’re comfortable with HTML/CSS. (see instructions below for developing locally)
 
 ## Managing form submissions in Airtable
 
-The Deliveries and Volunteers tabs in Airtable are there to help you manage the data that comes in from forms.
+The forms in the site are built with Airtable Forms, and data submits directly to the Deliveries and Volunteers tabs.
 
-Import your data: If you don’t have any data collected yet, delete all the test data in the template Base to start from scratch.
+If you don’t have any data collected yet, you can delete all the test data in the template tables to start from scratch.
 
 If you already have your own data, you have two options:
 
 * use the [CSV Import Block](https://support.airtable.com/hc/en-us/articles/115013249187-CSV-import-block) to import your data
 * [create a new Table from your existing spreadsheet](https://support.airtable.com/hc/en-us/articles/203313915-Creating-a-new-table-in-an-existing-base-via-CSV-spreadsheet-import)
 
-Add more views: Now, you can use the built-in views to manage data, or create/modify your own views as needed. See Airtable’s [Guide to Views](https://support.airtable.com/hc/en-us/articles/202624989-Guide-to-views) for more background.
+**Add more views**: Now, you can use the built-in views to manage data, or create/modify your own views as needed. See Airtable’s [Guide to Views](https://support.airtable.com/hc/en-us/articles/202624989-Guide-to-views) for more background.
 
-Collect new data: The Deliveries and Volunteers tables each contain an Airtable Form you can use to collect new data into the table. The Airtable form shows up on the public website, so you can just directly edit in Airtable and the new form shows up on the site.
+**Collect new data**: The Deliveries and Volunteers tables each contain an Airtable Form you can use to collect new data into the table. The Airtable form shows up on the public website, so you can just directly edit in Airtable and the new form shows up on the site.
 
 Watch the [5 minute video tour](https://www.loom.com/share/dabb2f47de454b8c86992db4fabae228) for more information on how to use the Airtable side of things.
 
