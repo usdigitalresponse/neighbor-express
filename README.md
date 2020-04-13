@@ -30,7 +30,7 @@ Click the button below to start a Zeit import. It will fork the Neighbor Express
 
 [![Deploy with ZEIT Now](https://zeit.co/button)](https://zeit.co/import/project?template=https://github.com/usdigitalresponse/neighbor-express)
 
-* First, find the Airtable API Key and Base ID for your Airtable copy, and pass them into the first Zeit import screen.
+* First, find the [Airtable API Key](https://support.airtable.com/hc/en-us/articles/219046777-How-do-I-get-my-API-key-) and [Base ID](https://community.airtable.com/t/what-is-the-app-id-where-do-i-find-it/2984) for your Airtable copy, and pass them into the first Zeit import screen.
 * Grant Github permissions if needed, to allow Zeit to fork the repo on your behalf.
 * Next it’s time to configure the project. This is pretty simple because it’s already a static site with no compilation needed.
   * Leave the “root directory” field blank.
