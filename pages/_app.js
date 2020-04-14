@@ -14,7 +14,7 @@ class ErrorBoundary extends React.Component {
   }
 
   componentDidCatch(error, errorInfo) {
-    console.log(error);
+
   }
 
   render() {
@@ -37,7 +37,6 @@ function MyApp({ Component, pageProps }) {
   useEffect(() => {
     fetch('/api/get-cms').then(res => res.json()).then(json => json.records).then(records => {
       setcms(records);
-      console.log('records', records);
     });
   }, []);
 
