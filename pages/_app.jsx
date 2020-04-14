@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import NeighborLayout from '../layouts/neighbor.jsx'
-import cmsContext from '../context/cms.js'
-import './styles.css'
+import NeighborLayout from '../layouts/neighbor.jsx';
+import cmsContext from '../context/cms.js';
+import './styles.css';
 
 class ErrorBoundary extends React.Component {
   constructor(props) {
@@ -19,33 +19,35 @@ class ErrorBoundary extends React.Component {
 
   render() {
     if (this.state.hasError) {
-      return "Internal Error.";
+      return 'Internal Error.';
     }
 
     return this.props.children;
   }
 }
 
-const ErrorTemplate = () => {
+const ErrorTemplate = () =>
   // ReferenceError: foo is not defined.
-  return "OK";
-};
-
+  'OK';
 function MyApp({ Component, pageProps }) {
   const [cms, setcms] = useState([]);
 
   useEffect(() => {
-    fetch('/api/get-cms').then(res => res.json()).then(json => json.records).then(records => {
+    fetch('/api/get-cms').then((res) => res.json()).then((json) => json.records).then((records) => {
       setcms(records);
     });
   }, []);
 
   if (!cms) return null;
-  return <ErrorBoundary><cmsContext.Provider value={cms}>
-    <NeighborLayout>
-      <Component {...pageProps} />
-    </NeighborLayout>
-  </cmsContext.Provider></ErrorBoundary>
+  return (
+    <ErrorBoundary>
+      <cmsContext.Provider value={cms}>
+        <NeighborLayout>
+          <Component {...pageProps} />
+        </NeighborLayout>
+      </cmsContext.Provider>
+    </ErrorBoundary>
+  );
 }
 
 // Only uncomment this method if you have blocking data requirements for
@@ -60,4 +62,4 @@ function MyApp({ Component, pageProps }) {
 //   return { ...appProps }
 // }
 
-export default MyApp
+export default MyApp;
