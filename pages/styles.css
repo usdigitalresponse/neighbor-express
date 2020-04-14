@@ -3,9 +3,3 @@
 @supports (font-variation-settings: normal) {
   html,body,div,p,.usa_prose { font-family: 'Inter var', sans-serif; }
 }
-
-.grid-container {
-  /* margin-left: auto;
-  margin-right: 0;
-  max-width: 74rem; */
-}

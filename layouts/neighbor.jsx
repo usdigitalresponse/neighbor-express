@@ -16,7 +16,7 @@ const NeighborLayout = ({ children }) => {
   const title = getCmsRecordFromKey('brand', cms);
   const footer = getCmsRecordFromKey('contact', cms);
 
-  return <>
+  return <div>
     <Head>
       <title>{title.body_en}</title>
       <meta name="description" content="Neighbor express" />
@@ -63,8 +63,7 @@ const NeighborLayout = ({ children }) => {
         </nav>
       </div>
     </header>
-
-    <main id="main-content">
+    <main>
       {children}
       <footer className="usa-footer">
         <div className="grid-container usa-footer__return-to-top">
@@ -96,16 +95,16 @@ const NeighborLayout = ({ children }) => {
           <div className="grid-container">
             <div className="grid-row grid-gap">
               <div className="usa-footer__logo grid-row mobile-lg:grid-col-6 mobile-lg:grid-gap-2">
-                <div className="mobile-lg:grid-col-auto" id="brand">
+                <div className="mobile-lg:grid-col-auto">
                   <h3 className="usa-footer__logo-heading">Neighbor Express</h3>
                 </div>
               </div>
-              <div className="usa-footer__contact-links mobile-lg:grid-col-6" id="contact">
-                <h3 className="usa-footer__contact-heading">{footer.title}</h3>
+              <div className="usa-footer__contact-links mobile-lg:grid-col-6">
+                <h3 className="usa-footer__contact-heading">{footer?.title}</h3>
                 <address className="usa-footer__address">
                   <div className="usa-footer__contact-info grid-row grid-gap">
                     <div className="grid-col-auto">
-                      {footer.body_en}
+                      {footer?.body_en}
                     </div>
                   </div>
                 </address>
@@ -114,9 +113,7 @@ const NeighborLayout = ({ children }) => {
           </div>
         </div>
       </footer></main>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/uswds/2.6.0/js/uswds.min.js"
-      integrity="sha256-Z8nSqW+Q0xnTMg12MCyeg0nGLTj6C4oa74tBt64EsFo=" crossOrigin="anonymous"></script>
-  </>
+  </div>
 }
 
 export const getLayout = page => <NeighborLayout>{page}</NeighborLayout>

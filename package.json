@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "airtable": "^0.8.1",
+    "airtable-plus": "^1.0.4",
     "interweave": "^12.5.0",
     "micromarkdown": "^0.3.4-a",
     "next": "^9.3.4",

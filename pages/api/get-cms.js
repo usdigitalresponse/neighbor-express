@@ -1,54 +1,40 @@
-const Airtable = require("airtable");
+/*
+* This is the *only* server-side file for neighbor express.
+*/
+const AirtablePlus = require('airtable-plus');
 const mmd = require('micromarkdown');
 
-const base = new Airtable({
-  apiKey: process.env.AIRTABLE_API_KEY
-}).base(process.env.AIRTABLE_BASE_ID);
-const tableName = "CMS";
-const viewName = "";
+const inst = new AirtablePlus({
+  baseId: process.env.AIRTABLE_BASE_ID,
+  apiKey: process.env.AIRTABLE_API_KEY,
+  tableName: 'CMS'
+});
 
-// Cache the records in case we get a lot of traffic.
-// Otherwise, we'll hit Airtable's rate limit.
-const cacheTimeoutMs = 5 * 1000; // Cache for 5 seconds.
-let cachedResponse = null;
-let cachedResponseDate = null;
 
-export default (req, res) => {
-  if (cachedResponse && new Date() - cachedResponseDate < cacheTimeoutMs) {
-    return res.send(cachedResponse);
-  } else {
-    // Select the first 10 records from the view.
-    base(tableName)
-      .select({
-        maxRecords: 30
-      })
-      .firstPage(function (error, records) {
-        if (error) {
-          return res.send({ error: error });
-        } else {
-          cachedResponse = {
-            records: records.map(record => {
-              return {
-                key: record.get("key"),
-                title: record.get("title"),
-                body_en: mmd.parse(nl2br(record.fields.body_en)),
-                body_es: nl2br(record.fields.body_es),
-                picture: record.get("picture") || [],
-                secondary_en: record.get("secondary_en"),
-                secondary_es: record.get("secondary_es"),
-                href: record.get("href")
-              };
-            })
-          };
-          cachedResponseDate = new Date();
 
-          return res.send(cachedResponse);
-        }
-      });
-  }
+// This takes the data from our CMS airtable
+// And sends it off to the frontend
+export default async (req, res) => {
+  const records = await inst.read({ maxRecords: 30 });
+  res.send({
+    records: records.map(record => {
+      const { key, title, body_en, body_es, picture, secondary_en, secondary_es, href } = record.fields;
+      return {
+        key,
+        title,
+        body_en: mmd.parse(nl2br(body_en)),
+        body_es: nl2br(body_es),
+        picture: picture || [],
+        secondary_en,
+        secondary_es,
+        href
+      };
+    })
+  });
+
 }
 
-// utilities
+// This adds a <br /> tag where a \n is
 function nl2br(str, replaceMode, isXhtml) {
 
   var breakTag = (isXhtml) ? '<br />' : '<br>';
