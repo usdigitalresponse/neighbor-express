@@ -1,3 +1,6 @@
+# Neighbor Express
+[![Deploy with ZEIT Now](https://zeit.co/button)](https://zeit.co/import/project?template=https://github.com/usdigitalresponse/neighbor-express)
+
 The Neighbor Express platform has two parts:
 
 * **A public-facing website** (code in this repo) to share information about the program, and collect signups from volunteers and people who need assistance
@@ -70,11 +73,3 @@ All of the advanced features require using Airtable Blocks, a paid feature which
 
 * Maps: set up the built-in Map block. You’ll need to create an account for the Google Maps API. Once you’ve set up the Map block, you can view a map of any table and color it by any single-select field. You can use this to view Volunteers or Deliveries on a map to help with matching people.
 * SMS: set up the built-in SMS block. You’ll need to create an account for the Twilio API. You can then send batch mail-merge-style SMS to any View.
-
-
-## Developing Locally
-1. Clone this repo
-2. Install the Zeit Now CLI globally `npm i -g now`
-3. `now dev` will start the development server, pointing to the API correctly
-4. Make any changes you'd like to public/index.html and open a pull request
-5. Merging into master will automatically deploy to https://neighbor.now.sh

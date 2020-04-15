@@ -4,11 +4,18 @@
   "description": "Display data from an Airtable base",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "dev": "next",
+    "build": "next build",
+    "start": "next start"
   },
   "dependencies": {
     "airtable": "^0.8.1",
-    "micromarkdown": "^0.3.4-a"
+    "airtable-plus": "^1.0.4",
+    "interweave": "^12.5.0",
+    "micromarkdown": "^0.3.4-a",
+    "next": "^9.3.4",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
   },
   "engines": {
     "node": "10"
@@ -18,5 +25,13 @@
     "express",
     "airtable"
   ],
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb": "^18.1.0",
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-react": "^7.19.0",
+    "eslint-plugin-react-hooks": "^2.5.1"
+  }
 }
