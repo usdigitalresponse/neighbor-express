@@ -18,10 +18,11 @@ export default async (req, res) => {
   res.send({
     records: records.map((record) => {
       const {
-        key, title, body_en, body_es, picture, secondary_en, secondary_es, href,
+        key, title, enabled, body_en, body_es, picture, secondary_en, secondary_es, href,
       } = record.fields;
       return {
         key,
+        enabled,
         title,
         body_en: mmd.parse(nl2br(body_en)),
         body_es: nl2br(body_es),

@@ -14,12 +14,13 @@ const NeighborLayout = ({ children }) => {
   if (cms.length === 0) return null;
 
   const title = getCmsRecordFromKey('brand', cms);
+  const cta = getCmsRecordFromKey('header_cta', cms);
   const footer = getCmsRecordFromKey('contact', cms);
 
   return <div>
     <Head>
       <title>{title.body_en}</title>
-      <meta name="description" content="Neighbor express" />
+      <meta name="description" content="Request free meals, order your usual groceries, or ask for other help you may need. A volunteer will bring your delivery right to your door." />
       <link id="favicon" rel="icon" href="https://glitch.com/favicon.ico" type="image/x-icon" />
       <meta charset="utf-8" />
       <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -57,8 +58,8 @@ const NeighborLayout = ({ children }) => {
             </li>
           </ul>
           <Link href="/request"><a className="usa-button" href="/request">
-            Request a Delivery, Meal, or Helping Hand
-        </a>
+            {cta.body_en}
+          </a>
           </Link>
         </nav>
       </div>

@@ -10,6 +10,8 @@ const HomePage = () => {
   const how = getCmsRecordFromKey('how_does_this_work', cms);
   const cta = getCmsRecordFromKey('cta', cms);
   const serving = getCmsRecordFromKey('currently_serving', cms);
+  const button_one = getCmsRecordFromKey('hero_button_one', cms);
+  const button_two = getCmsRecordFromKey('hero_button_two', cms);
 
   return (
     <>
@@ -23,9 +25,8 @@ const HomePage = () => {
               <p>
                 {hero.body_en}
               </p>
-              <p>
-                <a className="usa-button" href={hero.href}>{hero.secondary_en}</a>
-              </p>
+              {button_one.enabled && <p><a className="usa-button" href={button_one.href}>{button_one.body_en}</a></p>}
+              {button_two.enabled && <p><a className="usa-button" href={button_two.href}>{button_two.body_en}</a></p>}
             </div>
           </div>
         </div>

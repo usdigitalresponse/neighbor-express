@@ -5,8 +5,7 @@ module.exports = {
     node: true,
   },
   extends: [
-    'plugin:react/recommended',
-    'airbnb',
+    'plugin:react/recommended'
   ],
   globals: {
     Atomics: 'readonly',
@@ -23,6 +22,6 @@ module.exports = {
     'react',
   ],
   rules: {
-	"react/react-in-jsx-scope": "off"
+    "react/react-in-jsx-scope": "off"
   },
 };
