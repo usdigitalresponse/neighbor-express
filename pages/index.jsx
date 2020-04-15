@@ -48,7 +48,7 @@ const HomePage = () => {
       <section className="usa-section usa-section--dark">
         <div className="grid-container">
           <h2 className="font-heading-xl margin-y-0">{cta.title}</h2>
-          <a className="usa-button usa-button--big" href="/request">{cta.body_en}</a>
+          <p><a className="usa-button usa-button--big" href="/request">{cta.body_en}</a></p>
         </div>
       </section>
       <section className="grid-container usa-section" id="currently_serving">
