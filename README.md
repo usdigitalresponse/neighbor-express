@@ -37,7 +37,8 @@ Click the button below to start a Zeit import. It will fork the Neighbor Express
 * Grant Github permissions if needed, to allow Zeit to fork the repo on your behalf.
 * Next it’s time to configure the project. This is pretty simple because it’s already a static site with no compilation needed.
   * Leave the “root directory” field blank.
-  * Leave the build command and development command fields blank. Set the output directory to public.
+  * When Zeit auto-detects Next.js, don't change any of the settings for build command / output directory / development command, just leave them blank.
+  * Press Deploy
 * That’s it! Now you have your own deployment of the Neighbor Express website. You can click the production deployment link in Zeit to see the live site.
 
 #### Change site content
