@@ -11,11 +11,20 @@ For more background on the product:
 * [Product Overview doc](https://docs.google.com/document/d/14coib0p7LP3Twk1alY17d7uwVq1cxAEtijeUonnJnqY/edit#) including screenshots, best practices, FAQ
 * [5 minute video tour](https://www.loom.com/share/dabb2f47de454b8c86992db4fabae228)
 
-## Deploy a fork
+## Deploy a fork for your city
 
-In just a few minutes you can deploy a Neighbor Express site for your city.
+If you'd like to bring Neighbor Express to your city, you can deploy a fork of our system in a few minutes, using the instructions below.
 
 This site is a static site with a small dynamic component to load CMS data, so you can deploy it on any static hosting provider that allows for maintaining a secret API key. We recommend hosting on [Zeit](https://zeit.co/). The rest of these instructions assume a Zeit deployment.
+
+**Important note before starting**: Neighbor Express is not fully automated, nor is it our goal to make it 100% automated. Even after you set up a working website, you will still need people
+to manually monitor the form submissions coming into the Airtable, match volunteers
+with requests, and help facilitate communication between volunteers and requests,
+and generally make sure your program is a success.
+This can be a lot of work depending on the number of requests that come in.
+Before setting up a site, you should read our [Product Overview doc](https://docs.google.com/document/d/14coib0p7LP3Twk1alY17d7uwVq1cxAEtijeUonnJnqY/edit#) which includes
+best practices for managing a Neighbor Express program.
+We're happy to help you plan a successful program; reach out at the [Neighbor Express website](https://neighborexpress.org/bring-to-my-city).
 
 #### Prerequisites
 
@@ -25,7 +34,7 @@ Create accounts on [Airtable](https://airtable.com), [Zeit](https://zeit.co/), a
 
 Open the [Neighbor Express Airtable Template](https://airtable.com/shrUWmppqhdNK9Ij9), and click “Copy Base” in the top right.
 
-This Airtable will serve as your CMS for the site content, and store your form submissions.
+This Airtable will serve as your CMS for the site content, and also store your form submissions.
 
 #### Deploy a Zeit fork
 
@@ -39,15 +48,34 @@ Click the button below to start a Zeit import. It will fork the Neighbor Express
   * Leave the “root directory” field blank.
   * When Zeit auto-detects Next.js, don't change any of the settings for build command / output directory / development command, just leave them blank.
   * Press Deploy
-* That’s it! Now you have your own deployment of the Neighbor Express website. You can click the production deployment link in Zeit to see the live site.
+
+Now you have your own deployment of the Neighbor Express website. You can click the production deployment link in Zeit to see the live site.
+
+You're almost there! The next step is to use the Airtable CMS to customize the website for your city.
 
 #### Change site content
 
-To edit content on the Public Facing Website through the CMS, [follow these visual instructions](https://whimsical.com/LE8KPDkxRb1gB9GzuX8Qz2#7YNFXnKbYjZZjCn41Cg3J) to edit the website content in Airtable.
+First, there's one field you need to change first in the CMS. The `request_form`
+and `volunteer_form` rows specify which form will be displayed on the site.
+By default, those IDs point to the form on the template Airtable,
+but you need to update them to point to the forms on your cloned Airtable:
+
+* select the Deliveries tab
+* choose the Delivery Request Form view
+* click "Share form"
+* Copy the ID that comes after "https://airtable.com/". It should look something like this: `shrC4sgbVlo1LvH65`
+* Paste it into the CMS, on the `request_form` row, in the `body_en` column
+* Repeat those steps for the Volunteer Signup form
+
+You can also edit all the other content on the site. Here are some [visual instructions](https://whimsical.com/LE8KPDkxRb1gB9GzuX8Qz2#7YNFXnKbYjZZjCn41Cg3J) for doing that.
 
 You can edit most text, pictures, and button names on the website pages. Forms are fully editable as well: add, remove, or edit any question. Changes made in Airtable update immediately.
 
-If you’d like to make further changes beyond what’s available in the Airtable CMS you can also just directly edit the site code in your fork of this repo, if you’re comfortable with HTML/CSS. (see instructions below for developing locally)
+If you’d like to make further changes beyond what’s available in the Airtable CMS you can also just directly edit the site code in your fork of this repo, if you’re comfortable with HTML/CSS.
+
+#### Custom domain
+
+You can use [Zeit's intructions](https://zeit.co/docs/v2/custom-domains) to add a custom domain for your site.
 
 ## Managing form submissions in Airtable
 
