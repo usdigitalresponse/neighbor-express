@@ -16,5 +16,9 @@ export const getCmsRecordFromKey = (key, records) => {
     return {};
   }
 
+  if (!record.key) {
+    console.error(`The CMS was set up incorrectly and is missing a "key" column. Check that the column name is not "Name"!`);
+  }
+
   return record;
 }

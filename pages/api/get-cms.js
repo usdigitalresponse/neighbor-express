@@ -15,21 +15,15 @@ const inst = new AirtablePlus({
 // And sends it off to the frontend
 export default async (req, res) => {
   const records = await inst.read({ maxRecords: 30 });
+
   res.send({
     records: records.map((record) => {
-      const {
-        key, title, enabled, body_en, body_es, picture, secondary_en, secondary_es, href,
-      } = record.fields;
+      const fields = record.fields;
       return {
-        key,
-        enabled,
-        title,
-        body_en: mmd.parse(nl2br(body_en)),
-        body_es: nl2br(body_es),
-        picture: picture || [],
-        secondary_en,
-        secondary_es,
-        href,
+        ...fields,
+        body_en: mmd.parse(nl2br(fields.body_en)),
+        body_es: nl2br(fields.body_es),
+        picture: fields.picture || [],
       };
     }),
   });
