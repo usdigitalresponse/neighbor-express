@@ -104,9 +104,9 @@ const NeighborLayout = ({ children }) => {
                   <div className="usa-footer__contact-info grid-row grid-gap">
                     <div className="grid-col-auto">
                       {footer.body}
-                      <p>Change Language</p>
-                      <div onClick={() => dispatch({ type: 'set-language', payload: 'en' })} style={{ margin: '10px', padding: '10px', border: '2px solid black' }}>change language to en</div>
-                      <div onClick={() => dispatch({ type: 'set-language', payload: 'es' })} style={{ margin: '10px', padding: '10px', border: '2px solid black' }}>change language to es</div>
+                      <p>TEMPORARY Change Language</p>
+                      <div onClick={() => dispatch({ type: 'set-language', payload: 'en' })} style={{ margin: '10px', padding: '10px', border: '4px solid black' }}>change language to en</div>
+                      <div onClick={() => dispatch({ type: 'set-language', payload: 'es' })} style={{ margin: '10px', padding: '10px', border: '4px solid black' }}>change language to es</div>
                     </div>
                   </div>
                 </address>
