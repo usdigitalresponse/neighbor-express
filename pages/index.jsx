@@ -1,5 +1,4 @@
 import React, { useContext } from 'react';
-import Interweave from 'interweave';
 import { CMSContext } from '../context/cms';
 import { getCmsRecordFromKey } from '../utils/cms';
 import { getLayout } from '../layouts/neighbor.jsx';
@@ -41,7 +40,7 @@ const HomePage = () => {
           </div>
           <div className="tablet:grid-col-8 usa-prose">
             <div>
-              <Interweave content={how.body} />
+              {how.body}
             </div>
           </div>
         </div>
@@ -62,7 +61,7 @@ const HomePage = () => {
               {serving.title}
             </h2>
             <div>
-              <Interweave content={serving.body} />
+              {serving.body}
             </div>
           </div>
         </div>

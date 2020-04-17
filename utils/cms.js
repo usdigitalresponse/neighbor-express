@@ -1,4 +1,6 @@
-const mmd = require('micromarkdown');
+import Text from '@/components/Text';
+import Hero from '@/components/Hero';
+import Markdown from 'markdown-to-jsx';
 
 /**
 * Outputs the body of a record depending on the language of the user
@@ -7,7 +9,7 @@ const mmd = require('micromarkdown');
 */
 export function getRecordBody(record, language = 'en') {
   const body = record[`body_${language}`] || record[`body_en`];
-  return mmd.parse(body);
+  return body;
 }
 
 /**
@@ -39,7 +41,20 @@ export function getRecordLanguages(state) {
  */
 
 export function getCmsBlocks(page, state) {
-  return state.records.filter(record => { record.tag?.includes(page); });
+  return state.records.filter(record => { return record.tag?.includes(page); });
+}
+
+
+/**
+ * Right now this is a simple switch, to display a component
+ * but could be made much smarter!
+ */
+export const RenderCmsBlock = ({ block }) => {
+  return <>
+    {{
+      'block-text': <Text block={block} />,
+      'block-hero': <Hero block={block} />,
+    }[block.type]}</>
 }
 
 /**
@@ -52,7 +67,7 @@ export const getCmsRecordFromKey = (key, state) => {
   records.map(record => {
     // We're going to make a helper for the picture column
     record.image = record.picture[0]?.url;
-    record.body = getRecordBody(record, language);
+    record.body = <Markdown>{getRecordBody(record, language)}</Markdown>
     record.title = getRecordTitle(record, language);
     return record;
   });

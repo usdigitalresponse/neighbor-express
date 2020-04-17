@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { CMSContext } from '../context/cms';
-import { getCmsRecordFromKey, getCmsBlocks } from '../utils/cms';
+import { getCmsRecordFromKey, getCmsBlocks, RenderCmsBlock } from '../utils/cms';
 import { getLayout } from '../layouts/neighbor.jsx';
 import { useRouter } from 'next/router';
 
@@ -17,18 +17,11 @@ const Page = () => {
 
   console.log('blocks', blocks);
 
-  return <section className="grid-container usa-section" id="share">
-    <div className="grid-row grid-gap">
-      <div className="tablet:grid-col-8 usa-prose">
-        <h2 className="font-heading-xl margin-top-0 tablet:margin-bottom-0">
-          this is a page
-          </h2>
-        <p>
-          it has a name
-          </p>
-      </div>
-    </div>
-  </section>
+  return <>
+    {blocks.map(block => (
+      <RenderCmsBlock key={block.key} block={block} />
+    ))}
+  </>
 }
 
 Page.getLayout = getLayout;
