@@ -19,7 +19,7 @@ const NeighborLayout = ({ children }) => {
   const footer = getCmsRecordFromKey('contact', cms);
 
   const menuOpenStyles = {
-    display: isMenuOpen ? 'inline' : 'none'
+    display: isMenuOpen ? 'inline' : ''
   }
 
   return <div>
