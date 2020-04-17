@@ -64,7 +64,7 @@ but you need to update them to point to the forms on your cloned Airtable:
 * choose the Delivery Request Form view
 * click "Share form"
 * Copy the ID that comes after "https://airtable.com/". It should look something like this: `shrC4sgbVlo1LvH65`
-* Paste it into the CMS, on the `request_form` row, in the `body_en` column
+* Paste it into the CMS, on the `request_form` row, in the `body` column
 * Repeat those steps for the Volunteer Signup form
 
 You can also edit all the other content on the site. Here are some [visual instructions](https://whimsical.com/LE8KPDkxRb1gB9GzuX8Qz2#7YNFXnKbYjZZjCn41Cg3J) for doing that.

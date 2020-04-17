@@ -1,8 +1,15 @@
-export const getCmsRecordFromKey = (key, records) => {
-  // We need to make the picture field into something more useful
-  // to the front end
+const mmd = require('micromarkdown');
+
+export const getCmsRecordFromKey = (key, state) => {
+  const { records, language } = state;
+
   records.map(record => {
+    // We're going to make a helper for the picture column
     record.image = record.picture[0]?.url;
+    // And we're going to choose which language we need
+    // And default to english if this string isn't translated
+    const body = record[`body_${language}`] || record[`body_en`];
+    record.body = mmd.parse(body);
     return record;
   });
 

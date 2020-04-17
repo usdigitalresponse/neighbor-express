@@ -1,12 +1,13 @@
 import React, { useContext } from 'react';
 import Interweave from 'interweave';
-import cmsContext from '../context/cms';
+import { CMSContext } from '../context/cms';
 import { getCmsRecordFromKey } from '../utils/cms';
 import { getLayout } from '../layouts/neighbor.jsx';
 
 const Pledge = () => {
-  const cms = useContext(cmsContext);
-  const content = getCmsRecordFromKey('pledge', cms);
+  let { state, dispatch } = useContext(CMSContext);
+
+  const content = getCmsRecordFromKey('pledge', state);
 
   return (
     <section className="grid-container usa-section" id="share">
@@ -16,7 +17,7 @@ const Pledge = () => {
             {content.title}
           </h2>
           <p>
-            <Interweave content={content.body_en} />
+            <Interweave content={content.body} />
           </p>
         </div>
       </div>

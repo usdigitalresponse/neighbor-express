@@ -1,11 +1,12 @@
 import React, { useContext } from 'react';
-import cmsContext from '../context/cms';
+import { CMSContext } from '../context/cms';
 import { getCmsRecordFromKey } from '../utils/cms';
 import { getLayout } from '../layouts/neighbor.jsx';
 
 const Volunteer = () => {
-  const cms = useContext(cmsContext);
-  const content = getCmsRecordFromKey('volunteer_form', cms);
+  let { state, dispatch } = useContext(CMSContext);
+
+  const content = getCmsRecordFromKey('volunteer_form', state);
 
 
   return (
@@ -17,7 +18,7 @@ const Volunteer = () => {
           </h2>
           <p>
             <section id="request_form">
-              <iframe className="airtable-embed airtable-dynamic-height" src={`https://airtable.com/embed/${content.body_en}`} frameBorder="0" style={{ width: '100%' }} height="2316" />
+              <iframe className="airtable-embed airtable-dynamic-height" src={`https://airtable.com/embed/${content.body}`} frameBorder="0" style={{ width: '100%' }} height="2316" />
             </section>
           </p>
         </div>
