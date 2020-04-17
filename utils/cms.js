@@ -10,6 +10,9 @@ export const getCmsRecordFromKey = (key, state) => {
     // And default to english if this string isn't translated
     const body = record[`body_${language}`] || record[`body_en`];
     record.body = mmd.parse(body);
+    // And we need to do this for title too, not having a title_en is technical debt
+    const title = record[`title_${language}`] || record[`title`];
+    record.title = title;
     return record;
   });
 
