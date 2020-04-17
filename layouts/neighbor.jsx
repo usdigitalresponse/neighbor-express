@@ -14,6 +14,11 @@ const NeighborLayout = ({ children }) => {
   const brand = getCmsRecordFromKey('brand', state);
   const cta = getCmsRecordFromKey('header_cta', state);
   const footer = getCmsRecordFromKey('contact', state);
+  const languages = getRecordLanguages(state);
+
+  const setLanguage = (language) => {
+    dispatch({ type: 'set-language', payload: language });
+  }
 
   return <div>
     <Head>
@@ -105,8 +110,9 @@ const NeighborLayout = ({ children }) => {
                     <div className="grid-col-auto">
                       {footer.body}
                       <p>TEMPORARY Change Language</p>
-                      <div onClick={() => dispatch({ type: 'set-language', payload: 'en' })} style={{ margin: '10px', padding: '10px', border: '4px solid black' }}>change language to en</div>
-                      <div onClick={() => dispatch({ type: 'set-language', payload: 'es' })} style={{ margin: '10px', padding: '10px', border: '4px solid black' }}>change language to es</div>
+                      {languages.map(language => (
+                        <div onClick={() => setLanguage(language.key)} style={{ margin: '10px', padding: '10px', border: '4px solid black' }}>change language to {language.name}</div>
+                      ))}
                     </div>
                   </div>
                 </address>

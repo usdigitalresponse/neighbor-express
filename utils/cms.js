@@ -25,12 +25,12 @@ export function getRecordTitle(record, language = 'en') {
 * They are formatted like this:
 * English:en,Spanish:es
 */
-export function getRecordLanguages(state, language) {
-  const options = getCmsRecordFromKey('languages', state).split(',');
+export function getRecordLanguages(state) {
+  const options = getCmsRecordFromKey('languages', state).data.split(',');
   if (!options) return [];
   return options.map(option => {
-    const { name, key } = option.split(':');
-    return { name, key };
+    const data = option.split(':');
+    return { name: data[0], key: data[1] };
   });
 }
 
