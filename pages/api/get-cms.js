@@ -6,7 +6,7 @@ const AirtablePlus = require('airtable-plus');
 const inst = new AirtablePlus({
   baseId: process.env.AIRTABLE_BASE_ID,
   apiKey: process.env.AIRTABLE_API_KEY,
-  tableName: 'CMS',
+  tableName: 'CMS-page-builder',
 });
 
 
