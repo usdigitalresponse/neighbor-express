@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
 import Head from 'next/head';
-import { CMSContext } from '../context/cms';
+import { CMSContext } from '@/context/cms';
 import Link from 'next/link'
-import { getCmsRecordFromKey } from '../utils/cms'
+import { getCmsRecordFromKey, getRecordLanguages } from '@/utils/cms'
 
 const NeighborLayout = ({ children }) => {
   let { state, dispatch } = useContext(CMSContext);
