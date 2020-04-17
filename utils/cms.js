@@ -1,6 +1,6 @@
 const mmd = require('micromarkdown');
 
-/*
+/**
 * Outputs the body of a record depending on the language of the user
 * and then formats it with a markdown processor
 * Defaults to english
@@ -10,7 +10,7 @@ export function getRecordBody(record, language = 'en') {
   return mmd.parse(body);
 }
 
-/*
+/**
 * Outputs the title of a record depending on the language of the user
 * Defaults to english
 */
@@ -19,7 +19,7 @@ export function getRecordTitle(record, language = 'en') {
   return title;
 }
 
-/*
+/** 
 * This takes the 'languages' column and transforms it into something useful
 * For the footer to display the languge options
 * They are formatted like this:
@@ -34,7 +34,15 @@ export function getRecordLanguages(state) {
   });
 }
 
-/*
+/**
+ *
+ */
+
+export function getCmsBlocks(page, state) {
+  return state.records.filter(record => { record.tag?.includes(page); });
+}
+
+/**
 * We're going to look up a particular key in our CMS state and
 * run some filters on the data, before returning it to the page
 */

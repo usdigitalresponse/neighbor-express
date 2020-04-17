@@ -28,9 +28,6 @@ const NeighborLayout = ({ children }) => {
       <meta charset="utf-8" />
       <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
       <meta name="viewport" content="width=device-width, initial-scale=1" />
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uswds/2.6.0/css/uswds.min.css" />
-      <link rel="stylesheet" href="/style.css" />
-      <link rel="stylesheet" href="/reset.css" />
     </Head>
     <a className="usa-skipnav" href="#main-content">Skip to main content</a>
     <div className="usa-overlay"></div>
