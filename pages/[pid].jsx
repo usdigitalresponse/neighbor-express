@@ -15,8 +15,6 @@ const Page = () => {
   let page = router.query.pid;
   let blocks = getCmsBlocks(page, state);
 
-  console.log('blocks', blocks);
-
   return <>
     {blocks.map(block => (
       <RenderCmsBlock key={block.key} block={block} />

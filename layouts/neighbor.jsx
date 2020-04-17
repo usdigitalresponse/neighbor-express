@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import Head from 'next/head';
 import { CMSContext } from '@/context/cms';
 import Link from 'next/link'
-import { getCmsRecordFromKey, getRecordLanguages } from '@/utils/cms'
+import { getCmsRecordFromKey, getRecordLanguages, getCmsPages } from '@/utils/cms'
 
 const NeighborLayout = ({ children }) => {
   let { state, dispatch } = useContext(CMSContext);
@@ -15,6 +15,7 @@ const NeighborLayout = ({ children }) => {
   const cta = getCmsRecordFromKey('header_cta', state);
   const footer = getCmsRecordFromKey('contact', state);
   const languages = getRecordLanguages(state);
+  const pages = getCmsPages(state);
 
   const setLanguage = (language) => {
     dispatch({ type: 'set-language', payload: language });
@@ -22,7 +23,7 @@ const NeighborLayout = ({ children }) => {
 
   return <div>
     <Head>
-      <title>{title.body}</title>
+      <title>{title.title}</title>
       <meta name="description" content="Request free meals, order your usual groceries, or ask for other help you may need. A volunteer will bring your delivery right to your door." />
       <link id="favicon" rel="icon" href="https://glitch.com/favicon.ico" type="image/x-icon" />
       <meta charset="utf-8" />
@@ -44,18 +45,13 @@ const NeighborLayout = ({ children }) => {
             <img src="/assets/img/close.svg" alt="close" />
           </button>
           <ul className="usa-nav__primary usa-accordion">
-            <li className="usa-nav__primary-item">
-              <Link href="/about"><a className="usa-nav__link" href="/about"><span>About</span></a></Link>
-            </li>
-            <li className="usa-nav__primary-item">
-              <Link href="/share"><a className="usa-nav__link" href="/share"><span>Share</span></a></Link>
-            </li>
-            <li className="usa-nav__primary-item">
-              <Link href="/pledge"><a className="usa-nav__link" href="/pledge"><span>Volunteer Pledge</span></a></Link>
-            </li>
-            <li className="usa-nav__primary-item">
-              <Link href="/volunteer"><a className="usa-nav__link" href="/volunteer"><span>Sign Up to Volunteer</span></a></Link>
-            </li>
+            {
+              pages.map(page => {
+                return <li key={page.key} className="usa-nav__primary-item">
+                  <Link href="/[pid]" as={`/${page.key}`}><a className="usa-nav__link" href={`/${page.key}`}><span>{page.title}</span></a></Link>
+                </li>
+              })
+            }
           </ul>
           <Link href="/request"><a className="usa-button" href="/request">
             {cta.body}
@@ -108,7 +104,7 @@ const NeighborLayout = ({ children }) => {
                       {footer.body}
                       <p>TEMPORARY Change Language</p>
                       {languages.map(language => (
-                        <div onClick={() => setLanguage(language.key)} style={{ margin: '10px', padding: '10px', border: '4px solid black' }}>change language to {language.name}</div>
+                        <div key={language.key} onClick={() => setLanguage(language.key)} style={{ margin: '10px', padding: '10px', border: '4px solid black' }}>change language to {language.name}</div>
                       ))}
                     </div>
                   </div>

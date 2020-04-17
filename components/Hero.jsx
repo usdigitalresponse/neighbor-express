@@ -5,9 +5,9 @@ const Hero = ({ block }) => (<section aria-label="Introduction">
         <h1 className="usa-hero__heading">
           <span className="usa-hero__heading--alt">{block.title}</span>
         </h1>
-        <p>
-          {block.body}
-        </p>
+        <div>
+          {block.body_markdown}
+        </div>
       </div>
     </div>
   </div>

@@ -40,7 +40,7 @@ const HomePage = () => {
           </div>
           <div className="tablet:grid-col-8 usa-prose">
             <div>
-              {how.body}
+              {how.body_markdown}
             </div>
           </div>
         </div>
@@ -61,7 +61,7 @@ const HomePage = () => {
               {serving.title}
             </h2>
             <div>
-              {serving.body}
+              {serving.body_markdown}
             </div>
           </div>
         </div>
