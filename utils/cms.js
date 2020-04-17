@@ -48,7 +48,7 @@ export function getCmsBlocks(page, state) {
 
 
 export function getCmsPages(state) {
-  return state.records.filter(record => { return record.type === 'page' })
+  return state.records.filter(record => { return record.type === 'page' && record.enabled })
 }
 
 /**
