@@ -16,7 +16,7 @@ const About = () => {
             {content.title}
           </h2>
           <p>
-            <Interweave content={content.body} />
+            <Interweave content={content.body} /> xxx
           </p>
         </div>
       </div>
