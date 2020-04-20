@@ -66,20 +66,13 @@ async function getEmailInfoForDelivery(delivery) {
 }
 
 //==========================================================
+//==========================================================
 // Standard script begins here --
 // You shouldn't need to change anything below this line.
 //==========================================================
 
-output.markdown(`## Step 1: Refresh Queue`);
-
-output.markdown(`Open the Messages tab to get started. Click below to refresh queue (won't send emails yet).`);
-
-let enqueueButton = await input.buttonsAsync(
-    'Refresh queue',
-    [
-        {label: `Refresh queue`, value: 'yes', variant: 'primary'},
-    ],
-);
+// Define helper functions
+//==========================================================
 
 const matchedDeliveries = (await base.getTable("Deliveries").getView("Status: Matched").selectRecordsAsync()).records;
 const messagesTable = base.getTable("Messages")
@@ -145,6 +138,57 @@ async function computeMessagesToCreate() {
     return messagesToCreate;
 }
 
+// Given a Message Record from our Airtable, send it using Sendgrid
+async function sendMessage(messageToSend) {
+    const dynamicTemplateData = JSON.parse(messageToSend.getCellValue("Template Data"));
+    const sendgridData = {
+        "personalizations": [
+            {
+                "to": [
+                    {
+                    "email": messageToSend.getCellValue("Recipient")
+                    }
+                ],
+                "dynamic_template_data": dynamicTemplateData
+            }
+        ],
+        "from": {
+            "name": "Neighbor Express",
+            "email": "noreply@neighborexpress.org"
+        },
+        "reply_to": REPLY_TO,
+        "template_id": SENDGRID_TEMPLATES[messageToSend.getCellValue("Email type").name]
+    }
+
+    const response = await fetch(`https://nex-sendgrid-proxy.geoffreylitt.now.sh/api/sendgrid-proxy?proxy_token=${SENDGRID_PROXY_TOKEN}`, {
+        method: 'POST',
+        body: JSON.stringify(sendgridData)
+    });
+
+    if (response.status === 202) {
+        base.getTable("Messages").updateRecordAsync(messageToSend.id, {
+            "Status": { name: "Sent" },
+            "Sent Time": new Date()
+        })
+    } else {
+        output.text(`Error: Couldn't send message ${messageToSend.id}. Contact neighborexpress@gmail.com for help.`)
+    }
+}
+
+// Main UI flow
+//==========================================================
+
+output.markdown(`## Step 1: Refresh Queue`);
+
+output.markdown(`Open the Messages tab to get started. Click below to refresh queue (won't send emails yet).`);
+
+let enqueueButton = await input.buttonsAsync(
+    'Refresh queue',
+    [
+        {label: `Refresh queue`, value: 'yes', variant: 'primary'},
+    ],
+);
+
 const messagesToCreate = await computeMessagesToCreate();
 
 if (messagesToCreate.length > 0) {
@@ -179,39 +223,7 @@ if (sendButton === 'cancel') {
 }
 
 for (const messageToSend of messagesToSend) {
-    const dynamicTemplateData = JSON.parse(messageToSend.getCellValue("Template Data"));
-    const sendgridData = {
-        "personalizations": [
-            {
-                "to": [
-                    {
-                    "email": messageToSend.getCellValue("Recipient")
-                    }
-                ],
-                "dynamic_template_data": dynamicTemplateData
-            }
-        ],
-        "from": {
-            "name": "Neighbor Express",
-            "email": "noreply@neighborexpress.org"
-        },
-        "reply_to": REPLY_TO,
-        "template_id": SENDGRID_TEMPLATES[messageToSend.getCellValue("Email type").name]
-    }
-
-    const response = await fetch("https://nex-sendgrid-proxy.geoffreylitt.now.sh/api/sendgrid-proxy?proxy_token=nqotguhnBkZph52GJ55JHtWRlw4H2xHGZqfHLHusLpt", {
-        method: 'POST',
-        body: JSON.stringify(sendgridData)
-    });
-
-    if (response.status === 202) {
-        base.getTable("Messages").updateRecordAsync(messageToSend.id, {
-            "Status": { name: "Sent" },
-            "Sent Time": new Date()
-        })
-    } else {
-        output.text(`Error: Couldn't send message ${messageToSend.id}. Contact neighborexpress@gmail.com for help.`)
-    }
+    await sendMessage(messageToSend);
 }
 
-output.markdown(`**Success**: Messages sent.`)
+output.markdown(`**Done sending messages!**`)
