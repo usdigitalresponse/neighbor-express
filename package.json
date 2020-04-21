@@ -1,5 +1,5 @@
 {
-  "name": "neighborhood-cms",
+  "name": "neighbor-express",
   "version": "0.0.1",
   "description": "Display data from an Airtable base",
   "main": "server.js",
@@ -13,7 +13,7 @@
     "airtable-plus": "^1.0.4",
     "interweave": "^12.5.0",
     "micromarkdown": "^0.3.4-a",
-    "next": "^9.3.4",
+    "next": "^9.3.5",
     "react": "^16.13.1",
     "react-dom": "^16.13.1"
   },

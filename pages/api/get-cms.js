@@ -2,7 +2,6 @@
 * This is the *only* server-side file for neighbor express.
 */
 const AirtablePlus = require('airtable-plus');
-const mmd = require('micromarkdown');
 
 const inst = new AirtablePlus({
   baseId: process.env.AIRTABLE_BASE_ID,
@@ -21,8 +20,6 @@ export default async (req, res) => {
       const fields = record.fields;
       return {
         ...fields,
-        body_en: mmd.parse(nl2br(fields.body_en)),
-        body_es: nl2br(fields.body_es),
         picture: fields.picture || [],
       };
     }),

@@ -1,22 +1,25 @@
 import React, { useContext, useState } from 'react';
 import Head from 'next/head';
-import cmsContext from '../context/cms';
+import { CMSContext } from '@/context/cms';
 import Link from 'next/link'
-
-const getCmsRecordFromKey = (key, records) => {
-  return records.filter(record => record.key === key)[0];
-}
-
+import { getCmsRecordFromKey, getRecordLanguages } from '@/utils/cms'
 
 const NeighborLayout = ({ children }) => {
-  const cms = useContext(cmsContext);
+  const { state, dispatch } = useContext(CMSContext);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  if (cms.length === 0) return null;
+  if (state.records.length <= 0) {
+    return null;
+  }
+  const title = getCmsRecordFromKey('title', state);
+  const brand = getCmsRecordFromKey('brand', state);
+  const cta = getCmsRecordFromKey('header_cta', state);
+  const footer = getCmsRecordFromKey('contact', state);
+  const languages = getRecordLanguages(state);
 
-  const title = getCmsRecordFromKey('brand', cms);
-  const cta = getCmsRecordFromKey('header_cta', cms);
-  const footer = getCmsRecordFromKey('contact', cms);
+  const setLanguage = (language) => {
+    dispatch({ type: 'set-language', payload: language });
+  }
 
   const menuOpenStyles = {
     display: isMenuOpen ? 'inline' : ''
@@ -24,11 +27,11 @@ const NeighborLayout = ({ children }) => {
 
   return <div>
     <Head>
-      <title>{title.body_en}</title>
+      <title>{title.body}</title>
       <meta name="description" content="Request free meals, order your usual groceries, or ask for other help you may need. A volunteer will bring your delivery right to your door." />
       <link id="favicon" rel="icon" href="https://glitch.com/favicon.ico" type="image/x-icon" />
       <meta charset="utf-8" />
-      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
       <meta name="viewport" content="width=device-width, initial-scale=1" />
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uswds/2.6.0/css/uswds.min.css" />
       <link rel="stylesheet" href="/style.css" />
@@ -40,7 +43,7 @@ const NeighborLayout = ({ children }) => {
       <div className="usa-nav-container maxw-widescreen">
         <div className="usa-navbar">
           <div className="usa-logo" id="brand">
-            <em className="usa-logo__text"><Link href="/"><a href="/" title="Home" aria-label="Home">{title.body_en}</a></Link></em>
+            <em className="usa-logo__text"><Link href="/"><a href="/" title="Home" aria-label="Home">{brand.body}</a></Link></em>
           </div>
           <button className="usa-menu-btn" onClick={() => setIsMenuOpen(true)}>Menu</button>
         </div>
@@ -63,7 +66,7 @@ const NeighborLayout = ({ children }) => {
             </li>
           </ul>
           <Link href="/request"><a className="usa-button" href="/request">
-            {cta.body_en}
+            {cta.body}
           </a>
           </Link>
         </nav>
@@ -106,11 +109,20 @@ const NeighborLayout = ({ children }) => {
                 </div>
               </div>
               <div className="usa-footer__contact-links mobile-lg:grid-col-6">
-                <h3 className="usa-footer__contact-heading">{footer?.title}</h3>
+                <h3 className="usa-footer__contact-heading">{footer.title}</h3>
                 <address className="usa-footer__address">
                   <div className="usa-footer__contact-info grid-row grid-gap">
                     <div className="grid-col-auto">
-                      {footer?.body_en}
+                      <form className="usa-form">
+                        {footer.body}
+                        <label className="usa-label" htmlFor="options">Choose Language</label>
+                        <select onChange={(e) => setLanguage(e.target.value)} className="usa-select" name="options" id="options">
+                          {languages.map(language => (
+                            <option key={language.key} selected={state.language === language.key} value={language.key}>{language.name}</option>
+                            // <div onClick={() => setLanguage(language.key)} style={{ margin: '10px', padding: '10px', border: '4px solid black' }}>change language to {language.name}</div>
+                          ))}
+                        </select>
+                      </form>
                     </div>
                   </div>
                 </address>
