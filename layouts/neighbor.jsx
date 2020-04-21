@@ -1,14 +1,12 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import Head from 'next/head';
 import { CMSContext } from '@/context/cms';
 import Link from 'next/link'
 import { getCmsRecordFromKey, getRecordLanguages } from '@/utils/cms'
 
 const NeighborLayout = ({ children }) => {
-  let { state, dispatch } = useContext(CMSContext);
-
-  // TODO: Put a loader here
-  if (state.records.length === 0) return null;
+  const cms = useContext(cmsContext);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const title = getCmsRecordFromKey('title', state);
   const brand = getCmsRecordFromKey('brand', state);
@@ -18,6 +16,10 @@ const NeighborLayout = ({ children }) => {
 
   const setLanguage = (language) => {
     dispatch({ type: 'set-language', payload: language });
+  }
+
+  const menuOpenStyles = {
+    display: isMenuOpen ? 'inline' : ''
   }
 
   return <div>
@@ -40,10 +42,10 @@ const NeighborLayout = ({ children }) => {
           <div className="usa-logo" id="brand">
             <em className="usa-logo__text"><Link href="/"><a href="/" title="Home" aria-label="Home">{brand.body}</a></Link></em>
           </div>
-          <button className="usa-menu-btn">Menu</button>
+          <button className="usa-menu-btn" onClick={() => setIsMenuOpen(true)}>Menu</button>
         </div>
-        <nav aria-label="Primary navigation" className="usa-nav">
-          <button className="usa-nav__close">
+        <nav aria-label="Primary navigation" className="usa-nav" style={menuOpenStyles}>
+          <button className="usa-nav__close" onClick={() => setIsMenuOpen(false)}>
             <img src="/assets/img/close.svg" alt="close" />
           </button>
           <ul className="usa-nav__primary usa-accordion">
