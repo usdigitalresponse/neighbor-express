@@ -8,6 +8,9 @@ const NeighborLayout = ({ children }) => {
   const { state, dispatch } = useContext(CMSContext);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+  if (state.records.length <= 0) {
+    return null;
+  }
   const title = getCmsRecordFromKey('title', state);
   const brand = getCmsRecordFromKey('brand', state);
   const cta = getCmsRecordFromKey('header_cta', state);

@@ -26,6 +26,7 @@ export function getRecordTitle(record, language = 'en') {
 * English:en,Spanish:es
 */
 export function getRecordLanguages(state) {
+  console.log('state', state);
   const options = getCmsRecordFromKey('languages', state).data.split(',');
   if (!options) return [];
   return options.map(option => {

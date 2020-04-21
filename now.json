@@ -1,5 +1,6 @@
 {
   "version": 2,
+  "name": "neighbor-express",
   "env": {
     "AIRTABLE_API_KEY": "@airtable_api_key",
     "AIRTABLE_BASE_ID": "@airtable_base_id"
