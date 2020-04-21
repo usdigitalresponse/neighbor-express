@@ -37,31 +37,40 @@ const REPLY_TO = {
 
 // Customize what fields we pull in from a delivery for an email template.
 // If the city has adjusted field names, they need to be updated here too.
-
+// This is an example for Paterson, but should be replaced with a city-specific
+// version.
 async function getEmailInfoForDelivery(delivery) {
-    const vTable = base.getTable("Volunteers");
-    const allVolunteers = (await vTable.selectRecordsAsync()).records;
-    const volunteer = allVolunteers.find(v => v.id === delivery.getCellValue("Assigned volunteer")[0].id);
+    let volunteerData;
+    if (delivery.getCellValue("Assigned volunteer") && delivery.getCellValue("Assigned volunteer").length > 0) {
+        const volunteersTable = base.getTable("Volunteers");
+        const allVolunteers = (await volunteersTable.selectRecordsAsync()).records;
+        const volunteer = allVolunteers.find(v => v.id === delivery.getCellValue("Assigned volunteer")[0].id);
+        volunteerData = {
+            name: volunteer.getCellValue("Name"),
+            phone: volunteer.getCellValue("Phone"),
+            email: volunteer.getCellValue("Email")
+        }
+    } else {
+        volunteerData = null;
+    }
+
     return {
         delivery: {
             name: delivery.getCellValue("Recipient Name"),
             address: delivery.getCellValue("Address"),
             details: delivery.getCellValue("Delivery Request Details"),
-            phone: delivery.getCellValue("Phone Number (D)"),
-            email: delivery.getCellValue("Email Optional (D)"),
+            phone: delivery.getCellValue("Phone Number"),
+            email: delivery.getCellValue("Email"),
             instructions: delivery.getCellValue("Delivery Instructions"),
             // we need to have a boolean value for each grocery store,
             // in order to branch conditionally on the store in the email
             grocery_store: {
                 shoprite: delivery.getCellValue("Grocery Store Name").name === "ShopRite, Little Falls",
-                golden_mango: delivery.getCellValue("Grocery Store Name").name === "Golden Mango, Paterson"
+                golden_mango: delivery.getCellValue("Grocery Store Name").name === "Golden Mango, Paterson",
+                pay_later: delivery.getCellValue("Payment Method").name !== "(Preferred) Call ahead to the store and pay over the phone."
             }
         },
-        volunteer: {
-            name: volunteer.getCellValue("Name"),
-            phone: volunteer.getCellValue("Phone"),
-            email: volunteer.getCellValue("Email")
-        }
+        volunteer: volunteerData
     };
 }
 
@@ -74,7 +83,6 @@ async function getEmailInfoForDelivery(delivery) {
 // Define helper functions
 //==========================================================
 
-const matchedDeliveries = (await base.getTable("Deliveries").getView("Status: Matched").selectRecordsAsync()).records;
 const messagesTable = base.getTable("Messages")
 const volunteersTable = base.getTable("Volunteers")
 const deliveriesTable = base.getTable("Deliveries")
@@ -85,8 +93,10 @@ const allDeliveries = (await deliveriesTable.selectRecordsAsync()).records;
 // Compute a list of new queued messages to create, and return it.
 async function computeMessagesToCreate() {
     let messagesToCreate = [];
-    for (const delivery of matchedDeliveries) {
+
+    for (const delivery of allDeliveries) {
         const sendgridData = await getEmailInfoForDelivery(delivery);
+
         // assemble a list of existing message types for this delivery
         let existingMessageTypes = [];
         const existingMessages = delivery.getCellValue("Messages");
@@ -98,8 +108,28 @@ async function computeMessagesToCreate() {
             existingMessageTypes = [];
         }
 
-        // create a new message for the volunteer if necessary
-        if (existingMessageTypes.indexOf("Matched: to Volunteer") === -1) {
+        if (existingMessageTypes.indexOf("Initial Confirmation: Delivery Request") === -1) {
+            const recipientEmail = sendgridData.delivery.email;
+            if (recipientEmail) {
+                messagesToCreate.push({
+                    fields: {
+                        "Delivery": [{ "id": delivery.id }],
+                        "Email type": { "name": "Initial Confirmation: Delivery Request" },
+                        "Status": { name: "Queued" },
+                        "Recipient": recipientEmail,
+                        "Template Data": JSON.stringify(sendgridData)
+                    }
+                })
+            } else {
+                output.markdown(`**Warning, Missing email address**: Couldn't create message for delivery recipient ${sendgridData.delivery.name}.`)
+            }
+        }
+
+        // If the delivery is matched and we haven't emailed the volunteer yet,
+        // queue up an email
+        if (delivery.getCellValue("Errand Workflow Stage") &&
+            delivery.getCellValue("Errand Workflow Stage").name === "Matched" &&
+            existingMessageTypes.indexOf("Matched: to Volunteer") === -1) {
             const volunteerEmail = sendgridData.volunteer.email;
             if (volunteerEmail) {
                 messagesToCreate.push({
@@ -112,12 +142,15 @@ async function computeMessagesToCreate() {
                     }
                 })
             } else {
-                output.markdown(`**Warning, Missing email address**: couldn't create message for Volunteer ${volunteer.getCellValue("First Name")} ${volunteer.getCellValue("Last Name")}`)
+                output.markdown(`**Warning, Missing email address**: couldn't create message for Volunteer ${sendgridData.volunteer.name}`)
             }
         }
 
-        // create a new message for the recipient if necessary
-        if (existingMessageTypes.indexOf("Matched: to Recipient") === -1) {
+        // If the delivery is matched and we haven't emailed the recipient yet,
+        // queue up an email
+        if (delivery.getCellValue("Errand Workflow Stage") &&
+            delivery.getCellValue("Errand Workflow Stage").name === "Matched" &&
+            existingMessageTypes.indexOf("Matched: to Recipient") === -1) {
             const recipientEmail = sendgridData.delivery.email;
             if (recipientEmail) {
                 messagesToCreate.push({
@@ -130,7 +163,7 @@ async function computeMessagesToCreate() {
                     }
                 })
             } else {
-                output.markdown(`**Warning, Missing email address**: Couldn't create message for delivery recipient ${delivery.name}.`)
+                output.markdown(`**Warning, Missing email address**: Couldn't create message for delivery recipient ${sendgridData.delivery.name}.`)
             }
         }
     }
@@ -207,7 +240,8 @@ if (messagesToSend.length === 0) {
     return;
 }
 
-output.markdown(`${messagesToSend.length} messages queued to send. Review the list in the Messages tab. If you want to avoid sending a message, change the status to Don't Send.`);
+output.markdown(`${messagesToSend.length} messages queued to send. Review the list in the Messages tab, then click below to send them.
+`);
 
 let sendButton = await input.buttonsAsync(
     'Send messages',
