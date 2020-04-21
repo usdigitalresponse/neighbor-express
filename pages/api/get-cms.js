@@ -17,6 +17,7 @@ export default async (req, res) => {
 
   res.send({
     records: records.map((record) => {
+      console.log(record);
       const fields = record.fields;
       return {
         ...fields,

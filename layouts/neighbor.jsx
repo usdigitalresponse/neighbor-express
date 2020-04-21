@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { getCmsRecordFromKey, getRecordLanguages, getCmsPages } from '@/utils/cms'
 
 const NeighborLayout = ({ children }) => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   let { state, dispatch } = useContext(CMSContext);
 
   // TODO: Put a loader here
@@ -73,21 +74,13 @@ const NeighborLayout = ({ children }) => {
         <div className="usa-footer__primary-section">
           <nav className="usa-footer__nav" aria-label="Footer navigation">
             <ul className="grid-row grid-gap">
-              <li className="mobile-lg:grid-col-4 desktop:grid-col-auto usa-footer__primary-content">
-                <a className="usa-footer__primary-link" href="/about">About</a>
-              </li>
-              <li className="mobile-lg:grid-col-4 desktop:grid-col-auto usa-footer__primary-content">
-                <a className="usa-footer__primary-link" href="/share">Share</a>
-              </li>
-              <li className="mobile-lg:grid-col-4 desktop:grid-col-auto usa-footer__primary-content">
-                <a className="usa-footer__primary-link" href="/pledge">Volunteer Pledge</a>
-              </li>
-              <li className="mobile-lg:grid-col-4 desktop:grid-col-auto usa-footer__primary-content">
-                <a className="usa-footer__primary-link" href="/volunteer">Sign up to volunteer</a>
-              </li>
-              <li className="mobile-lg:grid-col-4 desktop:grid-col-auto usa-footer__primary-content">
-                <a className="usa-footer__primary-link" href="/request">Request a delivery</a>
-              </li>
+              {pages.map(page => (
+                <li key={page.key} className="mobile-lg:grid-col-4 desktop:grid-col-auto usa-footer__primary-content">
+                  <Link href="/[pid]" as={`/${page.key}`}>
+                    <a className="usa-footer__primary-link" href={`/${page.key}`}>{page.title}</a>
+                  </Link>
+                </li>
+              ))}
             </ul>
           </nav>
         </div>
@@ -111,7 +104,6 @@ const NeighborLayout = ({ children }) => {
                         <select onChange={(e) => setLanguage(e.target.value)} className="usa-select" name="options" id="options">
                           {languages.map(language => (
                             <option key={language.key} selected={state.language === language.key} value={language.key}>{language.name}</option>
-                            // <div onClick={() => setLanguage(language.key)} style={{ margin: '10px', padding: '10px', border: '4px solid black' }}>change language to {language.name}</div>
                           ))}
                         </select>
                       </form>
