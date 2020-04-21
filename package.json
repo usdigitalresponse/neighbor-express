@@ -1,5 +1,5 @@
 {
-  "name": "neighborhood-cms",
+  "name": "neighbor-express",
   "version": "0.0.1",
   "description": "Display data from an Airtable base",
   "main": "server.js",

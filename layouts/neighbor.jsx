@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import Head from 'next/head';
 import { CMSContext } from '@/context/cms';
 import Link from 'next/link'
@@ -21,6 +21,10 @@ const NeighborLayout = ({ children }) => {
     dispatch({ type: 'set-language', payload: language });
   }
 
+  const menuOpenStyles = {
+    display: isMenuOpen ? 'inline' : ''
+  }
+
   return <div>
     <Head>
       <title>{title.title}</title>
@@ -38,10 +42,10 @@ const NeighborLayout = ({ children }) => {
           <div className="usa-logo" id="brand">
             <em className="usa-logo__text"><Link href="/"><a href="/" title="Home" aria-label="Home">{brand.body}</a></Link></em>
           </div>
-          <button className="usa-menu-btn">Menu</button>
+          <button className="usa-menu-btn" onClick={() => setIsMenuOpen(true)}>Menu</button>
         </div>
-        <nav aria-label="Primary navigation" className="usa-nav">
-          <button className="usa-nav__close">
+        <nav aria-label="Primary navigation" className="usa-nav" style={menuOpenStyles}>
+          <button className="usa-nav__close" onClick={() => setIsMenuOpen(false)}>
             <img src="/assets/img/close.svg" alt="close" />
           </button>
           <ul className="usa-nav__primary usa-accordion">
@@ -101,11 +105,16 @@ const NeighborLayout = ({ children }) => {
                 <address className="usa-footer__address">
                   <div className="usa-footer__contact-info grid-row grid-gap">
                     <div className="grid-col-auto">
-                      {footer.body}
-                      <p>TEMPORARY Change Language</p>
-                      {languages.map(language => (
-                        <div key={language.key} onClick={() => setLanguage(language.key)} style={{ margin: '10px', padding: '10px', border: '4px solid black' }}>change language to {language.name}</div>
-                      ))}
+                      <form className="usa-form">
+                        {footer.body}
+                        <label className="usa-label" htmlFor="options">Choose Language</label>
+                        <select onChange={(e) => setLanguage(e.target.value)} className="usa-select" name="options" id="options">
+                          {languages.map(language => (
+                            <option key={language.key} selected={state.language === language.key} value={language.key}>{language.name}</option>
+                            // <div onClick={() => setLanguage(language.key)} style={{ margin: '10px', padding: '10px', border: '4px solid black' }}>change language to {language.name}</div>
+                          ))}
+                        </select>
+                      </form>
                     </div>
                   </div>
                 </address>
