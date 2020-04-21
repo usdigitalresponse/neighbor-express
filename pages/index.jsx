@@ -3,6 +3,7 @@ import Interweave from 'interweave';
 import { CMSContext } from '../context/cms';
 import { getCmsRecordFromKey } from '../utils/cms';
 import { getLayout } from '../layouts/neighbor.jsx';
+import Button from '@/components/Button';
 
 const HomePage = () => {
   let { state, dispatch } = useContext(CMSContext);
@@ -26,8 +27,8 @@ const HomePage = () => {
               <p>
                 {hero.body}
               </p>
-              {button_one.enabled && <p><a className="usa-button" href={button_one.href}>{button_one.body}</a></p>}
-              {button_two.enabled && <p><a className="usa-button" href={button_two.href}>{button_two.body}</a></p>}
+              {button_one.enabled && <Button href={button_one.href}>{button_one.body}</Button>}
+              {button_two.enabled && <Button href={button_two.href}>{button_two.body}</Button>}
             </div>
           </div>
         </div>
@@ -49,7 +50,7 @@ const HomePage = () => {
       <section className="usa-section usa-section--dark">
         <div className="grid-container">
           <h2 className="font-heading-xl margin-y-0">{cta.title}</h2>
-          <p><a className="usa-button usa-button--big" href="/request">{cta.body}</a></p>
+          <Button href='/request' size='big'>{cta.body}</Button>
         </div>
       </section>
       <section className="grid-container usa-section" id="currently_serving">
