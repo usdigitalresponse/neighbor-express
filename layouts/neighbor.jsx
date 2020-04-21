@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { getCmsRecordFromKey, getRecordLanguages } from '@/utils/cms'
 
 const NeighborLayout = ({ children }) => {
-  const cms = useContext(CMSContext);
+  const { state, dispatch } = useContext(CMSContext);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const title = getCmsRecordFromKey('title', state);
