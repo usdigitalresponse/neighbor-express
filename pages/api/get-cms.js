@@ -13,7 +13,11 @@ const inst = new AirtablePlus({
 // This takes the data from our CMS airtable
 // And sends it off to the frontend
 export default async (req, res) => {
-  const records = await inst.read({ maxRecords: 30 });
+  const records = await inst.read({
+    maxRecords: 60, sort: [{
+      field: 'key', direction: 'asc'
+    }]
+  });
 
   res.send({
     records: records.map((record) => {
