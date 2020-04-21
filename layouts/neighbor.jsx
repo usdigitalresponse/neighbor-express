@@ -113,11 +113,16 @@ const NeighborLayout = ({ children }) => {
                 <address className="usa-footer__address">
                   <div className="usa-footer__contact-info grid-row grid-gap">
                     <div className="grid-col-auto">
-                      {footer.body}
-                      <p>TEMPORARY Change Language</p>
-                      {languages.map(language => (
-                        <div onClick={() => setLanguage(language.key)} style={{ margin: '10px', padding: '10px', border: '4px solid black' }}>change language to {language.name}</div>
-                      ))}
+                      <form className="usa-form">
+                        {footer.body}
+                        <label className="usa-label" htmlFor="options">Choose Language</label>
+                        <select onChange={(e) => setLanguage(e.target.value)} className="usa-select" name="options" id="options">
+                          {languages.map(language => (
+                            <option key={language.key} selected={state.language === language.key} value={language.key}>{language.name}</option>
+                            // <div onClick={() => setLanguage(language.key)} style={{ margin: '10px', padding: '10px', border: '4px solid black' }}>change language to {language.name}</div>
+                          ))}
+                        </select>
+                      </form>
                     </div>
                   </div>
                 </address>
