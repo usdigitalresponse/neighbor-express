@@ -1,6 +1,9 @@
 import Text from '@/components/Text';
 import Hero from '@/components/Hero';
+import HeroWithButtons from '@/components/HeroWithButtons';
 import Form from '@/components/Form';
+import Button from '@/components/Button';
+import reactStringReplace from 'react-string-replace';
 
 import Markdown from 'markdown-to-jsx';
 
@@ -52,18 +55,27 @@ export function getCmsPages(state) {
 }
 
 /**
- * Right now this is a simple switch, to display a component
- * but could be made much smarter!
+ * Right now this is a simple switch, to display a component (hero, text block, etc)
  */
 export const RenderCmsBlock = ({ block }) => {
   return <>
     {{
       'block-text': <Text block={block} />,
       'block-hero': <Hero block={block} />,
+      'block-hero-button': <HeroWithButtons block={block} />,
       'block-form': <Form block={block} />,
     }[block.type]}</>
 }
 
+/**
+ * Right now this is a simple switch, to display an element (button, link, etc)
+ */
+export const RenderCmsElement = ({ Element }) => {
+  return <>
+    {{
+      'component-button': <Button />,
+    }[block.type]}</>
+}
 /**
 * We're going to look up a particular key in our CMS state and
 * run some filters on the data, before returning it to the page
@@ -71,19 +83,10 @@ export const RenderCmsBlock = ({ block }) => {
 export const getCmsRecordFromKey = (key, state) => {
   const { records, language } = state;
 
-  records.map(record => {
-    // We're going to make a helper for the picture column
-    record.image = record.picture[0]?.url;
-    record.body = getRecordBody(record, language);
-    record.body_markdown = <Markdown>{record.body || ""}</Markdown>
-    record.title = getRecordTitle(record, language);
-    return record;
-  });
-
   const record = records.filter(record => record.key === key)[0];
 
   if (!record) {
-    console.error(`❗ Missing ${key} value in CMS`);
+    console.error(`❗ Missing ${key} value in CMS`, records);
     return {};
   }
 
@@ -92,4 +95,16 @@ export const getCmsRecordFromKey = (key, state) => {
   }
 
   return record;
+}
+
+export const processRecords = (records, state) => {
+  const { language } = state;
+  return records.map(record => {
+    // We're going to make a helper for the picture column
+    record.image = record.picture[0]?.url;
+    record.body = getRecordBody(record, language);
+    record.body_markdown = <Markdown>{record.body || ""}</Markdown>;
+    record.title = getRecordTitle(record, language);
+    return record;
+  });
 }

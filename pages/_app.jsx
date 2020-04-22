@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import NeighborLayout from '../layouts/neighbor.jsx';
-import { CMSContextProvider, CMSContext } from '../context/cms.js';
+import { CMSContextProvider, CMSContext } from '@/context/cms.js';
+import { processRecords } from '@/utils/cms';
 import './styles.css';
 
 
@@ -9,7 +10,7 @@ function NeighborExpress({ children }) {
 
   useEffect(() => {
     fetch('/api/get-cms').then((res) => res.json()).then((json) => json.records).then((records) => {
-      dispatch({ type: 'set-records', payload: records })
+      dispatch({ type: 'set-records', payload: processRecords(records, state) })
     });
   }, []);
 
