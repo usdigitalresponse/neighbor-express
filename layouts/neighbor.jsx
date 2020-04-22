@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import Head from 'next/head';
 import { CMSContext } from '@/context/cms';
 import Link from 'next/link'
-import { getCmsRecordFromKey, getRecordLanguages, getCmsPages } from '@/utils/cms'
+import { getCmsRecordFromKey, getRecordLanguages, getCmsPages, getCmsNav, RenderNavLinks } from '@/utils/cms'
 
 const NeighborLayout = ({ children }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -17,6 +17,7 @@ const NeighborLayout = ({ children }) => {
   const footer = getCmsRecordFromKey('contact', state);
   const languages = getRecordLanguages(state);
   const pages = getCmsPages(state);
+  const nav = getCmsNav(state);
 
   const setLanguage = (language) => {
     dispatch({ type: 'set-language', payload: language });
@@ -49,15 +50,9 @@ const NeighborLayout = ({ children }) => {
           <button className="usa-nav__close" onClick={() => setIsMenuOpen(false)}>
             <img src="/assets/img/close.svg" alt="close" />
           </button>
-          <ul className="usa-nav__primary usa-accordion">
-            {
-              pages.map(page => {
-                return <li key={page.key} className="usa-nav__primary-item">
-                  <Link href="/[pid]" as={`/${page.key}`}><a className="usa-nav__link" href={`/${page.key}`}><span>{page.title}</span></a></Link>
-                </li>
-              })
-            }
-          </ul>
+          {
+            <RenderNavLinks key="nav" navs={nav} pages={pages} />
+          }
           <Link href="/request"><a className="usa-button" href="/request">
             {cta.body}
           </a>

@@ -4,6 +4,7 @@ import HeroWithButtons from '@/components/HeroWithButtons';
 import Form from '@/components/Form';
 import Button from '@/components/Button';
 import reactStringReplace from 'react-string-replace';
+import Link from 'next/link'
 
 import Markdown from 'markdown-to-jsx';
 
@@ -52,6 +53,47 @@ export function getCmsBlocks(page, state) {
 
 export function getCmsPages(state) {
   return state.records.filter(record => { return record.type === 'page' && record.enabled })
+}
+
+
+export function getCmsNav(state) {
+  return state.records.filter(record => { return record.type === 'nav' && record.enabled })
+}
+
+
+export const RenderNavLinks = ({navs, pages}) => {
+  return <ul className="usa-nav__primary usa-accordion">
+      {
+        navs?.map((nav) => {
+          const pageKeys = nav.data.split(",");
+          const this_pages = pages.filter(record => {return pageKeys.includes(record.key)});
+          if (this_pages.length == 1) {
+            const page = this_pages[0];
+            return <li key={nav.key} className="usa-nav__primary-item">
+              <Link href="/[pid]" as={`/${page.key}`}><a className="usa-nav__link" href={`/${page.key}`}><span>{page.title}</span></a></Link>
+            </li>
+          } else {
+            const aria_id = `basic-nav-section-${nav.key}`;
+            return <li key={nav.key} className="usa-nav__primary-item">
+              <button className="usa-accordion__button usa-nav__link" 
+                      aria-expanded="false" 
+                      aria-controls={aria_id}>
+              <span>{nav.title}</span></button>
+              <ul id={aria_id} className="usa-nav__submenu">
+                {
+                  this_pages.map((page) => {
+                    return <li className="usa-nav__submenu-item">
+                      <a className="usa-nav__link" href={`/${page.key}`}><span>{page.title}</span></a>
+                    </li>
+                  })
+                }
+              </ul>
+            </li>
+          }
+        })
+
+      }
+    </ul>
 }
 
 /**
