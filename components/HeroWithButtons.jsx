@@ -18,8 +18,8 @@ const HeroWithButtons = ({ block }) => {
           <p>
             {block.body}
           </p>
-          {button_one.enabled && <Button href={button_one.href}>{button_one.body}</Button>}
-          {button_two.enabled && <Button href={button_two.href}>{button_two.body}</Button>}
+          {button_one?.enabled && <Button href={button_one.href}>{button_one.body}</Button>}
+          {button_two?.enabled && <Button href={button_two.href}>{button_two.body}</Button>}
         </div>
       </div>
     </div>

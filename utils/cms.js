@@ -49,7 +49,7 @@ export function getRecordLanguages(state) {
  */
 
 export function getCmsBlocks(page, state) {
-  return state.records.filter(record => { return record.tag?.includes(page); });
+  return state.records.filter(record => { return record.tag?.includes(page) && record.enabled; });
 }
 
 
@@ -149,12 +149,18 @@ export const RenderCmsElement = ({ Element }) => {
 export const getCmsRecordFromKey = (key, state) => {
   const { records, language } = state;
 
-  const record = records.filter(record => record.key === key)[0];
+  const filteredRecords = records.filter(record => record.key === key && record.enabled);
 
-  if (!record) {
+  if (filteredRecords.length == 0) {
     console.error(`❗ Missing ${key} value in CMS`, records);
-    return {};
+    return undefined;
   }
+
+  if (filteredRecords.length > 1) {
+    console.warn(`❗ Duplicate ${key} value in CMS, using first one`, records);
+  }
+
+  const record = filteredRecords[0];
 
   if (!record.key) {
     console.error(`The CMS was set up incorrectly and is missing a "key" column. Check that the column name is not "Name"!`);
