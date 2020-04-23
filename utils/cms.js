@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import Text from '@/components/Text';
 import Hero from '@/components/Hero';
 import HeroWithButtons from '@/components/HeroWithButtons';
@@ -6,7 +6,7 @@ import Form from '@/components/Form';
 import Button from '@/components/Button';
 import reactStringReplace from 'react-string-replace';
 import Link from 'next/link'
-
+import { useOnClickOutside } from "react-recipes";
 import Markdown from 'markdown-to-jsx';
 
 /**
@@ -65,10 +65,16 @@ export function getCmsNav(state) {
 const AccordionNav = ({nav, pages}) => {
   const [open, setOpen] = useState(false);
   const aria_id = `basic-nav-section-${nav.key}`;
+  // Create a ref that we add to the element for which we want to detect outside clicks
+  const ref = useRef();
+
+  // Call hook passing in the ref and a function to call on outside click
+  useOnClickOutside(ref, () => setOpen(false));
+
   const menuOpenStyles = {
     display: open ? 'inline' : ''
   }
-  return <li key={nav.key} className="usa-nav__primary-item">
+  return <li key={nav.key} className="usa-nav__primary-item" ref={ref}>
     <button className="usa-accordion__button usa-nav__link"
             aria-expanded={open}
             aria-controls={aria_id}

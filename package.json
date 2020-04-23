@@ -16,6 +16,7 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-process-string": "^1.2.0",
+    "react-recipes": "^1.0.0",
     "react-string-replace": "^0.4.4"
   },
   "engines": {
