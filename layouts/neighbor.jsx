@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react';
 import Head from 'next/head';
 import { CMSContext } from '@/context/cms';
+import Button from '@/components/Button';
 import Link from 'next/link'
 import { getCmsRecordFromKey, getRecordLanguages, getCmsPages, getCmsNav, RenderNavLinks } from '@/utils/cms'
 
@@ -53,12 +54,7 @@ const NeighborLayout = ({ children }) => {
           {
             <RenderNavLinks key="nav" navs={nav} pages={pages} />
           }
-          { cta &&
-            <Link href="/requests"><a className="usa-button" href="/requests">
-              {cta.body}
-            </a>
-            </Link>
-          }
+          { cta && <Button href={cta.href}>{cta.body}</Button> }
         </nav>
       </div>
     </header>

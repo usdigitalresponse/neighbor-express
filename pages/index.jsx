@@ -7,15 +7,6 @@ import Button from '@/components/Button';
 
 const HomePage = () => {
   let { state, dispatch } = useContext(CMSContext);
-
-  const hero = getCmsRecordFromKey('hero', state);
-  const how = getCmsRecordFromKey('how_does_this_work', state);
-  const cta = getCmsRecordFromKey('cta', state);
-  const serving = getCmsRecordFromKey('currently_serving', state);
-  const button_one = getCmsRecordFromKey('hero_button_one', state);
-  const button_two = getCmsRecordFromKey('hero_button_two', state);
-
-
   let blocks = getCmsBlocks('home', state);
 
   return <>
