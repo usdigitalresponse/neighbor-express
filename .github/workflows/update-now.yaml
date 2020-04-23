@@ -3,7 +3,7 @@ on:
   # but only for the master branch
   push:
     branches:
-      - keith-update-sites
+      - master
 
 
 jobs:
