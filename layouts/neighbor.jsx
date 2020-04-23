@@ -54,7 +54,7 @@ const NeighborLayout = ({ children }) => {
             <RenderNavLinks key="nav" navs={nav} pages={pages} />
           }
           { cta &&
-            <Link href="/requests"><a className="usa-button" href="/requests">
+            <Link href={cta.href}><a className="usa-button" href={cta.href}>
               {cta.body}
             </a>
             </Link>
