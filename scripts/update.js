@@ -1,13 +1,12 @@
 const exec = require('@actions/exec');
 
-
-
 // What cities do we serve?
 const cities = ['concord'];
 
 cities.forEach(city => {
   // Lets get our baseid
   const baseId = process.env[`AIRTABLE_BASE_ID_${city.toUpperCase()}`]
+  console.log(process.env);
   // We are going to throw away our .now folder between deploys
   exec.exec('rm -rf .now');
   // And we're going to send it out to the correct vercel location
