@@ -4,6 +4,7 @@ import Hero from '@/components/Hero';
 import HeroWithButtons from '@/components/HeroWithButtons';
 import Form from '@/components/Form';
 import Button from '@/components/Button';
+import Quote from '@/components/Quote';
 import reactStringReplace from 'react-string-replace';
 import Link from 'next/link'
 import { useOnClickOutside } from "react-recipes";
@@ -128,6 +129,7 @@ export const RenderCmsBlock = ({ block }) => {
       'block-hero': <Hero block={block} />,
       'block-hero-button': <HeroWithButtons block={block} />,
       'block-form': <Form block={block} />,
+      'block-quote': <Quote block={block} />,
     }[block.type]}</>
 }
 
