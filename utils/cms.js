@@ -1,10 +1,12 @@
+import { useState, useRef } from 'react';
 import Text from '@/components/Text';
 import Hero from '@/components/Hero';
 import HeroWithButtons from '@/components/HeroWithButtons';
 import Form from '@/components/Form';
 import Button from '@/components/Button';
 import reactStringReplace from 'react-string-replace';
-
+import Link from 'next/link'
+import { useOnClickOutside } from "react-recipes";
 import Markdown from 'markdown-to-jsx';
 
 /**
@@ -52,6 +54,68 @@ export function getCmsBlocks(page, state) {
 
 export function getCmsPages(state) {
   return state.records.filter(record => { return record.type === 'page' && record.enabled })
+}
+
+
+export function getCmsNav(state) {
+  return state.records.filter(record => { return record.type === 'nav' && record.enabled })
+}
+
+
+const AccordionNav = ({nav, pages}) => {
+  const [open, setOpen] = useState(false);
+  const aria_id = `basic-nav-section-${nav.key}`;
+  // Create a ref that we add to the element for which we want to detect outside clicks
+  const ref = useRef();
+
+  // Call hook passing in the ref and a function to call on outside click
+  useOnClickOutside(ref, () => setOpen(false));
+
+  const menuOpenStyles = {
+    display: open ? 'inline' : ''
+  }
+  return <li key={nav.key} className="usa-nav__primary-item" ref={ref}>
+    <button className="usa-accordion__button usa-nav__link"
+            aria-expanded={open}
+            aria-controls={aria_id}
+            onClick={() => setOpen(!open)}>
+    <span>{nav.title}</span></button>
+    {open && <ul id={aria_id} className="usa-nav__submenu">
+      {
+        pages.map((page) => {
+          return <li className="usa-nav__submenu-item">
+            <a className="usa-nav__link" href={`/${page.key}`}><span>{page.title}</span></a>
+          </li>
+        })
+      }
+    </ul>}
+  </li>
+}
+
+export const RenderNavLinks = ({navs, pages}) => {
+  return <ul className="usa-nav__primary usa-accordion">
+      {
+        navs.length == 0 ?
+        pages.map(page => {
+        return <li key={page.key} className="usa-nav__primary-item">
+            <Link href="/[pid]" as={`/${page.key}`}><a className="usa-nav__link" href={`/${page.key}`}><span>{page.title}</span></a></Link>
+          </li>
+        }) :
+        navs.map((nav) => {
+          const pageKeys = nav.data.split(",");
+          const this_pages = pages.filter(record => {return pageKeys.includes(record.key)});
+          if (this_pages.length == 1) {
+            const page = this_pages[0];
+            return <li key={nav.key} className="usa-nav__primary-item">
+              <Link href="/[pid]" as={`/${page.key}`}><a className="usa-nav__link" href={`/${page.key}`}><span>{nav.title}</span></a></Link>
+            </li>
+          } else {
+            return <AccordionNav nav={nav} pages={this_pages}/>
+          }
+        })
+
+      }
+    </ul>
 }
 
 /**
