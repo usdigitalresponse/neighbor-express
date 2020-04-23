@@ -1,0 +1,10 @@
+on:
+  # Trigger the workflow on push or pull request,
+  # but only for the master branch
+  push:
+    branches:
+      - keith-update-sites
+  
+  steps:
+    - name: Update Paterson
+    run: ./scripts/update-sites.sh
