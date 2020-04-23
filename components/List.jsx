@@ -14,14 +14,19 @@ const List = ({ block }) => {
   return <section className="usa-section">
     <div className="grid-container">
       <h2> {block.title} </h2>
+      <div className="grid-row grid-gap-lg">
       {
         list_elements.map((el)=>{
-          return <p>
-            <a href={el.href}>{el.title}</a>
-          </p>
+          return <a href={el.href}
+              className="grid-col-4 height-card-lg text-center text-base-lightest font-sans-xl text-middle padding-105"
+              style={{ backgroundImage: `url(${el.image})`, backgroundSize: "cover",  backgroundClip: "content-box", textDecoration: "none" }}>
+            <div className="padding-5">
+              {el.title}
+            </div>
+          </a>
         })
       }
-
+      </div>
     </div>
   </section>
 }
