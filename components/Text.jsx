@@ -3,7 +3,7 @@ import Interweave from 'interweave';
 const Text = ({ block }) => (<section className="grid-container usa-section">
   <div className="grid-row grid-gap">
     {
-      block.image && block.data.includes('image:left') &&
+      block.image && !block.data?.includes('image:right') &&
       <div className="tablet:grid-col-4">
         <img src={block.image} />
       </div>
@@ -17,7 +17,7 @@ const Text = ({ block }) => (<section className="grid-container usa-section">
       </div>
     </div>
     {
-      block.image && block.data.includes('image:right') &&
+      block.image && block.data?.includes('image:right') &&
       <div className="tablet:grid-col-4">
         <img src={block.image} />
       </div>
