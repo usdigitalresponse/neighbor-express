@@ -19,4 +19,5 @@ jobs:
       - name: Run Deploys
         env: # Or as an environment variable
           ZEIT_TOKEN: ${{ secrets.ZEIT_TOKEN }}
+          AIRTABLE_BASE_ID_CONCORD: ${{ secrets.AIRTABLE_BASE_ID_CONCORD }}
         run: node scripts/update.js
