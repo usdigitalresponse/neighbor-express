@@ -9,5 +9,5 @@ cities.forEach(city => {
   // We are going to throw away our .now folder between deploys
   exec.exec('rm -rf .now');
   // And we're going to send it out to the correct vercel location
-  exec.exec(`now --env AIRTABLE_BASE_ID=${baseId} --name ${city} --confirm --scope neighborexpress --token ${process.env.ZEIT_TOKEN}`);
+  exec.exec(`now --env AIRTABLE_BASE_ID=${baseId} --name ${city} --confirm --scope neighborexpress --token ${process.env.ZEIT_TOKEN} --prod`);
 })
