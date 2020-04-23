@@ -9,11 +9,13 @@
     "start": "next start"
   },
   "dependencies": {
+    "@actions/exec": "^1.0.3",
     "airtable": "^0.8.1",
     "airtable-plus": "^1.0.4",
     "interweave": "^12.5.0",
     "micromarkdown": "^0.3.4-a",
     "next": "^9.3.5",
+    "now": "^18.0.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1"
   },

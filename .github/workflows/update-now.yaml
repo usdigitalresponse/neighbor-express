@@ -1,0 +1,25 @@
+on:
+  # Trigger the workflow on push or pull request,
+  # but only for the master branch
+  push:
+    branches:
+      - master
+
+
+jobs:
+  build:
+    name: Deploy to Vercel
+    runs-on: 'ubuntu-latest'
+    steps:
+      - uses: actions/checkout@master
+      - uses: actions/setup-node@v1 # need node to install npm packages / now
+        with:
+          node-version: '10.x'
+      - run: npm install
+      - name: Run Deploys
+        env: # Or as an environment variable
+          ZEIT_TOKEN: ${{ secrets.ZEIT_TOKEN }}
+          AIRTABLE_BASE_ID_CONCORD: ${{ secrets.AIRTABLE_BASE_ID_CONCORD }}
+          AIRTABLE_BASE_ID_WALNUTCREEK: ${{ secrets.AIRTABLE_BASE_ID_WALNUTCREEK }}
+          AIRTABLE_BASE_ID_PATERSON: ${{ secrets.AIRTABLE_BASE_ID_PATERSON }}
+        run: node scripts/update.js
