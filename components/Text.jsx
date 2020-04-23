@@ -1,5 +1,3 @@
-import Interweave from 'interweave';
-
 const Text = ({ block }) => (<section className="grid-container usa-section">
   <div className="grid-row grid-gap">
     {

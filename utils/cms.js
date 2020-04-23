@@ -5,6 +5,7 @@ import HeroWithButtons from '@/components/HeroWithButtons';
 import Form from '@/components/Form';
 import Button from '@/components/Button';
 import Quote from '@/components/Quote';
+import List from '@/components/List';
 import reactStringReplace from 'react-string-replace';
 import Link from 'next/link'
 import { useOnClickOutside } from "react-recipes";
@@ -49,7 +50,7 @@ export function getRecordLanguages(state) {
  */
 
 export function getCmsBlocks(page, state) {
-  return state.records.filter(record => { return record.tag?.includes(page); });
+  return state.records.filter(record => { return record.tag?.includes(page) && record.enabled; });
 }
 
 
@@ -130,6 +131,7 @@ export const RenderCmsBlock = ({ block }) => {
       'block-hero-button': <HeroWithButtons block={block} />,
       'block-form': <Form block={block} />,
       'block-quote': <Quote block={block} />,
+      'block-list': <List block={block} />,
     }[block.type]}</>
 }
 
@@ -149,12 +151,18 @@ export const RenderCmsElement = ({ Element }) => {
 export const getCmsRecordFromKey = (key, state) => {
   const { records, language } = state;
 
-  const record = records.filter(record => record.key === key)[0];
+  const filteredRecords = records.filter(record => record.key === key && record.enabled);
 
-  if (!record) {
+  if (filteredRecords.length == 0) {
     console.error(`❗ Missing ${key} value in CMS`, records);
-    return {};
+    return undefined;
   }
+
+  if (filteredRecords.length > 1) {
+    console.warn(`❗ Duplicate ${key} value in CMS, using first one`, records);
+  }
+
+  const record = filteredRecords[0];
 
   if (!record.key) {
     console.error(`The CMS was set up incorrectly and is missing a "key" column. Check that the column name is not "Name"!`);
