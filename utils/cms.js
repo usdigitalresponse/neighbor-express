@@ -80,7 +80,7 @@ const AccordionNav = ({nav, pages}) => {
             aria-controls={aria_id}
             onClick={() => setOpen(!open)}>
     <span>{nav.title}</span></button>
-    {open ? <ul id={aria_id} className="usa-nav__submenu">
+    {open && <ul id={aria_id} className="usa-nav__submenu">
       {
         pages.map((page) => {
           return <li className="usa-nav__submenu-item">
@@ -88,7 +88,7 @@ const AccordionNav = ({nav, pages}) => {
           </li>
         })
       }
-    </ul>: undefined}
+    </ul>}
   </li>
 }
 
