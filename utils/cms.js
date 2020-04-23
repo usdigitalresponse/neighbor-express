@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import Text from '@/components/Text';
 import Hero from '@/components/Hero';
 import HeroWithButtons from '@/components/HeroWithButtons';
@@ -61,34 +62,49 @@ export function getCmsNav(state) {
 }
 
 
+const AccordionNav = ({nav, pages}) => {
+  const [open, setOpen] = useState(false);
+  const aria_id = `basic-nav-section-${nav.key}`;
+  const menuOpenStyles = {
+    display: open ? 'inline' : ''
+  }
+  return <li key={nav.key} className="usa-nav__primary-item">
+    <button className="usa-accordion__button usa-nav__link"
+            aria-expanded={open}
+            aria-controls={aria_id}
+            onClick={() => setOpen(!open)}>
+    <span>{nav.title}</span></button>
+    {open ? <ul id={aria_id} className="usa-nav__submenu">
+      {
+        pages.map((page) => {
+          return <li className="usa-nav__submenu-item">
+            <a className="usa-nav__link" href={`/${page.key}`}><span>{page.title}</span></a>
+          </li>
+        })
+      }
+    </ul>: undefined}
+  </li>
+}
+
 export const RenderNavLinks = ({navs, pages}) => {
   return <ul className="usa-nav__primary usa-accordion">
       {
-        navs?.map((nav) => {
+        navs.length == 0 ?
+        pages.map(page => {
+        return <li key={page.key} className="usa-nav__primary-item">
+            <Link href="/[pid]" as={`/${page.key}`}><a className="usa-nav__link" href={`/${page.key}`}><span>{page.title}</span></a></Link>
+          </li>
+        }) :
+        navs.map((nav) => {
           const pageKeys = nav.data.split(",");
           const this_pages = pages.filter(record => {return pageKeys.includes(record.key)});
           if (this_pages.length == 1) {
             const page = this_pages[0];
             return <li key={nav.key} className="usa-nav__primary-item">
-              <Link href="/[pid]" as={`/${page.key}`}><a className="usa-nav__link" href={`/${page.key}`}><span>{page.title}</span></a></Link>
+              <Link href="/[pid]" as={`/${page.key}`}><a className="usa-nav__link" href={`/${page.key}`}><span>{nav.title}</span></a></Link>
             </li>
           } else {
-            const aria_id = `basic-nav-section-${nav.key}`;
-            return <li key={nav.key} className="usa-nav__primary-item">
-              <button className="usa-accordion__button usa-nav__link" 
-                      aria-expanded="false" 
-                      aria-controls={aria_id}>
-              <span>{nav.title}</span></button>
-              <ul id={aria_id} className="usa-nav__submenu">
-                {
-                  this_pages.map((page) => {
-                    return <li className="usa-nav__submenu-item">
-                      <a className="usa-nav__link" href={`/${page.key}`}><span>{page.title}</span></a>
-                    </li>
-                  })
-                }
-              </ul>
-            </li>
+            return <AccordionNav nav={nav} pages={this_pages}/>
           }
         })
 
