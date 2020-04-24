@@ -1,20 +1,27 @@
 import React, { useContext } from 'react';
-import Interweave from 'interweave';
 import { CMSContext } from '../context/cms';
 import { getCmsRecordFromKey, getCmsBlocks, RenderCmsBlock } from '../utils/cms';
 import { getLayout } from '../layouts/neighbor.jsx';
-import Button from '@/components/Button';
+import { useRouter } from 'next/router';
 
-const HomePage = () => {
+/*
+* This is our catch all page, for example /faq would direct here
+*/
+
+const Page = () => {
   let { state, dispatch } = useContext(CMSContext);
-  let blocks = getCmsBlocks('home', state);
+  let router = useRouter();
+
+  let page = router.query.pid;
+  let blocks = getCmsBlocks(page, state);
 
   return <>
     {blocks.map(block => (
       <RenderCmsBlock key={block.key} block={block} />
     ))}
   </>
-};
+}
 
-HomePage.getLayout = getLayout;
-export default HomePage;
+Page.getLayout = getLayout;
+
+export default Page;

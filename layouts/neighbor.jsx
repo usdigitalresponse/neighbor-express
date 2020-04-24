@@ -1,21 +1,24 @@
 import React, { useContext, useState } from 'react';
 import Head from 'next/head';
 import { CMSContext } from '@/context/cms';
+import Button from '@/components/Button';
 import Link from 'next/link'
-import { getCmsRecordFromKey, getRecordLanguages } from '@/utils/cms'
+import { getCmsRecordFromKey, getRecordLanguages, getCmsPages, getCmsNav, RenderNavLinks } from '@/utils/cms'
 
 const NeighborLayout = ({ children }) => {
-  const { state, dispatch } = useContext(CMSContext);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  let { state, dispatch } = useContext(CMSContext);
 
-  if (state.records.length <= 0) {
-    return null;
-  }
+  // TODO: Put a loader here
+  if (state.records.length === 0) return null;
+
   const title = getCmsRecordFromKey('title', state);
   const brand = getCmsRecordFromKey('brand', state);
   const cta = getCmsRecordFromKey('header_cta', state);
   const footer = getCmsRecordFromKey('contact', state);
   const languages = getRecordLanguages(state);
+  const pages = getCmsPages(state);
+  const nav = getCmsNav(state);
 
   const setLanguage = (language) => {
     dispatch({ type: 'set-language', payload: language });
@@ -27,15 +30,12 @@ const NeighborLayout = ({ children }) => {
 
   return <div>
     <Head>
-      <title>{title.body}</title>
+      <title>{title.title}</title>
       <meta name="description" content="Request free meals, order your usual groceries, or ask for other help you may need. A volunteer will bring your delivery right to your door." />
       <link id="favicon" rel="icon" href="https://glitch.com/favicon.ico" type="image/x-icon" />
       <meta charset="utf-8" />
       <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
       <meta name="viewport" content="width=device-width, initial-scale=1" />
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uswds/2.6.0/css/uswds.min.css" />
-      <link rel="stylesheet" href="/style.css" />
-      <link rel="stylesheet" href="/reset.css" />
     </Head>
     <a className="usa-skipnav" href="#main-content">Skip to main content</a>
     <div className="usa-overlay"></div>
@@ -51,24 +51,10 @@ const NeighborLayout = ({ children }) => {
           <button className="usa-nav__close" onClick={() => setIsMenuOpen(false)}>
             <img src="/img/close.svg" alt="close" />
           </button>
-          <ul className="usa-nav__primary usa-accordion">
-            <li className="usa-nav__primary-item">
-              <Link href="/about"><a className="usa-nav__link" href="/about"><span>About</span></a></Link>
-            </li>
-            <li className="usa-nav__primary-item">
-              <Link href="/share"><a className="usa-nav__link" href="/share"><span>Share</span></a></Link>
-            </li>
-            <li className="usa-nav__primary-item">
-              <Link href="/pledge"><a className="usa-nav__link" href="/pledge"><span>Volunteer Pledge</span></a></Link>
-            </li>
-            <li className="usa-nav__primary-item">
-              <Link href="/volunteer"><a className="usa-nav__link" href="/volunteer"><span>Sign Up to Volunteer</span></a></Link>
-            </li>
-          </ul>
-          <Link href="/request"><a className="usa-button" href="/request">
-            {cta.body}
-          </a>
-          </Link>
+          {
+            <RenderNavLinks key="nav" navs={nav} pages={pages} />
+          }
+          { cta && <Button href={cta.href}>{cta.body}</Button> }
         </nav>
       </div>
     </header>
@@ -81,21 +67,13 @@ const NeighborLayout = ({ children }) => {
         <div className="usa-footer__primary-section">
           <nav className="usa-footer__nav" aria-label="Footer navigation">
             <ul className="grid-row grid-gap">
-              <li className="mobile-lg:grid-col-4 desktop:grid-col-auto usa-footer__primary-content">
-                <a className="usa-footer__primary-link" href="/about">About</a>
-              </li>
-              <li className="mobile-lg:grid-col-4 desktop:grid-col-auto usa-footer__primary-content">
-                <a className="usa-footer__primary-link" href="/share">Share</a>
-              </li>
-              <li className="mobile-lg:grid-col-4 desktop:grid-col-auto usa-footer__primary-content">
-                <a className="usa-footer__primary-link" href="/pledge">Volunteer Pledge</a>
-              </li>
-              <li className="mobile-lg:grid-col-4 desktop:grid-col-auto usa-footer__primary-content">
-                <a className="usa-footer__primary-link" href="/volunteer">Sign up to volunteer</a>
-              </li>
-              <li className="mobile-lg:grid-col-4 desktop:grid-col-auto usa-footer__primary-content">
-                <a className="usa-footer__primary-link" href="/request">Request a delivery</a>
-              </li>
+              {pages.map(page => (
+                <li key={page.key} className="mobile-lg:grid-col-4 desktop:grid-col-auto usa-footer__primary-content">
+                  <Link href="/[pid]" as={`/${page.key}`}>
+                    <a className="usa-footer__primary-link" href={`/${page.key}`}>{page.title}</a>
+                  </Link>
+                </li>
+              ))}
             </ul>
           </nav>
         </div>
@@ -119,7 +97,6 @@ const NeighborLayout = ({ children }) => {
                         <select onChange={(e) => setLanguage(e.target.value)} className="usa-select" name="options" id="options">
                           {languages.map(language => (
                             <option key={language.key} selected={state.language === language.key} value={language.key}>{language.name}</option>
-                            // <div onClick={() => setLanguage(language.key)} style={{ margin: '10px', padding: '10px', border: '4px solid black' }}>change language to {language.name}</div>
                           ))}
                         </select>
                       </form>

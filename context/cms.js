@@ -1,4 +1,5 @@
 import React, { useReducer } from "react";
+import { processRecords } from '@/utils/cms';
 
 let CMSContext = React.createContext();
 
@@ -12,7 +13,12 @@ let reducer = (state, action) => {
     case "set-records":
       return { ...state, records: action.payload };
     case "set-language":
-      return { ...state, language: action.payload };
+      const { records } = state;
+      return {
+        ...state,
+        language: action.payload,
+        records: processRecords(records, {language: action.payload} )
+      };
   }
 };
 
