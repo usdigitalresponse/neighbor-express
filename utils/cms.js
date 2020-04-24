@@ -37,8 +37,10 @@ export function getRecordTitle(record, language = 'en') {
 * English:en,Spanish:es
 */
 export function getRecordLanguages(state) {
-  const options = getCmsRecordFromKey('languages', state).data.split(',');
-  if (!options) return [];
+  const languages = getCmsRecordFromKey('languages', state);
+  if (!languages.data)
+    return [{ name: 'English', key: 'en' }];
+  const options = languages.data.split(',');
   return options.map(option => {
     const data = option.split(':');
     return { name: data[0], key: data[1] };

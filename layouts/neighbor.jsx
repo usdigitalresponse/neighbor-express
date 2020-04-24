@@ -49,7 +49,7 @@ const NeighborLayout = ({ children }) => {
         </div>
         <nav aria-label="Primary navigation" className="usa-nav" style={menuOpenStyles}>
           <button className="usa-nav__close" onClick={() => setIsMenuOpen(false)}>
-            <img src="/assets/img/close.svg" alt="close" />
+            <img src="/img/close.svg" alt="close" />
           </button>
           {
             <RenderNavLinks key="nav" navs={nav} pages={pages} />
