@@ -8,11 +8,11 @@ import { useRouter } from 'next/router';
 * This is our catch all page, for example /faq would direct here
 */
 
-const Page = () => {
+const Page = ({pid}) => {
   let { state, dispatch } = useContext(CMSContext);
   let router = useRouter();
+  let page = pid ? pid : router.query.pid;
 
-  let page = router.query.pid;
   let blocks = getCmsBlocks(page, state);
 
   return <>
