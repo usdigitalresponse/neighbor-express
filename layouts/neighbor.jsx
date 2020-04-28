@@ -4,7 +4,6 @@ import { CMSContext } from '@/context/cms';
 import Button from '@/components/Button';
 import Link from 'next/link'
 import { getCmsRecordFromKey, getRecordLanguages, getCmsPages, getCmsNav, RenderNavLinks } from '@/utils/cms'
-import { NextSeo } from 'next-seo';
 
 const NeighborLayout = ({ children }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -30,10 +29,6 @@ const NeighborLayout = ({ children }) => {
   }
 
   return <div>
-    <NextSeo
-      title="Neighbor Express"
-      description="Request free meals, order your usual groceries, or ask for other help you may need. A volunteer will bring your delivery right to your door."
-    />
     <Head>
       <title>{title.title}</title>
       <meta name="description" content="Request free meals, order your usual groceries, or ask for other help you may need. A volunteer will bring your delivery right to your door." />
