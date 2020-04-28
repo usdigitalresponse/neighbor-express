@@ -6,7 +6,6 @@ on:
       - master
       - setup-demo-environments
 
-
 jobs:
   build:
     name: Deploy to Vercel
