@@ -9,7 +9,6 @@ const List = ({ block }) => {
   const list_elements = state.records.filter(record => {
     return record.tag?.includes(block.key) && record.type == "list-element" && record.enabled;
   });
-  console.log(list_elements);
 
   return <section className="usa-section">
     <div className="grid-container">
