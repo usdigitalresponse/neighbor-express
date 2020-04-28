@@ -89,7 +89,9 @@ const AccordionNav = ({nav, pages}) => {
       {
         pages.map((page) => {
           return <li className="usa-nav__submenu-item">
-            <a className="usa-nav__link" href={`/${page.key}`}><span>{page.title}</span></a>
+            <Link href="/[pid]" as={`/${page.key}`}>
+              <a className="usa-nav__link" href={`/${page.key}`}><span>{page.title}</span></a>
+            </Link>
           </li>
         })
       }
