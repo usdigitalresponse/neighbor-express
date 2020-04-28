@@ -3,6 +3,7 @@ import NeighborLayout from '../layouts/neighbor.jsx';
 import { CMSContextProvider, CMSContext } from '@/context/cms.js';
 import { processRecords } from '@/utils/cms';
 import './styles.css';
+import { NextSeo } from 'next-seo';
 
 
 function NeighborExpress({ children }) {
@@ -48,6 +49,11 @@ class ErrorBoundary extends React.Component {
 
 function App({ Component, pageProps }) {
   return (
+    <>
+    <NextSeo
+      title="Neighbor Express"
+      description="Request free meals, order your usual groceries, or ask for other help you may need. A volunteer will bring your delivery right to your door."
+    />
     <ErrorBoundary>
       <CMSContextProvider>
         <NeighborExpress>
@@ -55,6 +61,7 @@ function App({ Component, pageProps }) {
         </NeighborExpress>
       </CMSContextProvider>
     </ErrorBoundary>
+    </>
   );
 }
 
