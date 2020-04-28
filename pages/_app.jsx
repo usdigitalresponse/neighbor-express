@@ -55,6 +55,10 @@ function App({ Component, pageProps }) {
         <NextSeo
           title="Neighbor Express"
           description="Free deliveries from one neighbor to another."
+          openGraph={{
+            title: "Neighbor Express",
+            description: "Free deliveries from one neighbor to another.",
+          }}
         />
         <NeighborExpress>
           <Component {...pageProps} />
