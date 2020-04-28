@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - master
-      - setup-demo-environments
 
 jobs:
   build:
