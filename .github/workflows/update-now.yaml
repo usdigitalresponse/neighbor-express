@@ -22,4 +22,5 @@ jobs:
           AIRTABLE_BASE_ID_CONCORD: ${{ secrets.AIRTABLE_BASE_ID_CONCORD }}
           AIRTABLE_BASE_ID_WALNUTCREEK: ${{ secrets.AIRTABLE_BASE_ID_WALNUTCREEK }}
           AIRTABLE_BASE_ID_PATERSON: ${{ secrets.AIRTABLE_BASE_ID_PATERSON }}
+          AIRTABLE_BASE_ID_LANDING-PAGE: ${{ secrets.AIRTABLE_BASE_ID_LANDING-PAGE }}
         run: node scripts/update.js
