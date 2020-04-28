@@ -22,4 +22,7 @@ jobs:
           AIRTABLE_BASE_ID_CONCORD: ${{ secrets.AIRTABLE_BASE_ID_CONCORD }}
           AIRTABLE_BASE_ID_WALNUTCREEK: ${{ secrets.AIRTABLE_BASE_ID_WALNUTCREEK }}
           AIRTABLE_BASE_ID_PATERSON: ${{ secrets.AIRTABLE_BASE_ID_PATERSON }}
-        run: node scripts/update.js
+          AIRTABLE_BASE_ID_DEMO_1: ${{ secrets.AIRTABLE_BASE_ID_DEMO_1 }}
+          AIRTABLE_BASE_ID_DEMO_2: ${{ secrets.AIRTABLE_BASE_ID_DEMO_2 }}
+          AIRTABLE_BASE_ID_DEMO_3: ${{ secrets.AIRTABLE_BASE_ID_DEMO_3 }}
+        run: node scripts/update-all.js
