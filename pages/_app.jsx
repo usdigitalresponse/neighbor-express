@@ -50,12 +50,12 @@ class ErrorBoundary extends React.Component {
 function App({ Component, pageProps }) {
   return (
     <>
-    <NextSeo
-      title="Neighbor Express"
-      description="Request free meals, order your usual groceries, or ask for other help you may need. A volunteer will bring your delivery right to your door."
-    />
     <ErrorBoundary>
       <CMSContextProvider>
+        <NextSeo
+          title="Neighbor Express"
+          description="TEST: Request free meals, order your usual groceries, or ask for other help you may need. A volunteer will bring your delivery right to your door."
+        />
         <NeighborExpress>
           <Component {...pageProps} />
         </NeighborExpress>
