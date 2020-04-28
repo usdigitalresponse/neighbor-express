@@ -1,7 +1,7 @@
 const exec = require('@actions/exec');
 
 // What cities do we serve?
-const cities = ['concord', 'walnutcreek', 'paterson', 'demo1', 'demo2', 'demo3'];
+const cities = ['concord', 'walnutcreek', 'paterson', 'demo1', 'demo2', 'demo3', 'landing-page'];
 
 cities.forEach(city => {
   // Lets get our baseid
