@@ -6,6 +6,7 @@ import Form from '@/components/Form';
 import Button from '@/components/Button';
 import Quote from '@/components/Quote';
 import List from '@/components/List';
+import YouTube from '@/components/YouTube';
 import reactStringReplace from 'react-string-replace';
 import Link from 'next/link'
 import { useOnClickOutside } from "react-recipes";
@@ -134,6 +135,7 @@ export const RenderCmsBlock = ({ block }) => {
       'block-form': <Form block={block} />,
       'block-quote': <Quote block={block} />,
       'block-list': <List block={block} />,
+      'block-youtube': <YouTube block={block} />,
     }[block.type]}</>
 }
 
