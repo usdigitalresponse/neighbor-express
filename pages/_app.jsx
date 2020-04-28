@@ -4,6 +4,7 @@ import { CMSContextProvider, CMSContext } from '@/context/cms.js';
 import { processRecords } from '@/utils/cms';
 import './styles.css';
 import { NextSeo } from 'next-seo';
+import { getCmsRecordFromKey } from '@/utils/cms'
 
 
 function NeighborExpress({ children }) {
@@ -47,15 +48,22 @@ class ErrorBoundary extends React.Component {
   }
 }
 
+function CustomSeo() {
+  let { state, dispatch } = useContext(CMSContext);
+  const title = getCmsRecordFromKey('title', state);
+  return (title ?  <NextSeo
+    title={title.title}
+    description={title.body}
+  /> : null)
+
+}
+
 function App({ Component, pageProps }) {
   return (
     <>
     <ErrorBoundary>
       <CMSContextProvider>
-        <NextSeo
-          title="Neighbor Express"
-          description="TEST: Request free meals, order your usual groceries, or ask for other help you may need. A volunteer will bring your delivery right to your door."
-        />
+        <CustomSeo />
         <NeighborExpress>
           <Component {...pageProps} />
         </NeighborExpress>
