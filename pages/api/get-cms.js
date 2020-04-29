@@ -10,16 +10,14 @@ const inst = new AirtablePlus({
 });
 
 
-// This takes the data from our CMS airtable
-// And sends it off to the frontend
-export default async (req, res) => {
-  const records = await inst.read({
+export async function getCms(airtableInst) {
+  const records = await airtableInst.read({
     maxRecords: 60, sort: [{
       field: 'key', direction: 'asc'
     }]
   });
 
-  res.send({
+  return {
     records: records.map((record) => {
       const fields = record.fields;
       return {
@@ -27,5 +25,11 @@ export default async (req, res) => {
         picture: fields.picture || [],
       };
     }),
-  });
+  };
+}
+
+// This takes the data from our CMS airtable
+// And sends it off to the frontend
+export default async (req, res) => {
+  res.send(await getCms(inst));
 };

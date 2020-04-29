@@ -9,8 +9,18 @@ function NeighborExpress({ children }) {
   let { state, dispatch } = useContext(CMSContext);
 
   useEffect(() => {
+    import('../cms-cache.json').then((json) => json.records).then((records) => {
+      dispatch({ type: 'set-cached-records', payload: processRecords(records, state) })
+    });
+
+    console.log('starting fetch');
     fetch('/api/get-cms').then((res) => res.json()).then((json) => json.records).then((records) => {
-      dispatch({ type: 'set-records', payload: processRecords(records, state) })
+      console.log('simulating fetch taking a long time');
+      setTimeout(() => {
+        dispatch({ type: 'set-records', payload: processRecords(records, state) })
+        console.log("done with fetch");
+      }, 3000)
+      
     });
   }, []);
 

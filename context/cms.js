@@ -12,6 +12,15 @@ let reducer = (state, action) => {
   switch (action.type) {
     case "set-records":
       return { ...state, records: action.payload };
+    case "set-cached-records":
+      // Cached records should never overwrite existing records if we have them
+      console.log("found the cached records!!");
+      if (state.records.length == 0) {
+        console.log("populating from cache");
+        return { ...state, records: action.payload };
+      } else {
+        console.log("skipping cache because we already have other records")
+      }
     case "set-language":
       const { records } = state;
       return {
