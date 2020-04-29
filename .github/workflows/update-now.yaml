@@ -5,7 +5,6 @@ on:
     branches:
       - master
 
-
 jobs:
   build:
     name: Deploy to Vercel
@@ -22,5 +21,8 @@ jobs:
           AIRTABLE_BASE_ID_CONCORD: ${{ secrets.AIRTABLE_BASE_ID_CONCORD }}
           AIRTABLE_BASE_ID_WALNUTCREEK: ${{ secrets.AIRTABLE_BASE_ID_WALNUTCREEK }}
           AIRTABLE_BASE_ID_PATERSON: ${{ secrets.AIRTABLE_BASE_ID_PATERSON }}
+          AIRTABLE_BASE_ID_DEMO1: ${{ secrets.AIRTABLE_BASE_ID_DEMO1 }}
+          AIRTABLE_BASE_ID_DEMO2: ${{ secrets.AIRTABLE_BASE_ID_DEMO2 }}
+          AIRTABLE_BASE_ID_DEMO3: ${{ secrets.AIRTABLE_BASE_ID_DEMO3 }}
           AIRTABLE_BASE_ID_LANDING-PAGE: ${{ secrets.AIRTABLE_BASE_ID_LANDING_PAGE }}
-        run: node scripts/update.js
+        run: node scripts/update-all.js
