@@ -14,7 +14,7 @@ const NeighborLayout = ({ children }) => {
 
   const title = getCmsRecordFromKey('title', state);
   const brand = getCmsRecordFromKey('brand', state);
-  const cta = getCmsRecordFromKey('header_cta', state);
+  const cta = getCmsRecordFromKey('header_cta', state, false /*required*/);
   const footer = getCmsRecordFromKey('contact', state);
   const languages = getRecordLanguages(state);
   const pages = getCmsPages(state);
@@ -94,9 +94,10 @@ const NeighborLayout = ({ children }) => {
                       <form className="usa-form">
                         {footer.body}
                         <label className="usa-label" htmlFor="options">Choose Language</label>
-                        <select onChange={(e) => setLanguage(e.target.value)} className="usa-select" name="options" id="options">
+                        <select onChange={(e) => setLanguage(e.target.value)} className="usa-select"
+                                name="options" id="options" value={state.language.key}>
                           {languages.map(language => (
-                            <option key={language.key} selected={state.language === language.key} value={language.key}>{language.name}</option>
+                            <option key={language.key} value={language.key}>{language.name}</option>
                           ))}
                         </select>
                       </form>

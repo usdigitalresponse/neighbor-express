@@ -22,7 +22,8 @@ const List = ({ block }) => {
                                               flex-align-center"
                     style={{ backgroundImage: `url(${el.image})`,
                              backgroundSize: "cover",  backgroundClip: "content-box",
-                             textDecoration: "none" }}>
+                             textDecoration: "none" }}
+                    key={el.key}>
             <div>
               {el.title}
             </div>

@@ -6,7 +6,7 @@ import Button from '@/components/Button';
 const HeroWithButtons = ({ block }) => {
   let { state, dispatch } = useContext(CMSContext);
   const button_one = getCmsRecordFromKey('hero_button_one', state);
-  const button_two = getCmsRecordFromKey('hero_button_two', state);
+  const button_two = getCmsRecordFromKey('hero_button_two', state, false /*required*/);
 
   return <section aria-label="Introduction" id="hero">
     <div className="usa-hero" style={{ backgroundImage: `url(${block.image})` }}>

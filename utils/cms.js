@@ -90,7 +90,7 @@ const AccordionNav = ({nav, pages}) => {
     {open && <ul id={aria_id} className="usa-nav__submenu">
       {
         pages.map((page) => {
-          return <li className="usa-nav__submenu-item">
+          return <li className="usa-nav__submenu-item" key={page.key}>
             <Link href="/[pid]" as={`/${page.key}`}>
               <a className="usa-nav__link" href={`/${page.key}`}><span>{page.title}</span></a>
             </Link>
@@ -119,7 +119,7 @@ export const RenderNavLinks = ({navs, pages}) => {
               <Link href="/[pid]" as={`/${page.key}`}><a className="usa-nav__link" href={`/${page.key}`}><span>{nav.title}</span></a></Link>
             </li>
           } else {
-            return <AccordionNav nav={nav} pages={this_pages}/>
+            return <AccordionNav key={nav.key} nav={nav} pages={this_pages}/>
           }
         })
 
@@ -158,13 +158,15 @@ export const RenderCmsElement = ({ Element }) => {
 * We're going to look up a particular key in our CMS state and
 * run some filters on the data, before returning it to the page
 */
-export const getCmsRecordFromKey = (key, state) => {
+export const getCmsRecordFromKey = (key, state, required = true) => {
   const { records, language } = state;
 
   const filteredRecords = records.filter(record => record.key === key && record.enabled);
 
   if (filteredRecords.length == 0) {
-    console.error(`❗ Missing ${key} value in CMS`, records);
+    if (required) {
+      console.error(`❗ Missing ${key} value in CMS`, records);
+    }
     return undefined;
   }
 
