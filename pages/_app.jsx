@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import NeighborLayout from '../layouts/neighbor.jsx';
 import { CMSContextProvider, CMSContext } from '@/context/cms.js';
-import { processRecords } from '@/utils/cms';
+import { getCmsRecordFromKey, processRecords } from '@/utils/cms';
 import './styles.css';
 import { NextSeo } from 'next-seo';
 
@@ -50,13 +50,14 @@ class ErrorBoundary extends React.Component {
 function CustomSeo() {
   let { state, dispatch } = useContext(CMSContext);
   const title = getCmsRecordFromKey('title', state);
+  const openGraph = title ? {
+    title: title.title,
+    description: title.body
+  } : null;
   return (title ?  <NextSeo
     title={title.title}
     description={title.body}
-    openGraph={{
-      title: {title.title},
-      description: {title.body},
-    }}
+    openGraph={openGraph}
   /> : null)
 
 }
