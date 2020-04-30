@@ -1,4 +1,6 @@
-const Text = ({ block }) => (<section className="grid-container usa-section">
+import Content from '@/components/Content';
+
+const Text = ({ block }) => (<Content block={block}>
   <div className="grid-row grid-gap">
     {
       block.image && !block.data?.includes('image:right') &&
@@ -21,9 +23,7 @@ const Text = ({ block }) => (<section className="grid-container usa-section">
       </div>
     }
   </div>
-</section>
+</Content>
 )
-
-
 
 export default Text;
