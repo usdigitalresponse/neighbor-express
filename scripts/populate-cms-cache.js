@@ -1,29 +1,11 @@
-const AirtablePlus = require('airtable-plus');
 var fs = require("fs");
+const airtable = require('../utils/airtable.js');
+
 
 async function populateCmsCache (baseId, apiKey) {
-	const inst = new AirtablePlus({
-	  'baseID': baseId,
-	  'apiKey': apiKey,
-	  'tableName': 'CMS-page-builder',
+	const cacheResults = await airtable.getCms(baseId, apiKey).catch((err) => {
+		console.log(err)
 	});
-	const records = await inst.read({
-		'maxRecords': 60, 
-		'sort': [{
-	  	'field': 'key', 
-	  	'direction': 'asc'
-		}]
-	}).catch((e) => console.log(e));
-
-	const cacheResults = {
-		'records': records.map((record) => {
-		  const fields = record.fields;
-		  return {
-		    ...fields,
-		    'picture': fields.picture || [],
-		  };
-		}),
-	};
 
 	fs.writeFile("./cms-cache.json", JSON.stringify(cacheResults, null, 4), (err) => {
 	  if (err) {
