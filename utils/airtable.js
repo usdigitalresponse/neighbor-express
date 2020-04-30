@@ -8,7 +8,7 @@ async function getCms(baseId, apiKey) {
   });
 
   const records = await inst.read({
-    maxRecords: 60, sort: [{
+    maxRecords: 100, sort: [{
       field: 'key', direction: 'asc'
     }]
   });
