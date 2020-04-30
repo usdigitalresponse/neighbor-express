@@ -1,8 +1,10 @@
-const Photo = ({ block }) => (<section className="grid-container usa-section">
+import Content from '@/components/Content';
+
+const Photo = ({ block }) => (<Content block={block}>
   <div className="grid-row">
     <img src={block.image} alt={block.body} />
   </div>
-</section>
+</Content>
 )
 
 export default Photo;

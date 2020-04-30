@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { CMSContext } from '../context/cms';
 import Button from '@/components/Button';
+import Content from '@/components/Content';
 
 
 const Columns = ({ block }) => {
@@ -11,7 +12,7 @@ const Columns = ({ block }) => {
   });
 
 
-  return <section className="grid-container usa-section">
+  return <Content block={block}>
     <div className="grid-row grid-gap">
       {
         columns.map((column) => {
@@ -27,7 +28,7 @@ const Columns = ({ block }) => {
         })
       }
     </div>
-  </section>
+  </Content>
 }
 
 
