@@ -1,7 +1,7 @@
 
 const Form = ({ block }) => (<section className="grid-container usa-section">
   <div className="grid-row grid-gap">
-    <div className="tablet:grid-col-8 usa-prose">
+    <div className="tablet:grid-col-12 usa-prose">
       <h2 className="font-heading-xl margin-top-0 tablet:margin-bottom-0">
         {block.title}
       </h2>
