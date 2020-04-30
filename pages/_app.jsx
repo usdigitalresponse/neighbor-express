@@ -47,19 +47,27 @@ class ErrorBoundary extends React.Component {
   }
 }
 
+function CustomSeo() {
+  let { state, dispatch } = useContext(CMSContext);
+  const title = getCmsRecordFromKey('title', state);
+  return (title ?  <NextSeo
+    title={title.title}
+    description={title.body}
+    openGraph={{
+      title: {title.title},
+      description: {title.body},
+    }}
+  /> : null)
+
+}
+
+
 function App({ Component, pageProps }) {
   return (
     <>
     <ErrorBoundary>
       <CMSContextProvider>
-        <NextSeo
-          title="Neighbor Express"
-          description="Free deliveries from one neighbor to another."
-          openGraph={{
-            title: "Neighbor Express",
-            description: "Free deliveries from one neighbor to another.",
-          }}
-        />
+        <CustomSeo />
         <NeighborExpress>
           <Component {...pageProps} />
         </NeighborExpress>
