@@ -15,7 +15,7 @@ const Columns = ({ block }) => {
     <div className="grid-row grid-gap">
       {
         columns.map((column) => {
-          return <div className="tablet:grid-col">
+          return <div className="tablet:grid-col" key={column.key}>
             {column.image && <img src={column.image} />}
             {column.title && <h3 className="font-heading-xl margin-top-0 tablet:margin-bottom-0">
               {column.title}
