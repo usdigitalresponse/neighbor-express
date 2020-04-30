@@ -16,6 +16,7 @@
     "markdown-to-jsx": "^6.11.1",
     "next": "^9.3.5",
     "now": "^18.0.0",
+    "nprogress": "^0.2.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-process-string": "^1.2.0",

@@ -1,9 +1,17 @@
 import React, { useEffect, useState, useContext } from 'react';
+import Router from 'next/router'
 import NeighborLayout from '../layouts/neighbor.jsx';
 import { CMSContextProvider, CMSContext } from '@/context/cms.js';
 import { processRecords } from '@/utils/cms';
+import NProgress from 'nprogress'
 import './styles.css';
 
+Router.events.on('routeChangeStart', url => {
+  console.log(`Loading: ${url}`)
+  NProgress.start()
+})
+Router.events.on('routeChangeComplete', () => NProgress.done())
+Router.events.on('routeChangeError', () => NProgress.done())
 
 function NeighborExpress({ children }) {
   let { state, dispatch } = useContext(CMSContext);
