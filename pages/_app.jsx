@@ -61,7 +61,6 @@ function CustomSeo() {
 
 function App({ Component, pageProps }) {
   return (
-    <>
     <ErrorBoundary>
       <CMSContextProvider>
         <CustomSeo />
@@ -70,7 +69,6 @@ function App({ Component, pageProps }) {
         </NeighborExpress>
       </CMSContextProvider>
     </ErrorBoundary>
-    </>
   );
 }
 

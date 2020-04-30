@@ -19,5 +19,5 @@ asyncForEach(cities, async (city) => {
   // We are going to throw away our .now folder between deploys
   await exec.exec('rm -rf .now');
   // And we're going to send it out to the correct vercel location
-  await exec.exec(`now --env AIRTABLE_BASE_ID=${baseId} --name ${city} --confirm --scope neighborexpress --token ${process.env.ZEIT_TOKEN} --prod`);/
+  await exec.exec(`now --env AIRTABLE_BASE_ID=${baseId} --name ${city} --confirm --scope neighborexpress --token ${process.env.ZEIT_TOKEN} --prod`);
 })
