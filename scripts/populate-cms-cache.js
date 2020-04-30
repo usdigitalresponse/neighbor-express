@@ -8,7 +8,9 @@ async function populateCmsCache (baseId, apiKey) {
 		return {"records": []};
 	});
 
-	fs.writeFile("./cms-cache.json", JSON.stringify(cacheResults, null, 4), (err) => {
+	const fileOutput = `module.exports = ${JSON.stringify(cacheResults, null, 4)}`;
+
+	fs.writeFile("./cms-cache.js", fileOutput, (err) => {
 	  if (err) {
 	    console.error(err);
 	    return;
