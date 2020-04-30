@@ -13,14 +13,8 @@ function NeighborExpress({ children }) {
       dispatch({ type: 'set-cached-records', payload: processRecords(records, state) })
     });
 
-    console.log('starting fetch');
     fetch('/api/get-cms').then((res) => res.json()).then((json) => json.records).then((records) => {
-      console.log('simulating fetch taking a long time');
-      setTimeout(() => {
-        dispatch({ type: 'set-records', payload: processRecords(records, state) })
-        console.log("done with fetch");
-      }, 3000)
-      
+      dispatch({ type: 'set-records', payload: processRecords(records, state) });
     });
   }, []);
 

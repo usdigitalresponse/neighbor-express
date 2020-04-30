@@ -3,7 +3,7 @@ const populateCmsCache = require('./populate-cms-cache.js');
 
 // What cities do we serve?
 //const cities = ['concord', 'walnutcreek', 'paterson', 'demo1', 'demo2', 'demo3', 'landing-page'];
-const cities = ['demo3'];
+const cities = ['demo2', 'demo3'];
 
 cities.forEach(city => {
   // Lets get our baseid
