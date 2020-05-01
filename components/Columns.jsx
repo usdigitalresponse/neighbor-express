@@ -13,11 +13,18 @@ const Columns = ({ block }) => {
 
 
   return <Content block={block}>
+    <h2> {block.title} </h2>
     <div className="grid-row grid-gap">
       {
         columns.map((column) => {
+          const imageElement = column.image && column.href ?
+            <a href={column.href}>
+              <img src={column.image}/>
+            </a> :
+            <img src={column.image}/>
+
           return <div className="tablet:grid-col" key={column.key}>
-            {column.image && <img src={column.image} />}
+            {column.image && imageElement}
             {column.title && <h3 className="font-heading-xl margin-top-0 tablet:margin-bottom-0">
               {column.title}
             </h3>}
