@@ -19,9 +19,9 @@ const Columns = ({ block }) => {
         columns.map((column) => {
           const imageElement = column.image && column.href ?
             <a href={column.href}>
-              <img src={column.image}/>
+              <img src={column.image} alt={column.alt}/>
             </a> :
-            <img src={column.image}/>
+            <img src={column.image} alt={column.alt}/>
 
           return <div className="tablet:grid-col" key={column.key}>
             {column.image && imageElement}
