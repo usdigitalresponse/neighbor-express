@@ -16,6 +16,7 @@
     "interweave": "^12.5.0",
     "markdown-to-jsx": "^6.11.1",
     "next": "^9.3.5",
+    "next-seo": "^4.4.0",
     "now": "^18.0.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",

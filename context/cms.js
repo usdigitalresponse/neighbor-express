@@ -1,10 +1,11 @@
 import React, { useReducer } from "react";
 import { processRecords } from '@/utils/cms';
+import { records } from '../cms-cache.js'
 
 let CMSContext = React.createContext();
 
 let initialState = {
-  records: [],
+  records: processRecords(records, {language: 'en'}),
   language: 'en'
 };
 

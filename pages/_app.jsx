@@ -1,18 +1,15 @@
 import React, { useEffect, useState, useContext } from 'react';
 import NeighborLayout from '../layouts/neighbor.jsx';
 import { CMSContextProvider, CMSContext } from '@/context/cms.js';
-import { processRecords } from '@/utils/cms';
+import { getCmsRecordFromKey, processRecords } from '@/utils/cms';
 import './styles.css';
+import { NextSeo } from 'next-seo';
 
 
 function NeighborExpress({ children }) {
   let { state, dispatch } = useContext(CMSContext);
 
   useEffect(() => {
-    import('../cms-cache.json').then((json) => json.records).then((records) => {
-      dispatch({ type: 'set-cached-records', payload: processRecords(records, state) })
-    });
-
     fetch('/api/get-cms').then((res) => res.json()).then((json) => json.records).then((records) => {
       dispatch({ type: 'set-records', payload: processRecords(records, state) });
     });
@@ -46,10 +43,27 @@ class ErrorBoundary extends React.Component {
   }
 }
 
+function CustomSeo() {
+  let { state, dispatch } = useContext(CMSContext);
+  const title = getCmsRecordFromKey('title', state);
+  const openGraph = title ? {
+    title: title.title,
+    description: title.body
+  } : null;
+  return (title ?  <NextSeo
+    title={title.title}
+    description={title.body}
+    openGraph={openGraph}
+  /> : null)
+
+}
+
+
 function App({ Component, pageProps }) {
   return (
     <ErrorBoundary>
       <CMSContextProvider>
+        <CustomSeo />
         <NeighborExpress>
           <Component {...pageProps} />
         </NeighborExpress>
