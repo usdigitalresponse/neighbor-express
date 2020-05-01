@@ -14,23 +14,14 @@ import Link from 'next/link'
 import { useOnClickOutside } from "react-recipes";
 import Markdown from 'markdown-to-jsx';
 
-/**
-* Outputs the body of a record depending on the language of the user
-* and then formats it with a markdown processor
-* Defaults to english
-*/
-export function getRecordBody(record, language = 'en') {
-  const body = record[`body_${language}`] || record[`body_en`];
-  return body;
-}
 
 /**
-* Outputs the title of a record depending on the language of the user
+* Outputs the requested field of a record depending on the language of the user
 * Defaults to english
 */
-export function getRecordTitle(record, language = 'en') {
-  const title = record[`title_${language}`] || record[`title`];
-  return title;
+function getRecordField (record, fieldName, language = 'en') {
+  const field = record[`${fieldName}_${language}`] || record[`${fieldName}`];
+  return field;
 }
 
 /** 
@@ -188,9 +179,10 @@ export const processRecords = (records, state) => {
   return records.map(record => {
     // We're going to make a helper for the picture column
     record.image = record.picture[0]?.url;
-    record.body = getRecordBody(record, language);
+    record.body = getRecordField(record, 'body', language);
     record.body_markdown = <Markdown>{record.body || ""}</Markdown>;
-    record.title = getRecordTitle(record, language);
+    record.title = getRecordField(record, 'title', language);
+    record.alt = getRecordField(record, 'alt', language);
     return record;
   });
 }
