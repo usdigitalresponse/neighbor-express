@@ -21,7 +21,7 @@ describe("Text block", () => {
   	const block_with_image = {
   		...block,
   		image: 'exampleurl.com',
-  		alt: 'test alt text'
+  		alt: 'test alt text FAIL PLZ'
   	}
     const text = shallow(<Text block={block_with_image} />);
     expect(text.contains(<img src='exampleurl.com' alt='test alt text'/>)).toEqual(true);
