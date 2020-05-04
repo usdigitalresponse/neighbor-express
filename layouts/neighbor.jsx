@@ -32,7 +32,7 @@ const NeighborLayout = ({ children }) => {
     <Head>
       <title>{title.title}</title>
       <meta name="description" content={title.body} />
-      <link id="favicon" rel="icon" href="https://glitch.com/favicon.ico" type="image/x-icon" />
+      {title.image && <link id="favicon" rel="icon" href={title.image} type="image/x-icon" />}
       <meta charset="utf-8" />
       <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
       <meta name="viewport" content="width=device-width, initial-scale=1" />
