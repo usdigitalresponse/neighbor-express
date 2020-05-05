@@ -1,0 +1,42 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`YouTube block renders correctly 1`] = `
+<Content
+  block={
+    Object {
+      "body_markdown": "Test body",
+      "href": "https://youtu.be/NzwSF9GEm0E",
+      "title": "Test title",
+    }
+  }
+>
+  <h2
+    className="jsx-2037020011 font-heading-xl margin-y-0"
+  >
+    Test title
+  </h2>
+  <div
+    className="jsx-2037020011"
+  >
+     
+    Test body
+     
+  </div>
+  <div
+    className="jsx-2037020011 videoWrapper"
+  >
+    <iframe
+      allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+      allowFullScreen={true}
+      className="jsx-2037020011"
+      frameBorder="0"
+      src="https://www.youtube.com/embed/NzwSF9GEm0E"
+    />
+  </div>
+  <JSXStyle
+    id="2037020011"
+  >
+    .videoWrapper.jsx-2037020011{position:relative;padding-bottom:56.25%;height:0;}.videoWrapper.jsx-2037020011 iframe.jsx-2037020011{position:absolute;top:0;left:0;width:100%;height:100%;}
+  </JSXStyle>
+</Content>
+`;

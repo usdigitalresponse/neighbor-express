@@ -1,4 +1,4 @@
-import Content from '@/components/Content';
+import Content from './Content';
 
 const Form = ({ block }) => (<Content block={block}>
   <div className="grid-row grid-gap">

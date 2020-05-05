@@ -1,4 +1,4 @@
-import Content from '@/components/Content';
+import Content from './Content';
 
 const Photo = ({ block }) => (<Content block={block}>
   <img src={block.image} alt={block.alt} />
