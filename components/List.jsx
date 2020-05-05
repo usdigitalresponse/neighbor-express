@@ -17,14 +17,14 @@ const List = ({ block }) => {
     {
       list_elements.map((el)=>{
         return <a href={el.href} className="tablet:grid-col-4 height-card-lg text-center
-                                            text-base-lightest font-sans-xl text-middle
+                                            font-sans-xl text-middle
                                             padding-105 display-flex flex-justify-center
                                             flex-align-center"
                   style={{ backgroundImage: `url(${el.image})`,
                            backgroundSize: "cover",  backgroundClip: "content-box",
                            textDecoration: "none" }}
                   key={el.key}>
-          <div>
+          <div style={{background: "black", opacity: 0.7, padding: "1rem 0.5rem", color: "white"}}>
             {el.title}
           </div>
         </a>
