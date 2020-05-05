@@ -92,7 +92,7 @@ const NeighborLayout = ({ children }) => {
                   <div className="usa-footer__contact-info grid-row grid-gap">
                     <div className="grid-col-auto">
                       <form className="usa-form">
-                        {contact.body}
+                        {contact.body_markdown}
                         <label className="usa-label" htmlFor="options">Choose Language</label>
                         <select onChange={(e) => setLanguage(e.target.value)} className="usa-select"
                                 name="options" id="options" value={state.language.key}>
