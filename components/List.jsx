@@ -3,6 +3,9 @@ import { CMSContext } from '../context/cms';
 import { getByTag } from '../utils/cms';
 import Button from '@/components/Button';
 import Content from '@/components/Content';
+import styles from './List.module.css'
+var classNames = require('classnames');
+
 
 const List = ({ block }) => {
   let { state, dispatch } = useContext(CMSContext);
@@ -11,20 +14,19 @@ const List = ({ block }) => {
     return record.tag?.includes(block.key) && record.type == "list-element" && record.enabled;
   });
 
+  const imageLinkClasses = classNames(styles.image, "tablet:grid-col-4",
+    "height-card-lg", "font-sans-lg", "text-semibold", "padding-105");
+  const overlayClasses = classNames(styles.overlay, "display-flex",
+    "flex-justify-start", "flex-align-end", "padding-2");
+
   return <Content block={block}>
     <h2> {block.title} </h2>
     <div className="grid-row grid-gap-lg">
     {
       list_elements.map((el)=>{
-        return <a href={el.href} className="tablet:grid-col-4 height-card-lg text-center
-                                            text-base-lightest font-sans-xl text-middle
-                                            padding-105 display-flex flex-justify-center
-                                            flex-align-center"
-                  style={{ backgroundImage: `url(${el.image})`,
-                           backgroundSize: "cover",  backgroundClip: "content-box",
-                           textDecoration: "none" }}
-                  key={el.key}>
-          <div>
+        return <a href={el.href} className={imageLinkClasses}
+                  style={{  backgroundImage: `url(${el.image})`}} key={el.key}>
+          <div className={overlayClasses}>
             {el.title}
           </div>
         </a>
