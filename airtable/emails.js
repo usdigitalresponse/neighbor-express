@@ -5,9 +5,28 @@
 // To set it up for a city:
 
 // * Copy paste this into the Airtable Scripting Block environment for a city
-// * Update the Global and City-Specific configuration sections below
+// * Update configuration in a table called Email Configuration
 // * Test it out by creating a test delivery and volunteer, and confirming that
 // emails send as expected.
+
+const configTable = base.getTable("Email Configuration");
+const messagesTable = base.getTable("Messages");
+const allConfig = (await base.getTable("Email Configuration").selectRecordsAsync()).records;
+
+const globalConfig = allConfig.filter(c => c.getCellValue("type").name === "global");
+const emailTypesConfig = allConfig.filter(c => c.getCellValue("type").name === "email-template");
+const templateVarsConfig = allConfig.filter(c => c.getCellValue("type").name === "template-variable");
+const allMessages = (await messagesTable.selectRecordsAsync()).records;
+const allVolunteers = (await base.getTable("Volunteers").selectRecordsAsync()).records;
+const allDeliveries = (await base.getTable("Deliveries").selectRecordsAsync()).records;
+
+function globalValueFromKey(key) {
+    return globalConfig.find(k => k.name === key).getCellValue("value");
+}
+
+function findById(table, id) {
+    return table.find(r => r.id === id);
+}
 
 //==========================================================
 // Global configuration -- insert global Nex sendgrid proxy credentials
@@ -16,7 +35,7 @@
 // that forwards our request to the Sendgrid API.
 // We need to keep this secret because anyone with this credential
 // can send email on our behalf
-const SENDGRID_PROXY_TOKEN= <insert credential here>
+const SENDGRID_PROXY_TOKEN = globalValueFromKey("SENDGRID_PROXY_TOKEN");
 
 //==========================================================
 // City-specific configuration: update to match the city
@@ -24,146 +43,108 @@ const SENDGRID_PROXY_TOKEN= <insert credential here>
 
 // For each email type, point to the Sendgrid template ID
 // Find the Sendgrid template IDs in Sendgrid UI.
-const SENDGRID_TEMPLATES = {
-    "Matched: to Volunteer": <insert template id>
-    "Matched: to Recipient": <insert template id>
+const EMAIL_TYPES = {};
+for (const emailType of emailTypesConfig) {
+    EMAIL_TYPES[emailType.name] = {
+        "sendgrid_template": emailType.getCellValue("sendgrid_template"),
+        "audience": emailType.getCellValue("audience").name,
+        "send_before_matching": Boolean(emailType.getCellValue("send_before_matching"))
+    }
 }
+const allMessageTypes = Object.keys(EMAIL_TYPES);
 
-// todo: update paterson-specific
 const REPLY_TO = {
-    name: "Neighbor Express",
-    email: "neighborexpress@gmail.com"
+    name: globalValueFromKey("reply_to_name"),
+    email: globalValueFromKey("reply_to_email")
 }
 
 // Customize what fields we pull in from a delivery for an email template.
-// If the city has adjusted field names, they need to be updated here too.
-// This is an example for Paterson, but should be replaced with a city-specific
-// version.
 async function getEmailInfoForDelivery(delivery) {
-    let volunteerData;
-    if (delivery.getCellValue("Assigned volunteer") && delivery.getCellValue("Assigned volunteer").length > 0) {
-        const volunteersTable = base.getTable("Volunteers");
-        const allVolunteers = (await volunteersTable.selectRecordsAsync()).records;
-        const volunteer = allVolunteers.find(v => v.id === delivery.getCellValue("Assigned volunteer")[0].id);
-        volunteerData = {
-            name: volunteer.getCellValue("Name"),
-            phone: volunteer.getCellValue("Phone"),
-            email: volunteer.getCellValue("Email")
+    let output = {
+        delivery: {},
+        volunteer: {}
+    }
+    
+    // see if there's a volunteer assigned
+    let volunteer;
+    const volunteers = delivery.getCellValue("Assigned volunteer");
+    if (volunteers && volunteers.length > 0) {
+        volunteer = findById(allVolunteers, volunteers[0].id);
+    }
+    
+    for (let r of templateVarsConfig) {
+        if (r.getCellValue("Airtable table").name == "Deliveries") {
+            output.delivery[r.getCellValue("sendgrid")] = delivery.getCellValue(r.getCellValue("Airtable Field Name"));
+        } else if (r.getCellValue("Airtable table").name == "Volunteers") {
+            if (volunteer) {
+                output.volunteer[r.getCellValue("sendgrid")] = volunteer.getCellValue(r.getCellValue("Airtable Field Name"));
+            }
+        } else {
+            console.log("Configuration error, make sure all template variables have either Deliveries or Volunteers as their Airtable table");
         }
-    } else {
-        volunteerData = null;
     }
 
-    return {
-        delivery: {
-            name: delivery.getCellValue("Recipient Name"),
-            address: delivery.getCellValue("Address"),
-            details: delivery.getCellValue("Delivery Request Details"),
-            phone: delivery.getCellValue("Phone Number"),
-            email: delivery.getCellValue("Email"),
-            instructions: delivery.getCellValue("Delivery Instructions"),
-            // we need to have a boolean value for each grocery store,
-            // in order to branch conditionally on the store in the email
-            grocery_store: {
-                shoprite: delivery.getCellValue("Grocery Store Name").name === "ShopRite, Little Falls",
-                golden_mango: delivery.getCellValue("Grocery Store Name").name === "Golden Mango, Paterson",
-                pay_later: delivery.getCellValue("Payment Method").name !== "(Preferred) Call ahead to the store and pay over the phone."
-            }
-        },
-        volunteer: volunteerData
-    };
+    return output;
 }
 
-//==========================================================
-//==========================================================
-// Standard script begins here --
-// You shouldn't need to change anything below this line.
-//==========================================================
+async function formatSengridMessage(delivery, messageType) {
+    const sendgridData = await getEmailInfoForDelivery(delivery);
 
-// Define helper functions
-//==========================================================
+    const audience = EMAIL_TYPES[messageType]["audience"];
+    var toEmail;
+    if (audience === "volunteer") {
+        toEmail = sendgridData.volunteer?.email;
+    } else if (audience === "recipient") {
+        toEmail = sendgridData.delivery.email;
+    } 
 
-const messagesTable = base.getTable("Messages")
-const volunteersTable = base.getTable("Volunteers")
-const deliveriesTable = base.getTable("Deliveries")
-const allMessages = (await messagesTable.selectRecordsAsync()).records;
-const allVolunteers = (await volunteersTable.selectRecordsAsync()).records;
-const allDeliveries = (await deliveriesTable.selectRecordsAsync()).records;
+    if (toEmail) {
+        const formattedMessage = {
+            fields: {
+                "Delivery": [{ "id": delivery.id }],
+                "Email type": { "name": messageType },
+                "Status": { name: "Queued" },
+                "Recipient": toEmail,
+                "Template Data": JSON.stringify(sendgridData)
+            }
+        }
+        return formattedMessage;
+    } else {
+        output.markdown(`**Warning, Missing email address**: Couldn't create ${messageType} for delivery recipient ${sendgridData.delivery.name}.`);
+    }
+}
 
 // Compute a list of new queued messages to create, and return it.
 async function computeMessagesToCreate() {
     let messagesToCreate = [];
 
     for (const delivery of allDeliveries) {
-        const sendgridData = await getEmailInfoForDelivery(delivery);
+        const isMatched = delivery.getCellValue("Errand Workflow Stage") &&
+            delivery.getCellValue("Errand Workflow Stage").name === "Matched";
 
         // assemble a list of existing message types for this delivery
         let existingMessageTypes = [];
         const existingMessages = delivery.getCellValue("Messages");
         if (existingMessages) {
             existingMessageTypes = existingMessages.map(existingMessage =>
-                allMessages.find(m => m.id === existingMessage.id).getCellValue("Email type").name
+                findById(allMessages, existingMessage.id).getCellValue("Email type").name
             );
         } else {
             existingMessageTypes = [];
         }
 
-        if (existingMessageTypes.indexOf("Initial Confirmation: Delivery Request") === -1) {
-            const recipientEmail = sendgridData.delivery.email;
-            if (recipientEmail) {
-                messagesToCreate.push({
-                    fields: {
-                        "Delivery": [{ "id": delivery.id }],
-                        "Email type": { "name": "Initial Confirmation: Delivery Request" },
-                        "Status": { name: "Queued" },
-                        "Recipient": recipientEmail,
-                        "Template Data": JSON.stringify(sendgridData)
-                    }
-                })
-            } else {
-                output.markdown(`**Warning, Missing email address**: Couldn't create message for delivery recipient ${sendgridData.delivery.name}.`)
+        for (let messageType of allMessageTypes) {
+            if (existingMessageTypes.includes(messageType)) {
+                // We've already sent a message of this type for this delivery
+                continue;
             }
-        }
-
-        // If the delivery is matched and we haven't emailed the volunteer yet,
-        // queue up an email
-        if (delivery.getCellValue("Errand Workflow Stage") &&
-            delivery.getCellValue("Errand Workflow Stage").name === "Matched" &&
-            existingMessageTypes.indexOf("Matched: to Volunteer") === -1) {
-            const volunteerEmail = sendgridData.volunteer.email;
-            if (volunteerEmail) {
-                messagesToCreate.push({
-                    fields: {
-                        "Delivery": [{ "id": delivery.id }],
-                        "Email type": { "name": "Matched: to Volunteer" },
-                        "Status": { name: "Queued" },
-                        "Recipient": volunteerEmail,
-                        "Template Data": JSON.stringify(sendgridData)
-                    }
-                })
-            } else {
-                output.markdown(`**Warning, Missing email address**: couldn't create message for Volunteer ${sendgridData.volunteer.name}`)
-            }
-        }
-
-        // If the delivery is matched and we haven't emailed the recipient yet,
-        // queue up an email
-        if (delivery.getCellValue("Errand Workflow Stage") &&
-            delivery.getCellValue("Errand Workflow Stage").name === "Matched" &&
-            existingMessageTypes.indexOf("Matched: to Recipient") === -1) {
-            const recipientEmail = sendgridData.delivery.email;
-            if (recipientEmail) {
-                messagesToCreate.push({
-                    fields: {
-                        "Delivery": [{ "id": delivery.id }],
-                        "Email type": { "name": "Matched: to Recipient" },
-                        "Status": { name: "Queued" },
-                        "Recipient": recipientEmail,
-                        "Template Data": JSON.stringify(sendgridData)
-                    }
-                })
-            } else {
-                output.markdown(`**Warning, Missing email address**: Couldn't create message for delivery recipient ${sendgridData.delivery.name}.`)
+            if (isMatched || EMAIL_TYPES[messageType].send_before_matching) {
+                // we only send an email if the delivery is matched, OR if the email type
+                // is specifically set up to "send before matching"
+                const message = await formatSengridMessage(delivery, messageType);
+                if (message) {
+                    messagesToCreate.push(message);
+                } 
             }
         }
     }
@@ -190,7 +171,7 @@ async function sendMessage(messageToSend) {
             "email": "noreply@neighborexpress.org"
         },
         "reply_to": REPLY_TO,
-        "template_id": SENDGRID_TEMPLATES[messageToSend.getCellValue("Email type").name]
+        "template_id": EMAIL_TYPES[messageToSend.getCellValue("Email type").name]["sendgrid_template"]
     }
 
     const response = await fetch(`https://nex-sendgrid-proxy.geoffreylitt.now.sh/api/sendgrid-proxy?proxy_token=${SENDGRID_PROXY_TOKEN}`, {
@@ -210,7 +191,6 @@ async function sendMessage(messageToSend) {
 
 // Main UI flow
 //==========================================================
-
 output.markdown(`## Step 1: Refresh Queue`);
 
 output.markdown(`Open the Messages tab to get started. Click below to refresh queue (won't send emails yet).`);
@@ -222,13 +202,17 @@ let enqueueButton = await input.buttonsAsync(
     ],
 );
 
-const messagesToCreate = await computeMessagesToCreate();
+let messagesToCreate = await computeMessagesToCreate();
 
-if (messagesToCreate.length > 0) {
-    messagesTable.createRecordsAsync(messagesToCreate);
-    output.markdown(`**Success!** Enqueued ${messagesToCreate.length} new messages`)
-} else {
+if (messagesToCreate.length == 0) {
     output.markdown(`No new messages to enqueue.`);
+} else {
+    if (messagesToCreate.length > 50) {
+        output.markdown(`You can only create 50 emails at once, but we found ${messagesToCreate.length} Doing the first 50 now... remember to do this again to get the rest!`)
+        messagesToCreate = messagesToCreate.slice(0, 50);
+    } 
+    await messagesTable.createRecordsAsync(messagesToCreate);
+    output.markdown(`**Success!** Enqueued ${messagesToCreate.length} new messages`)
 }
 
 output.markdown(`## Step 2: Send emails`);
