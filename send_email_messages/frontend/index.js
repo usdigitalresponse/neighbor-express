@@ -236,6 +236,24 @@ function StepSendMessages() {
 	)
 }
 
+function WarningAccordion({warnings}) {
+    const [isOpen, setIsOpen] = useState(false);
+
+    if (warnings.length === 0) {
+        return null;
+    }
+    return (
+        <Box>
+            <Button onClick={() => setIsOpen(!isOpen)}>
+                {isOpen ? "Hide Warnings" : `Show ${warnings.length} warnings`}
+            </Button>
+            {isOpen && warnings.map((warning, i) => {
+                return <p key={`warning_${i}`}>{warning}</p>
+            })}
+        </Box>
+    )
+}
+
 function MainUIBlock() {
     const [step1result, setStep1result] = useState(undefined);
     const [warnings, setWarnings] = useState([]);
@@ -268,7 +286,7 @@ function MainUIBlock() {
             <Button variant="primary" onClick={refreshQueue}>
                 Refresh queue
             </Button>
-            {warnings.map(warning => {return <p>{warning}</p>})}
+            <WarningAccordion warnings={warnings}/>
             {step1result && <>
                 <p> {step1result} </p>
                 <StepSendMessages/>
