@@ -12,6 +12,11 @@ async function getConfigOfType(type) {
 	return allConfig.filter(c => c.getCellValue("type").name === type)
 }
 
+async function getGlobalValueFromKey(key) {
+    const globalConfig = await getConfigOfType("global");
+    return globalConfig.find(k => k.name === key).getCellValue("value");
+}
+
 async function getSendgridConfig() {
 	const globalConfig = await getConfigOfType("global");
 
@@ -37,7 +42,7 @@ async function getEmailTypes() {
 	    EMAIL_TYPES[emailType.name] = {
 	        "sendgrid_template": emailType.getCellValue("sendgrid_template"),
 	        "audience": emailType.getCellValue("audience").name,
-	        "send_before_matching": Boolean(emailType.getCellValue("send_before_matching"))
+            "stages": emailType.getCellValue("stages").map((s) => {return s.name}),
 	    }
 	}
 	return EMAIL_TYPES;
@@ -115,8 +120,7 @@ async function computeMessagesToCreate(addWarning) {
 	const EMAIL_TYPES = await getEmailTypes();
 
     for (const delivery of allDeliveries) {
-        const isMatched = delivery.getCellValue("Errand Workflow Stage") &&
-             delivery.getCellValue("Errand Workflow Stage").name === "Matched";
+        const deliveryStage = delivery.getCellValue(await getGlobalValueFromKey("stage_column_name"))?.name;
 
         // assemble a list of existing message types for this delivery
         let existingMessageTypes = [];
@@ -134,16 +138,17 @@ async function computeMessagesToCreate(addWarning) {
                 // We've already sent a message of this type for this delivery
                 continue;
             }
-            if (isMatched || EMAIL_TYPES[messageType].send_before_matching) {
-                // we only send an email if the delivery is matched, OR if the email type
-                // is specifically set up to "send before matching"
-                const {message, warning} = await formatSengridMessage(delivery, messageType, EMAIL_TYPES[messageType]["audience"]);
-                if (message) {
-                    output.messagesToCreate.push(message);
-                } 
-                if (warning) {
-                    output.warnings.push(warning);
-                }
+            if (!EMAIL_TYPES[messageType].stages.includes(deliveryStage)){
+                // The delivery is in the wrong stage for this type of email, skip
+                continue;
+            }
+
+            const {message, warning} = await formatSengridMessage(delivery, messageType, EMAIL_TYPES[messageType]["audience"]);
+            if (message) {
+                output.messagesToCreate.push(message);
+            }
+            if (warning) {
+                output.warnings.push(warning);
             }
         }
     }
