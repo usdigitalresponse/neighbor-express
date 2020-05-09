@@ -152,7 +152,6 @@ async function computeMessagesToCreate(addWarning) {
             }
         }
     }
-
     return output;
 }
 
@@ -259,13 +258,18 @@ function MainUIBlock() {
     const [warnings, setWarnings] = useState([]);
 
     function addWarning(newWarning) {
-        setWarnings(warnings.concat(newWarning));
+        if (newWarning) {
+            setWarnings(warnings.concat(newWarning));
+        }
     }
 
     async function refreshQueue() {
     	var result = ''
+
+        // Clear out the warnings from any previous run
+        setWarnings([]);
         let {messagesToCreate, warnings} = await computeMessagesToCreate();
-        addWarning(warnings)
+        setWarnings(warnings);
 
         if (messagesToCreate.length == 0) {
             setStep1result(`No new messages to enqueue.`);
