@@ -36,7 +36,7 @@ async function formatMessageRecord(messageType, delivery, volunteer, audience) {
 
   var toEmail;
   if (audience === "volunteer") {
-    toEmail = sendgridData.volunteer?.email;
+    toEmail = sendgridData.volunteer.email;
   } else if (audience === "recipient") {
     toEmail = sendgridData.delivery.email;
   } 

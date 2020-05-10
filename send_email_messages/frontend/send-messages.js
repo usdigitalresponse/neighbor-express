@@ -70,7 +70,7 @@ export function SendMessagesStep() {
       {result ? <p> {result} </p> : <>
         {
           messagesToSend.length === 0 ?
-          <p> No enqueued messages to send. <strong> You're all done! </strong></p> :
+          <p> No enqueued messages to send. <strong> All done! </strong></p> :
           <>
             <p> {messagesToSend.length} messages queued to send. Review the list in the Messages tab, then click below to send them. </p>
             <Button variant="secondary" onClick={cancelButton} disabled={result!=undefined}>
