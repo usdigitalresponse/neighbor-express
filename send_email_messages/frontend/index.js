@@ -142,7 +142,6 @@ function MainUIBlock() {
   }
 
   async function refreshQueue() {
-    console.log("hello");
     var result = ''
 
     // Clear out the warnings from any previous run

@@ -30,8 +30,6 @@ async function sendMessage(messageToSend, cfg) {
   });
 
   return response;
-
-
 }
 
 export function SendMessagesStep() {
@@ -82,7 +80,6 @@ export function SendMessagesStep() {
           </>
         }
       </>}
-      
     </Box>
   )
 }
