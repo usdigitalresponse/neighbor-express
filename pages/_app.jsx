@@ -1,10 +1,18 @@
 import React, { useEffect, useState, useContext } from 'react';
+import Router from 'next/router'
 import NeighborLayout from '../layouts/neighbor.jsx';
 import { CMSContextProvider, CMSContext } from '@/context/cms.js';
+import NProgress from 'nprogress'
 import { getCmsRecordFromKey, processRecords } from '@/utils/cms';
 import './styles.css';
 import { NextSeo } from 'next-seo';
 
+Router.events.on('routeChangeStart', url => {
+  console.log(`Loading: ${url}`)
+  NProgress.start()
+})
+Router.events.on('routeChangeComplete', () => NProgress.done())
+Router.events.on('routeChangeError', () => NProgress.done())
 
 function NeighborExpress({ children }) {
   let { state, dispatch } = useContext(CMSContext);
@@ -50,7 +58,7 @@ function CustomSeo() {
     title: title.title,
     description: title.body
   } : null;
-  return (title ?  <NextSeo
+  return (title ? <NextSeo
     title={title.title}
     description={title.body}
     openGraph={openGraph}
