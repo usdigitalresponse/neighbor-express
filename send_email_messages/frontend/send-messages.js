@@ -34,6 +34,7 @@ async function sendMessage(messageToSend) {
 
 export function SendMessagesStep() {
   const [result, setResult] = useState(undefined);
+  const [sending, setSending] = useState(false);
   const messagesTable = useBase().getTable("Messages");
 
   const messagesToSend = useRecords(messagesTable).filter(m => m.getCellValue("Status").name === "Queued");
@@ -44,6 +45,7 @@ export function SendMessagesStep() {
   }
 
   async function sendMessages() {
+    setSending(true);
     for (const messageToSend of messagesToSend) {
       const response = await sendMessage(messageToSend);
 
@@ -58,6 +60,7 @@ export function SendMessagesStep() {
         })
       }
     }
+    setSending(false);
     setResult('**Done sending messages!**');
   }
 
@@ -70,10 +73,10 @@ export function SendMessagesStep() {
           <p> No enqueued messages to send. <strong> All done! </strong></p> :
           <>
             <p> {messagesToSend.length} messages queued to send. Review the list in the Messages tab, then click below to send them. </p>
-            <Button variant="secondary" onClick={cancelButton} disabled={result!=undefined}>
+            <Button variant="secondary" onClick={cancelButton} disabled={sending}>
               Cancel
             </Button>
-            <Button variant="primary" onClick={sendMessages} disabled={result!=undefined}> 
+            <Button variant="primary" onClick={sendMessages} disabled={sending}>
               Send {messagesToSend.length} Messages
             </Button>
           </>

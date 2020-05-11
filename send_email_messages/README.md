@@ -29,3 +29,5 @@ Block release basically takes your current code, packages it up, and sends it to
 Airtable has instructions for this: https://airtable.com/developers/blocks/guides/run-in-multiple-bases
 
 Creating a new remote generates a json file in the /.block folder -- check that in.
+
+After releasing the block to the new city remember to go fill in their settings
