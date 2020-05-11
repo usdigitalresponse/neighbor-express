@@ -1,5 +1,5 @@
 # Neighbor Express
-[![Deploy with ZEIT Now](https://zeit.co/button)](https://zeit.co/import/project?template=https://github.com/usdigitalresponse/neighbor-express)
+[![Deploy with Vercel Now](https://zeit.co/button)](https://zeit.co/import/project?template=https://github.com/usdigitalresponse/neighbor-express)
 
 The Neighbor Express platform has two parts:
 
@@ -15,7 +15,7 @@ For more background on the product:
 
 If you'd like to bring Neighbor Express to your city, you can deploy a fork of our system in a few minutes, using the instructions below.
 
-This site is a static site with a small dynamic component to load CMS data, so you can deploy it on any static hosting provider that allows for maintaining a secret API key. We recommend hosting on [Zeit](https://zeit.co/). The rest of these instructions assume a Zeit deployment.
+This site is a static site with a small dynamic component to load CMS data, so you can deploy it on any static hosting provider that allows for maintaining a secret API key. We recommend hosting on [Vercel (formerly Zeit)](https://zeit.co/). The rest of these instructions assume a Vercel deployment.
 
 **Important note before starting**: Neighbor Express is not fully automated, nor is it our goal to make it 100% automated. Even after you set up a working website, you will still need people
 to manually monitor the form submissions coming into the Airtable, match volunteers
@@ -28,7 +28,7 @@ We're happy to help you plan a successful program; reach out at the [Neighbor Ex
 
 #### Prerequisites
 
-Create accounts on [Airtable](https://airtable.com), [Zeit](https://zeit.co/), and [Github](https://github.com).
+Create accounts on [Airtable](https://airtable.com), [Vercel](https://zeit.co/), and [Github](https://github.com).
 
 #### Create an Airtable backend
 
@@ -36,20 +36,20 @@ Open the [Neighbor Express Airtable Template](https://airtable.com/shrUWmppqhdNK
 
 This Airtable will serve as your CMS for the site content, and also store your form submissions.
 
-#### Deploy a Zeit fork
+#### Deploy a Vercel fork
 
-Click the button below to start a Zeit import. It will fork the Neighbor Express Github repo for you and deploy the fork to Zeit.
+Click the button below to start a Zeit import. It will fork the Neighbor Express Github repo for you and deploy the fork to Vercel.
 
-[![Deploy with ZEIT Now](https://zeit.co/button)](https://zeit.co/import/project?template=https://github.com/usdigitalresponse/neighbor-express)
+[![Deploy with Vercel Now](https://zeit.co/button)](https://zeit.co/import/project?template=https://github.com/usdigitalresponse/neighbor-express)
 
-* First, find the [Airtable API Key](https://support.airtable.com/hc/en-us/articles/219046777-How-do-I-get-my-API-key-) and [Base ID](https://community.airtable.com/t/what-is-the-app-id-where-do-i-find-it/2984) for your Airtable copy, and pass them into the first Zeit import screen.
-* Grant Github permissions if needed, to allow Zeit to fork the repo on your behalf.
+* First, find the [Airtable API Key](https://support.airtable.com/hc/en-us/articles/219046777-How-do-I-get-my-API-key-) and [Base ID](https://community.airtable.com/t/what-is-the-app-id-where-do-i-find-it/2984) for your Airtable copy, and pass them into the first Vercel import screen.
+* Grant Github permissions if needed, to allow Vercel to fork the repo on your behalf.
 * Next it’s time to configure the project. This is pretty simple because it’s already a static site with no compilation needed.
   * Leave the “root directory” field blank.
-  * When Zeit auto-detects Next.js, don't change any of the settings for build command / output directory / development command, just leave them blank.
+  * When Vercel auto-detects Next.js, don't change any of the settings for build command / output directory / development command, just leave them blank.
   * Press Deploy
 
-Now you have your own deployment of the Neighbor Express website. You can click the production deployment link in Zeit to see the live site.
+Now you have your own deployment of the Neighbor Express website. You can click the production deployment link in Vercel to see the live site.
 
 You're almost there! The next step is to use the Airtable CMS to customize the website for your city.
 
@@ -75,7 +75,7 @@ If you’d like to make further changes beyond what’s available in the Airtabl
 
 #### Custom domain
 
-You can use [Zeit's intructions](https://zeit.co/docs/v2/custom-domains) to add a custom domain for your site.
+You can use [Vercel's intructions](https://zeit.co/docs/v2/custom-domains) to add a custom domain for your site.
 
 ## Managing form submissions in Airtable
 
