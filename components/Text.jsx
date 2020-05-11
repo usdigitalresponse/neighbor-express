@@ -1,9 +1,11 @@
-const Text = ({ block }) => (<section className="grid-container usa-section">
+import Content from './Content';
+
+const Text = ({ block }) => (<Content block={block}>
   <div className="grid-row grid-gap">
     {
       block.image && !block.data?.includes('image:right') &&
       <div className="tablet:grid-col-4">
-        <img src={block.image} />
+        <img src={block.image} alt={block.alt}/>
       </div>
     }
     <div className="tablet:grid-col-8 usa-prose">
@@ -17,13 +19,11 @@ const Text = ({ block }) => (<section className="grid-container usa-section">
     {
       block.image && block.data?.includes('image:right') &&
       <div className="tablet:grid-col-4">
-        <img src={block.image} />
+        <img src={block.image} alt={block.alt} />
       </div>
     }
   </div>
-</section>
+</Content>
 )
-
-
 
 export default Text;

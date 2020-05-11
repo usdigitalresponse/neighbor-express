@@ -1,31 +1,10 @@
 /*
 * This is the *only* server-side file for neighbor express.
 */
-const AirtablePlus = require('airtable-plus');
-
-const inst = new AirtablePlus({
-  baseId: process.env.AIRTABLE_BASE_ID,
-  apiKey: process.env.AIRTABLE_API_KEY,
-  tableName: 'CMS-page-builder',
-});
-
+const airtable = require('../../utils/airtable.js');
 
 // This takes the data from our CMS airtable
 // And sends it off to the frontend
 export default async (req, res) => {
-  const records = await inst.read({
-    maxRecords: 60, sort: [{
-      field: 'key', direction: 'asc'
-    }]
-  });
-
-  res.send({
-    records: records.map((record) => {
-      const fields = record.fields;
-      return {
-        ...fields,
-        picture: fields.picture || [],
-      };
-    }),
-  });
+  res.send(await airtable.getCms(process.env.AIRTABLE_BASE_ID, process.env.AIRTABLE_API_KEY));
 };

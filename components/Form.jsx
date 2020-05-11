@@ -1,7 +1,8 @@
+import Content from '@/components/Content';
 
-const Form = ({ block }) => (<section className="grid-container usa-section">
+const Form = ({ block }) => (<Content block={block}>
   <div className="grid-row grid-gap">
-    <div className="tablet:grid-col-8 usa-prose">
+    <div className="tablet:grid-col-12 usa-prose">
       <h2 className="font-heading-xl margin-top-0 tablet:margin-bottom-0">
         {block.title}
       </h2>
@@ -10,7 +11,7 @@ const Form = ({ block }) => (<section className="grid-container usa-section">
       </section>
     </div>
   </div>
-</section>);
+</Content>);
 
 
 export default Form;

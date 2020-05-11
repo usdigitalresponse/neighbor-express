@@ -18,6 +18,7 @@ jobs:
       - name: Run Deploys
         env: # Or as an environment variable
           ZEIT_TOKEN: ${{ secrets.ZEIT_TOKEN }}
+          AIRTABLE_API_KEY: ${{secrets.AIRTABLE_API_KEY}}
           AIRTABLE_BASE_ID_CONCORD: ${{ secrets.AIRTABLE_BASE_ID_CONCORD }}
           AIRTABLE_BASE_ID_WALNUTCREEK: ${{ secrets.AIRTABLE_BASE_ID_WALNUTCREEK }}
           AIRTABLE_BASE_ID_PATERSON: ${{ secrets.AIRTABLE_BASE_ID_PATERSON }}

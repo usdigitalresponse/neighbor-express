@@ -15,7 +15,7 @@ const NeighborLayout = ({ children }) => {
   const title = getCmsRecordFromKey('title', state);
   const brand = getCmsRecordFromKey('brand', state);
   const cta = getCmsRecordFromKey('header_cta', state, false /*required*/);
-  const footer = getCmsRecordFromKey('contact', state);
+  const contact = getCmsRecordFromKey('contact', state);
   const languages = getRecordLanguages(state);
   const pages = getCmsPages(state);
   const nav = getCmsNav(state);
@@ -31,8 +31,8 @@ const NeighborLayout = ({ children }) => {
   return <div>
     <Head>
       <title>{title.title}</title>
-      <meta name="description" content="Request free meals, order your usual groceries, or ask for other help you may need. A volunteer will bring your delivery right to your door." />
-      <link id="favicon" rel="icon" href="https://glitch.com/favicon.ico" type="image/x-icon" />
+      <meta name="description" content={title.body} />
+      {title.image && <link id="favicon" rel="icon" href={title.image} type="image/x-icon" />}
       <meta charset="utf-8" />
       <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
       <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -83,16 +83,16 @@ const NeighborLayout = ({ children }) => {
             <div className="grid-row grid-gap">
               <div className="usa-footer__logo grid-row mobile-lg:grid-col-6 mobile-lg:grid-gap-2">
                 <div className="mobile-lg:grid-col-auto">
-                  <h3 className="usa-footer__logo-heading">Neighbor Express</h3>
+                  <h3 className="usa-footer__logo-heading">{brand.body}</h3>
                 </div>
               </div>
               <div className="usa-footer__contact-links mobile-lg:grid-col-6">
-                <h3 className="usa-footer__contact-heading">{footer.title}</h3>
+                <h3 className="usa-footer__contact-heading">{contact.title}</h3>
                 <address className="usa-footer__address">
                   <div className="usa-footer__contact-info grid-row grid-gap">
                     <div className="grid-col-auto">
                       <form className="usa-form">
-                        {footer.body}
+                        {contact.body_markdown}
                         <label className="usa-label" htmlFor="options">Choose Language</label>
                         <select onChange={(e) => setLanguage(e.target.value)} className="usa-select"
                                 name="options" id="options" value={state.language.key}>
