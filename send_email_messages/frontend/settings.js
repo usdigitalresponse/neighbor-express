@@ -198,7 +198,7 @@ function TableTemplateVariables({tableName}) {
 				      (remove)
 				    </TextButton>
 					)
-					return <li> {field.name} -> {sendgridFormat} {removeLink}</li>
+					return <li key={f_id}> {field.name} -> {sendgridFormat} {removeLink}</li>
 				})}
 			</ul>
 			<AddTemplateVariableDialog table={table}/>
@@ -209,6 +209,14 @@ function TableTemplateVariables({tableName}) {
 
 export function SettingsComponent({exit}) {  
 	const globalConfig = useGlobalConfig();
+
+	if (globalConfig.get('template_variables') === undefined) {
+		globalConfig.setAsync('template_variables', {});
+	}
+
+	if (globalConfig.get('email_types') === undefined) {
+		globalConfig.setAsync('email_types', {});
+	}
 
   return (
     <Box padding={3}>
@@ -246,7 +254,7 @@ export function SettingsComponent({exit}) {
       <Accordion title="Template Variables">
       	{
       		['Deliveries', 'Volunteers'].map((tableName) => {
-      			return <TableTemplateVariables tableName={tableName} />
+      			return <TableTemplateVariables key={tableName} tableName={tableName} />
       		})
       	}
       </Accordion>
