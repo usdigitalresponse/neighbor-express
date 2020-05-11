@@ -1,8 +1,10 @@
-import { initializeBlock, Box, Button, useRecords, useBase } from '@airtable/blocks/ui';
-import { base } from '@airtable/blocks';
+import { initializeBlock, Box, Button, useRecords, useBase, useSettingsButton } from '@airtable/blocks/ui';
+import { base, globalConfig } from '@airtable/blocks';
 import React, { useState } from 'react';
-import { getConfigOfType, getGlobalValueFromKey, getEmailTypes } from './config.js';
+import { SettingsComponent } from './settings.js'
 import { SendMessagesStep } from './send-messages.js'
+import { Accordion } from './util.js'
+
 
 function findById(table, id) {
   return table.find(r => r.id === id);
@@ -14,20 +16,17 @@ async function getEmailInfoForDelivery(delivery, volunteer) {
     delivery: {},
     volunteer: {}
   }
-  const templateVarsConfig = await getConfigOfType("template-variable");
-
-  for (let r of templateVarsConfig) {
-    if (r.getCellValue("Airtable table").name == "Deliveries") {
-      output.delivery[r.getCellValue("sendgrid")] = delivery.getCellValue(r.getCellValue("Airtable Field Name"));
-    } else if (r.getCellValue("Airtable table").name == "Volunteers") {
-      if (volunteer) {
-        output.volunteer[r.getCellValue("sendgrid")] = volunteer.getCellValue(r.getCellValue("Airtable Field Name"));
-      }
-    } else {
-      console.log("Configuration error, make sure all template variables have either Deliveries or Volunteers as their Airtable table");
+  const deliveryTemplateVars = globalConfig.get(['template_variables', 'Deliveries'])
+  for (let [f_id, sendgridValue] of Object.entries(deliveryTemplateVars)) {
+    output.delivery[sendgridValue] = delivery.getCellValue(f_id);
+  }
+  if (volunteer) {
+    // Only populate volunteer template variables if there is a volunteer assigned.
+    const volunteerTemplateVars = globalConfig.get(['template_variables', 'Volunteers'])
+    for (let [f_id, sendgridValue] of Object.entries(volunteerTemplateVars)) {
+      output.volunteer[sendgridValue] = volunteer.getCellValue(f_id);
     }
   }
-
   return output;
 }
 
@@ -68,10 +67,10 @@ async function computeMessagesToCreate(addWarning) {
   const allMessages = (await base.getTable("Messages").selectRecordsAsync()).records;
   const allVolunteers = (await base.getTable("Volunteers").selectRecordsAsync()).records;
 
-  const EMAIL_TYPES = await getEmailTypes();
+  const EMAIL_TYPES = globalConfig.get('email_types');
 
   for (const delivery of allDeliveries) {
-    const deliveryStage = delivery.getCellValue(await getGlobalValueFromKey("stage_column_name"))?.name;
+    const deliveryStageId = delivery.getCellValue(globalConfig.get('trigger_column'))?.id;
 
     // assemble a list of existing message types for this delivery
     let existingMessageTypes = [];
@@ -96,7 +95,7 @@ async function computeMessagesToCreate(addWarning) {
         // We've already sent a message of this type for this delivery
         continue;
       }
-      if (!EMAIL_TYPES[messageType].stages.includes(deliveryStage)){
+      if (EMAIL_TYPES[messageType].stage != deliveryStageId){
         // The delivery is in the wrong stage for this type of email, skip
         continue;
       }
@@ -113,25 +112,22 @@ async function computeMessagesToCreate(addWarning) {
   return output;
 }
 
+
 function WarningAccordion({warnings}) {
-  const [isOpen, setIsOpen] = useState(false);
 
   if (warnings.length === 0) {
     return null;
   }
   return (
-    <Box>
-      <Button onClick={() => setIsOpen(!isOpen)}>
-        {isOpen ? "Hide Warnings" : `Show ${warnings.length} warnings`}
-      </Button>
-      {isOpen && warnings.map((warning, i) => {
+    <Accordion title={ `${warnings.length} warnings`}>
+      {warnings.map((warning, i) => {
         return <p key={`warning_${i}`}>{warning}</p>
       })}
-    </Box>
+    </Accordion>
   )
 }
 
-function MainUIBlock() {
+function MainUIComponent() {
   const [step1result, setStep1result] = useState(undefined);
   const [warnings, setWarnings] = useState([]);
 
@@ -177,5 +173,17 @@ function MainUIBlock() {
   );
 }
 
+function ComponentWithSettings() {
+  const [isShowingSettings, setIsShowingSettings] = useState(false);
+  useSettingsButton(function() {
+    setIsShowingSettings(!isShowingSettings);
+  });
+  
+  if (isShowingSettings) {
+    return <SettingsComponent exit={() => setIsShowingSettings(false)}/>
+  }
+  return <MainUIComponent />
+}
 
-initializeBlock(() => <MainUIBlock />);
+
+initializeBlock(() => <ComponentWithSettings />);

@@ -1,10 +1,10 @@
 import { Box, Button, useRecords, useBase } from '@airtable/blocks/ui';
 import React, { useState } from 'react';
-import { getSendgridConfig } from './config.js';
+import { globalConfig } from '@airtable/blocks';
 
-
-async function sendMessage(messageToSend, cfg) {
+async function sendMessage(messageToSend) {
   const dynamicTemplateData = JSON.parse(messageToSend.getCellValue("Template Data"));
+  const EMAIL_TYPES = globalConfig.get('email_types');
   const sendgridData = {
     "personalizations": [
       {
@@ -20,11 +20,11 @@ async function sendMessage(messageToSend, cfg) {
       "name": "Neighbor Express",
       "email": "noreply@neighborexpress.org"
     },
-    "reply_to": cfg.REPLY_TO,
-    "template_id": cfg.EMAIL_TYPES[messageToSend.getCellValue("Email type").name]["sendgrid_template"]
+    "reply_to": globalConfig.get('reply_to'),
+    "template_id": EMAIL_TYPES[messageToSend.getCellValue("Email type").name]["sendgrid_template"]
   }
-
-  const response = await fetch(`https://nex-sendgrid-proxy.geoffreylitt.now.sh/api/sendgrid-proxy?proxy_token=${cfg.SENDGRID_PROXY_TOKEN}`, {
+  const token = globalConfig.get("SENDGRID_PROXY_TOKEN");
+  const response = await fetch(`https://nex-sendgrid-proxy.geoffreylitt.now.sh/api/sendgrid-proxy?proxy_token=${token}`, {
     method: 'POST',
     body: JSON.stringify(sendgridData)
   });
@@ -44,9 +44,8 @@ export function SendMessagesStep() {
   }
 
   async function sendMessages() {
-    const cfg = await getSendgridConfig();
     for (const messageToSend of messagesToSend) {
-      const response = await sendMessage(messageToSend, cfg);
+      const response = await sendMessage(messageToSend);
 
       if (response.status === 202) {
         messagesTable.updateRecordAsync(messageToSend.id, {
