@@ -140,7 +140,7 @@ function AddTemplateVariableDialog({table}) {
   const globalConfig = useGlobalConfig();
 
   function save() {
-		globalConfig.setAsync(["template_variables", table.name, field], sendgrid)
+		globalConfig.setAsync(["template_variables", table.name, field.id], sendgrid)
 		setField('');
 		setSendgrid('');
   	setIsDialogOpen(false);
@@ -155,7 +155,8 @@ function AddTemplateVariableDialog({table}) {
           <FormField label="Airtable field" description="What field contains the data you want to send to sendgrid?">
 				  	<FieldPicker 
 				  		table={table}
-				  		onChange={(newField) => setField(newField.id)} />
+				  		field={field}
+				  		onChange={(newField) => setField(newField)} />
 				  </FormField>
 				  <FormField label="Sendgrid reference" description="How does the sengrid template refer to this data?">
 				  	<Input 
@@ -185,7 +186,7 @@ function TableTemplateVariables({tableName}) {
 
 	return (
 		<Box padding={3}>
-			<Text> You can use these fields from the {table.name} in sendgrid </Text>
+			<Text> You can use these fields from the {table.name} table in sendgrid </Text>
 			<ul>
 				{Object.keys(globalConfig.get(['template_variables', table.name])).map((f_id) => {
 					const field = table.getFieldIfExists(f_id);
