@@ -2,7 +2,7 @@ const exec = require('@actions/exec');
 const populateCmsCache = require('./populate-cms-cache.js');
 
 // What cities do we serve?
-const cities = ['concord', 'walnutcreek', 'paterson', 'demo1', 'demo2', 'demo3', 'landing-page'];
+const cities = ['concord', 'walnutcreek', 'paterson', 'demo1', 'demo2', 'demo3', 'landing-page', 'cms'];
 
 //https://codeburst.io/javascript-async-await-with-foreach-b6ba62bbf404
 async function asyncForEach(array, callback) {
