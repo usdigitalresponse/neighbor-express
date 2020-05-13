@@ -3,7 +3,7 @@ module.exports = {
         browser: true,
         es6: true,
     },
-    extends: ['eslint:recommended', 'plugin:react/recommended'],
+    extends: ['eslint:recommended'],
     globals: {
         Atomics: 'readonly',
         SharedArrayBuffer: 'readonly',
@@ -15,7 +15,7 @@ module.exports = {
         ecmaVersion: 2018,
         sourceType: 'module',
     },
-    plugins: ['react', 'react-hooks'],
+    plugins: ['react-hooks'],
     rules: {
         'react/prop-types': 0,
         'react-hooks/rules-of-hooks': 'error',
