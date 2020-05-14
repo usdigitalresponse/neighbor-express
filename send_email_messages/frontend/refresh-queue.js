@@ -110,6 +110,13 @@ async function computeMessagesToCreate(addWarning) {
   return output;
 }
 
+async function batchedCreate(messages) {
+  // Airtable only lets us createRecordsAsync for 50 at a time
+  for (let index = 0; index < messages.length; index+=50) {
+    await base.getTable("Messages").createRecordsAsync(messages.slice(index, index+50));
+  }
+}
+
 
 function WarningAccordion({warnings}) {
 
@@ -145,11 +152,7 @@ export function RefreshQueueStep({nextStep}) {
       setResult(`No new messages to enqueue.`);
       return;
     }
-    if (messagesToCreate.length > 50) {
-      addWarning(`You can only create 50 emails at once, but we found ${messagesToCreate.length} Doing the first 50 now... remember to do this again to get the rest!`);
-      messagesToCreate = messagesToCreate.slice(0, 50);
-    } 
-    await base.getTable("Messages").createRecordsAsync(messagesToCreate);
+    await batchedCreate(messagesToCreate);
     setResult(`Enqueued ${messagesToCreate.length} new messages`);
   }
 
