@@ -11,13 +11,9 @@ exports[`Photo block renders correctly 1`] = `
     }
   }
 >
-  <div
-    className="grid-row"
-  >
-    <img
-      alt="golden retriever puppy"
-      src="https://cdn2-www.dogtime.com/assets/uploads/2011/03/puppy-development.jpg"
-    />
-  </div>
+  <img
+    alt="golden retriever puppy"
+    src="https://cdn2-www.dogtime.com/assets/uploads/2011/03/puppy-development.jpg"
+  />
 </Content>
 `;
