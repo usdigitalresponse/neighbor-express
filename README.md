@@ -102,3 +102,19 @@ All of the advanced features require using Airtable Blocks, a paid feature which
 
 * Maps: set up the built-in Map block. You’ll need to create an account for the Google Maps API. Once you’ve set up the Map block, you can view a map of any table and color it by any single-select field. You can use this to view Volunteers or Deliveries on a map to help with matching people.
 * SMS: set up the built-in SMS block. You’ll need to create an account for the Twilio API. You can then send batch mail-merge-style SMS to any View.
+
+# Managed sites
+
+You can fork this repository and set up your own Neighbor Express instance using the instructions above -- you don't need this section. This section is for Neighbor Express eng, about how to set up a new Neighbor Express site that *we* are managing through our own Vercel and Airtable accounts. (such as for Paterson, Walnut Creek, our landing page, etc.)
+
+## Adding a new city
+
+* Add a new Vercel project to this [page](https://vercel.com/dashboard/neighborexpress/projects) using the [Now CLI](https://vercel.com/docs/now-cli?query=cli#commands/overview/project-linking). The name should be a short descriptive name like "paterson" or "cms"
+* In cloudflare, create a new subdomain for your new page. Copy the configuration from our other sites.
+* In Vercel, add the subdomain.neighborexpress.org domain to the project you created [instructions](https://vercel.com/docs/v2/custom-domains)
+* To make sure your new site is updated when we make improvements or bugfixes to the code, add it in 3 places:
+    * [Deploy Script](https://github.com/usdigitalresponse/neighbor-express/blob/master/scripts/update-all.js) Add your project name to the `cities` list. This way the script auto-deploys to your city
+    * [Git Hook](https://github.com/usdigitalresponse/neighbor-express/blob/master/.github/workflows/update-now.yaml) Add an environment variable with the Airtable Base ID of the base that will power your site. Imitate the examples there.
+    * [Github Secrets](https://github.com/usdigitalresponse/neighbor-express/settings/secrets) Add the airtable base ID as a github secret so the git hook can access it
+
+Now, when you merge that PR to master with the latest code, the site will update, and stay updated with all future changes.
