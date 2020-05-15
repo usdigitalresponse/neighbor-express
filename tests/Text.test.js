@@ -1,20 +1,28 @@
 import { shallow } from "enzyme";
 import Text from "../components/Text.jsx";
 
-describe("Text block", () => {
-	const block = {
-		title: 'aaa',
-		body_markdown: 'bbb',
-	}
-	it('shows header', () => {
-    const text = shallow(<Text block={block} />);
+let wrapper;
 
-    expect(text.find("h2").text()).toEqual("aaa");
+const block = {
+  title: 'aaa',
+  body_markdown: 'bbb',
+};
+
+beforeEach(() => {
+  wrapper = shallow(<Text block={block} />);
+});
+
+describe("Text block", () => {
+  it('renders correctly', () => {
+    expect(wrapper).toMatchSnapshot();
+  });
+
+	it('shows header', () => {
+    expect(wrapper.find("h2").text()).toEqual("aaa");
   });
 
   it('shows body', () => {
-    const text = shallow(<Text block={block} />);
-    expect(text.contains(<div>bbb</div>)).toEqual(true);
+    expect(wrapper.contains(<div>bbb</div>)).toEqual(true);
   });
 
   it('shows image', () => {

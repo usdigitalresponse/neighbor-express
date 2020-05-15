@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Button component renders correctly 1`] = `
+<p>
+  <Link
+    as="/volunteer"
+    href="/[pid]"
+  >
+    <a
+      className="usa-button usa-button--small"
+      href="/volunteer"
+    >
+      Volunteer now!!
+    </a>
+  </Link>
+</p>
+`;

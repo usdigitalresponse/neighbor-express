@@ -1,0 +1,38 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Form block renders correctly 1`] = `
+<Content
+  block={
+    Object {
+      "body": "abc123airtableformcode",
+      "title": "Test title",
+    }
+  }
+>
+  <div
+    className="grid-row grid-gap"
+  >
+    <div
+      className="tablet:grid-col-12 usa-prose"
+    >
+      <h2
+        className="font-heading-xl margin-top-0 tablet:margin-bottom-0"
+      >
+        Test title
+      </h2>
+      <section
+        id="request_form"
+      >
+        <iframe
+          className="airtable-embed airtable-dynamic-height"
+          frameBorder="0"
+          height="2316"
+          onmousewheel=""
+          src="https://airtable.com/embed/abc123airtableformcode"
+          width="100%"
+        />
+      </section>
+    </div>
+  </div>
+</Content>
+`;
