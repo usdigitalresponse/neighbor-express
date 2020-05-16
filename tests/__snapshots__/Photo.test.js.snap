@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Photo block renders correctly 1`] = `
+<Content
+  block={
+    Object {
+      "alt": "golden retriever puppy",
+      "body_markdown": "Test body",
+      "image": "https://cdn2-www.dogtime.com/assets/uploads/2011/03/puppy-development.jpg",
+      "title": "Test title",
+    }
+  }
+>
+  <img
+    alt="golden retriever puppy"
+    src="https://cdn2-www.dogtime.com/assets/uploads/2011/03/puppy-development.jpg"
+  />
+</Content>
+`;

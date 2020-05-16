@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Text block renders correctly 1`] = `
+<Content
+  block={
+    Object {
+      "body_markdown": "bbb",
+      "title": "aaa",
+    }
+  }
+>
+  <div
+    className="grid-row grid-gap"
+  >
+    <div
+      className="tablet:grid-col-8 usa-prose"
+    >
+      <h2
+        className="font-heading-xl margin-top-0 tablet:margin-bottom-0"
+      >
+        aaa
+      </h2>
+      <div>
+        bbb
+      </div>
+    </div>
+  </div>
+</Content>
+`;

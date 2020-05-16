@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Hero block renders correctly 1`] = `
+<section
+  aria-label="Introduction"
+>
+  <div
+    className="usa-hero"
+    style={
+      Object {
+        "backgroundImage": "url(https://icatcare.org/app/uploads/2019/09/The-Kitten-Checklist-1.png)",
+      }
+    }
+  >
+    <div
+      className="grid-container"
+    >
+      <div
+        className="usa-hero__callout"
+      >
+        <h1
+          className="usa-hero__heading"
+        >
+          <span
+            className="usa-hero__heading--alt"
+          >
+            Test title
+          </span>
+        </h1>
+        <div>
+          Test body
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+`;

@@ -1,4 +1,4 @@
-import { Box, Button, useRecords, useBase } from '@airtable/blocks/ui';
+import { Box, Button, ChoiceToken, ProgressBar, RecordCardList, Text, useRecords, useBase } from '@airtable/blocks/ui';
 import React, { useState } from 'react';
 import { globalConfig } from '@airtable/blocks';
 
@@ -32,20 +32,22 @@ async function sendMessage(messageToSend) {
   return response;
 }
 
-export function SendMessagesStep() {
-  const [result, setResult] = useState(undefined);
+export function SendMessagesStep({previousStep}) {
+  const [completed, setCompleted] = useState(false);
   const [sending, setSending] = useState(false);
+  const [progress, setProgress] = useState(0);
+
   const messagesTable = useBase().getTable("Messages");
+  const statusField = messagesTable.getFieldByName("Status");
+  const queuedOption = statusField.options.choices.find(c => c.name == "Queued");
 
   const messagesToSend = useRecords(messagesTable).filter(m => m.getCellValue("Status").name === "Queued");
 
-  function cancelButton() {
-    // also disable all buttons!
-    setResult('**Canceled!** No messages sent.');
-  }
-
   async function sendMessages() {
+    setCompleted(false);
     setSending(true);
+    const total = messagesToSend.length;
+    let i = 0;
     for (const messageToSend of messagesToSend) {
       const response = await sendMessage(messageToSend);
 
@@ -59,29 +61,42 @@ export function SendMessagesStep() {
           "Status": { name: "Errored" },
         })
       }
+      i += 1;
+      setProgress(i/total);
     }
     setSending(false);
-    setResult('**Done sending messages!**');
+    setCompleted(true);
+  }
+
+  async function goBack() {
+    // Clear any non-persistent data before leaving
+    setCompleted(false);
+    setSending(false);
+    setProgress(0);
+    previousStep();
   }
 
   return (
     <Box>
       <h2> Step 2: Send emails </h2>
-      {result ? <p> {result} </p> : <>
-        {
-          messagesToSend.length === 0 ?
-          <p> No enqueued messages to send. <strong> All done! </strong></p> :
-          <>
-            <p> {messagesToSend.length} messages queued to send. Review the list in the Messages tab, then click below to send them. </p>
-            <Button variant="secondary" onClick={cancelButton} disabled={sending}>
-              Cancel
-            </Button>
-            <Button variant="primary" onClick={sendMessages} disabled={sending}>
-              Send {messagesToSend.length} Messages
-            </Button>
-          </>
-        }
-      </>}
+      {(sending || completed) && <ProgressBar progress={progress}/> }
+      {completed && <p> Successfully sent all messages </p>}
+      {
+        messagesToSend.length === 0 ?
+        <p> There are no messages with status <ChoiceToken choice={queuedOption} marginRight={1} /> </p> :
+        <>
+          <Box margin={2} display="flex" flexDirection="row" justifyContent="flex-start" alignItems="center">
+            <Text> The following {messagesToSend.length} messages will be sent:</Text>
+            <Button marginX={2} variant="primary" onClick={sendMessages} disabled={sending}>
+              Send All Messages
+            </Button> 
+          </Box>
+          <Box height="300px" border="thick" backgroundColor="lightGray1">
+            <RecordCardList records={messagesToSend} fields={["Email type", "Recipient", "Delivery"].map((f) => messagesTable.getFieldByName(f))} />
+          </Box>
+        </>
+      }
+      <Button onClick={goBack}> Go Back </Button>
     </Box>
   )
 }

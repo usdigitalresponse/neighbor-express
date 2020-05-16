@@ -1,4 +1,4 @@
-import Content from '@/components/Content';
+import Content from './Content';
 
 const YouTube = ({ block }) => {
   // regex the href so its foolproof
