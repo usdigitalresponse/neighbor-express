@@ -1,21 +1,32 @@
 {
-  "name": "neighborhood-cms",
+  "name": "neighbor-express",
   "version": "0.0.1",
   "description": "Display data from an Airtable base",
   "main": "server.js",
   "scripts": {
     "dev": "next",
     "build": "next build",
-    "start": "next start"
+    "export": "next export",
+    "start": "next start",
+    "test": "jest",
+    "testwatch": "jest --watchAll"
   },
   "dependencies": {
+    "@actions/exec": "^1.0.3",
     "airtable": "^0.8.1",
     "airtable-plus": "^1.0.4",
+    "classnames": "^2.2.6",
     "interweave": "^12.5.0",
-    "micromarkdown": "^0.3.4-a",
-    "next": "^9.3.4",
+    "markdown-to-jsx": "^6.11.1",
+    "next": "^9.3.5",
+    "next-seo": "^4.4.0",
+    "now": "^18.0.0",
+    "nprogress": "^0.2.0",
     "react": "^16.13.1",
-    "react-dom": "^16.13.1"
+    "react-dom": "^16.13.1",
+    "react-process-string": "^1.2.0",
+    "react-recipes": "^1.0.0",
+    "react-string-replace": "^0.4.4"
   },
   "engines": {
     "node": "10"
@@ -27,11 +38,14 @@
   ],
   "license": "MIT",
   "devDependencies": {
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.2",
+    "enzyme-to-json": "^3.4.4",
     "eslint": "^6.8.0",
-    "eslint-config-airbnb": "^18.1.0",
     "eslint-plugin-import": "^2.20.2",
     "eslint-plugin-jsx-a11y": "^6.2.3",
-    "eslint-plugin-react": "^7.19.0",
-    "eslint-plugin-react-hooks": "^2.5.1"
+    "eslint-plugin-react": "^7.20.0",
+    "eslint-plugin-react-hooks": "^2.5.1",
+    "jest": "^25.5.3"
   }
 }

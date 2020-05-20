@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Quote block renders correctly 1`] = `
+<section
+  className="usa-section usa-section--dark"
+>
+  <div
+    className="grid-container"
+  >
+    <h2
+      className="font-heading-xl margin-y-0"
+    >
+      May the Force be with you
+    </h2>
+    <Button
+      href="www.google.com"
+      size="big"
+    >
+      Btn text
+    </Button>
+  </div>
+</section>
+`;
