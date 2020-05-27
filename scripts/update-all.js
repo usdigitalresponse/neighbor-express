@@ -2,7 +2,7 @@ const exec = require('@actions/exec');
 const populateCmsCache = require('./populate-cms-cache.js');
 
 // What cities do we serve?
-const cities = ['concord'];
+const cities = ['concord', 'sanramon']; // are all cities suppose to be in this list? 
 
 //https://codeburst.io/javascript-async-await-with-foreach-b6ba62bbf404
 async function asyncForEach(array, callback) {
