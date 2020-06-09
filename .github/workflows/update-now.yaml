@@ -5,7 +5,7 @@ on:
     # but only for the master branch
     push:
         branches:
-            - master
+            - google-analytics
 
 jobs:
     build:
@@ -15,7 +15,7 @@ jobs:
             - uses: actions/checkout@master
             - uses: actions/setup-node@v1 # need node to install npm packages / now
               with:
-                  node-version: '10.x'
+                  node-version: '12.x'
             - run: npm install
             - name: Run Deploys
               env: # Or as an environment variable
