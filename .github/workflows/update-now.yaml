@@ -5,7 +5,7 @@ on:
     # but only for the master branch
     push:
         branches:
-            - google-analytics
+            - master
 
 jobs:
     build:
