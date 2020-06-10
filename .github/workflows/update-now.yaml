@@ -1,31 +1,34 @@
+name: Update Servers
+
 on:
-  # Trigger the workflow on push or pull request,
-  # but only for the master branch
-  push:
-    branches:
-      - master
+    # Trigger the workflow on push or pull request,
+    # but only for the master branch
+    push:
+        branches:
+            - master
 
 jobs:
-  build:
-    name: Deploy to Vercel
-    runs-on: 'ubuntu-latest'
-    steps:
-      - uses: actions/checkout@master
-      - uses: actions/setup-node@v1 # need node to install npm packages / now
-        with:
-          node-version: '10.x'
-      - run: npm install
-      - name: Run Deploys
-        env: # Or as an environment variable
-          ZEIT_TOKEN: ${{ secrets.ZEIT_TOKEN }}
-          AIRTABLE_API_KEY: ${{secrets.AIRTABLE_API_KEY}}
-          AIRTABLE_BASE_ID_CONCORD: ${{ secrets.AIRTABLE_BASE_ID_CONCORD }}
-          AIRTABLE_BASE_ID_WALNUTCREEK: ${{ secrets.AIRTABLE_BASE_ID_WALNUTCREEK }}
-          AIRTABLE_BASE_ID_PATERSON: ${{ secrets.AIRTABLE_BASE_ID_PATERSON }}
-          AIRTABLE_BASE_ID_DEMO1: ${{ secrets.AIRTABLE_BASE_ID_DEMO1 }}
-          AIRTABLE_BASE_ID_DEMO2: ${{ secrets.AIRTABLE_BASE_ID_DEMO2 }}
-          AIRTABLE_BASE_ID_DEMO3: ${{ secrets.AIRTABLE_BASE_ID_DEMO3 }}
-          AIRTABLE_BASE_ID_LANDING-PAGE: ${{ secrets.AIRTABLE_BASE_ID_LANDING_PAGE }}
-          AIRTABLE_BASE_ID_CMS: ${{ secrets.AIRTABLE_BASE_ID_CMS }}
-          AIRTABLE_BASE_ID_SANRAMON: ${{ secrets.AIRTABLE_BASE_ID_SANRAMON }}
-        run: node scripts/update-all.js
+    build:
+        name: Deploy to Vercel
+        runs-on: 'ubuntu-latest'
+        steps:
+            - uses: actions/checkout@master
+            - uses: actions/setup-node@v1 # need node to install npm packages / now
+              with:
+                  node-version: '12.x'
+            - run: npm install
+            - name: Run Deploys
+              env: # Or as an environment variable
+                  ZEIT_TOKEN: ${{ secrets.ZEIT_TOKEN }}
+                  AIRTABLE_API_KEY: ${{secrets.AIRTABLE_API_KEY}}
+                  AIRTABLE_BASE_ID_CONCORD: ${{ secrets.AIRTABLE_BASE_ID_CONCORD }}
+                  AIRTABLE_BASE_ID_WALNUTCREEK: ${{ secrets.AIRTABLE_BASE_ID_WALNUTCREEK }}
+                  AIRTABLE_BASE_ID_PATERSON: ${{ secrets.AIRTABLE_BASE_ID_PATERSON }}
+                  AIRTABLE_BASE_ID_DEMO1: ${{ secrets.AIRTABLE_BASE_ID_DEMO1 }}
+                  AIRTABLE_BASE_ID_DEMO2: ${{ secrets.AIRTABLE_BASE_ID_DEMO2 }}
+                  AIRTABLE_BASE_ID_DEMO3: ${{ secrets.AIRTABLE_BASE_ID_DEMO3 }}
+                  AIRTABLE_BASE_ID_LANDING-PAGE: ${{ secrets.AIRTABLE_BASE_ID_LANDING_PAGE }}
+                  AIRTABLE_BASE_ID_CMS: ${{ secrets.AIRTABLE_BASE_ID_CMS }}
+                  AIRTABLE_BASE_ID_SANRAMON: ${{ secrets.AIRTABLE_BASE_ID_SANRAMON }}
+                  GA_TRACKING_ID: ${{ secrets.GA_TRACKING_ID }}
+              run: node scripts/update-all.js
