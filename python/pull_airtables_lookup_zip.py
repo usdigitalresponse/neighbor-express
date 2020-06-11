@@ -1,14 +1,15 @@
+#%%
 import pandas as pd
-import airtable as a
+from airtable import Airtable
 import os
 import geocoder
 import googlemaps
 from datetime import datetime
 import time
 
-
+#%%
 #Changing drive to where control file/parameters file is held
-os.chdir(r'C:\\')
+#os.chdir(r'C:\\')
 
 parameters = pd.read_excel('Parameters.xlsx')
 
@@ -20,7 +21,7 @@ base = str(parameters['Base'].loc[0])
 api = str(parameters['API'].loc[0])
 
 google = str(parameters['GoogleGeocode'].loc[0])
-
+#
 
 
 #Starting a timer to see how long program takes
@@ -28,12 +29,12 @@ From = time.time()
 
 
 
-
+#%%
 def air(table):
 
 
     #Connecting to Airtable API with base key, api key, and table name specified when function called
-    airtable = a.Airtable(base_key=base,api_key=api, table_name=table)
+    airtable = Airtable(base_key = base, api_key = api,table_name=table)
 
 
 
@@ -194,7 +195,7 @@ def air(table):
 
     return df
 
-
+#%%
 #Calling function here in loop in case I want to pull multiple tables at once.
 for tables in parameters['Tables']:
     x = air(tables)
@@ -210,3 +211,6 @@ strminutes = str(minutes)
 
 print('Finished')
 print('I rock...that only took me ' + strminutes + ' minutes!')
+
+
+# %%
