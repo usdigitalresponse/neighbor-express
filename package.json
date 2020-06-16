@@ -21,6 +21,7 @@
     "next-seo": "^4.5.0",
     "now": "^18.0.0",
     "nprogress": "^0.2.0",
+    "parse-domain": "^3.0.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-process-string": "^1.2.0",
