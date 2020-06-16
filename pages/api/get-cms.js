@@ -14,11 +14,11 @@ export default async (req, res) => {
   }
 
   // This feature is built for neighborexpress, so we can have multiple sites on a domain with the code deployed once
-  if (!config.singleSource) {
+  if (!config.multipleDomains) {
     const hostname = req.headers.host || 'neighborexpress.org';
     const { subDomains } = parseDomain(hostname);
     if (subDomains) {
-      cms.base = config.domains[subDomains[0]]; // we're going to use the correct base
+      cms.base = config.multipleDomains[subDomains[0]]; // we're going to use the correct base
     }
   }
 
