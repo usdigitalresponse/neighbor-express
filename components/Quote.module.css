@@ -1,0 +1,5 @@
+/* Duplicate .block to increase specificity, so that this rule overrides
+ * .usa-section--dark h2. */
+.block.block h2 {
+  color: #fff;
+}
