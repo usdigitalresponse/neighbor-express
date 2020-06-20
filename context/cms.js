@@ -1,11 +1,12 @@
 import React, { useReducer } from "react";
 import { processRecords } from '@/utils/cms';
-import { records } from '../cms-cache.js'
+import NodeCache from 'node-cache';
 
+const cache = new NodeCache({ checkperiod: 120 });
 let CMSContext = React.createContext();
 
 let initialState = {
-  records: processRecords(records, {language: 'en'}),
+  records: [],
   language: 'en'
 };
 
@@ -25,17 +26,20 @@ let reducer = (state, action) => {
       return {
         ...state,
         language: action.payload,
-        records: processRecords(records, {language: action.payload} )
+        records: processRecords(records, { language: action.payload })
       };
   }
 };
 
-function CMSContextProvider(props) {
-  let [state, dispatch] = useReducer(reducer, initialState);
+function CMSContextProvider({ children, records }) {
+  let [state, dispatch] = useReducer(reducer, {
+    records,
+    language: 'en'
+  });
   let value = { state, dispatch };
 
   return (
-    <CMSContext.Provider value={value}>{props.children}</CMSContext.Provider>
+    <CMSContext.Provider value={value}>{children}</CMSContext.Provider>
   );
 }
 

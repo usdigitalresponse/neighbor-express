@@ -19,7 +19,7 @@ import Markdown from 'markdown-to-jsx';
 * Outputs the requested field of a record depending on the language of the user
 * Defaults to english
 */
-function getRecordField (record, fieldName, language = 'en') {
+function getRecordField(record, fieldName, language = 'en') {
   const field = record[`${fieldName}_${language}`] || record[`${fieldName}`];
   return field;
 }
@@ -60,7 +60,7 @@ export function getCmsNav(state) {
 }
 
 
-const AccordionNav = ({nav, pages}) => {
+const AccordionNav = ({ nav, pages }) => {
   const [open, setOpen] = useState(false);
   const aria_id = `basic-nav-section-${nav.key}`;
   // Create a ref that we add to the element for which we want to detect outside clicks
@@ -74,10 +74,10 @@ const AccordionNav = ({nav, pages}) => {
   }
   return <li key={nav.key} className="usa-nav__primary-item" ref={ref}>
     <button className="usa-accordion__button usa-nav__link"
-            aria-expanded={open}
-            aria-controls={aria_id}
-            onClick={() => setOpen(!open)}>
-    <span>{nav.title}</span></button>
+      aria-expanded={open}
+      aria-controls={aria_id}
+      onClick={() => setOpen(!open)}>
+      <span>{nav.title}</span></button>
     {open && <ul id={aria_id} className="usa-nav__submenu">
       {
         pages.map((page) => {
@@ -92,30 +92,30 @@ const AccordionNav = ({nav, pages}) => {
   </li>
 }
 
-export const RenderNavLinks = ({navs, pages}) => {
+export const RenderNavLinks = ({ navs, pages }) => {
   return <ul className="usa-nav__primary usa-accordion">
-      {
-        navs.length == 0 ?
+    {
+      navs.length == 0 ?
         pages.map(page => {
-        return <li key={page.key} className="usa-nav__primary-item">
+          return <li key={page.key} className="usa-nav__primary-item">
             <Link href="/[pid]" as={`/${page.key}`}><a className="usa-nav__link" href={`/${page.key}`}><span>{page.title}</span></a></Link>
           </li>
         }) :
         navs.map((nav) => {
           const pageKeys = nav.data.split(",");
-          const this_pages = pages.filter(record => {return pageKeys.includes(record.key)});
+          const this_pages = pages.filter(record => { return pageKeys.includes(record.key) });
           if (this_pages.length == 1) {
             const page = this_pages[0];
             return <li key={nav.key} className="usa-nav__primary-item">
               <Link href="/[pid]" as={`/${page.key}`}><a className="usa-nav__link" href={`/${page.key}`}><span>{nav.title}</span></a></Link>
             </li>
           } else {
-            return <AccordionNav key={nav.key} nav={nav} pages={this_pages}/>
+            return <AccordionNav key={nav.key} nav={nav} pages={this_pages} />
           }
         })
 
-      }
-    </ul>
+    }
+  </ul>
 }
 
 /**
@@ -178,11 +178,11 @@ export const processRecords = (records, state) => {
   const { language } = state;
   return records.map(record => {
     // We're going to make a helper for the picture column
-    record.image = record.picture[0]?.url;
-    record.body = getRecordField(record, 'body', language);
-    record.body_markdown = <Markdown>{record.body || ""}</Markdown>;
-    record.title = getRecordField(record, 'title', language);
-    record.alt = getRecordField(record, 'alt', language);
+    record.image = record.picture[0]?.url || null;
+    record.body = getRecordField(record, 'body', language) || null;
+    record.body_markdown = '';
+    record.title = getRecordField(record, 'title', language) || null;
+    record.alt = getRecordField(record, 'alt', language) || null;
     return record;
   });
 }

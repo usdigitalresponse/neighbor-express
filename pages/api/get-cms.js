@@ -1,6 +1,6 @@
 import airtable from '@/utils/airtable';
 import populateCmsCacheFromJson from '@/utils/cmsCache';
-import { parseDomain, ParseResultType } from 'parse-domain';
+import { parseDomain } from 'parse-domain';
 import config from '@/nex.config';
 
 // This is our one API endpoint, at /api/get-cms
@@ -23,5 +23,6 @@ export default async (req, res) => {
   }
 
   const data = await airtable.getCms(cms.base, cms.key);
+  populateCmsCacheFromJson(data.records);
   res.send(data);
 };

@@ -1,15 +1,12 @@
-const fs = require('fs');
+import fs from 'fs';
 
 function populateCmsCacheFromJson(data) {
-  const fileOutput = `module.exports = ${JSON.stringify(data, null, 4)}`;
-
-  fs.writeFile("./cms-cache.js", fileOutput, (err) => {
+  fs.writeFile('../../.cache/cache.json', data, (err) => {
     if (err) {
-      console.error(err);
-      return;
-    };
-    console.log("Cache file populated");
-  });
+      console.error(err)
+      return
+    }
+  })
 }
 
-module.exports = populateCmsCacheFromJson;
+export default populateCmsCacheFromJson;
