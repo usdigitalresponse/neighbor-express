@@ -7,14 +7,22 @@ const DELIMITER = '@@@';
 
 const Quote = ({ block }) => {
   const quotes = block.title.split(DELIMITER);
-  
-  return <section className="usa-section usa-section--dark">
-    <div className="grid-container">
+  let quotesDiv;
+  if (quotes.length > 1) {
+    quotesDiv = (
       <Carousel className={`${styles.carousel}`}>
         {quotes.map((quote) => {
-          return <h2 className="font-heading-xl margin-y-0">{quote}</h2>
+          return <h2 className="font-heading-xl">{quote}</h2>
         })}
       </Carousel>
+    );
+  } else {
+    quotesDiv = block.title;
+  }
+  
+  return <section className={`usa-section usa-section--dark ${styles.block}`}>
+    <div className="grid-container">
+      {quotesDiv}
       {block.href && <Button href={block.href} size='big'>{block.body}</Button>}
     </div>
   </section>
