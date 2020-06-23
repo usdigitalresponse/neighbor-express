@@ -17,7 +17,7 @@ const Quote = ({ block }) => {
       </Carousel>
     );
   } else {
-    quotesDiv = block.title;
+    quotesDiv = <h2 className="font-heading-xl">{block.title}</h2>;
   }
   
   return <section className={`usa-section usa-section--dark ${styles.block}`}>
