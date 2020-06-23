@@ -1,0 +1,12 @@
+/* Duplicate .carousel to increase specificity, so that this rule overrides
+ * .usa-section--dark h2. */
+.carousel.carousel h2 {
+  color: #fff;
+}
+
+.carousel.carousel :global(.slide) {
+  background: transparent;
+  margin-bottom: 40px;
+  padding: 0px 40px;
+  text-align: left;
+}
