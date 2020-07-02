@@ -2,8 +2,10 @@ import React, { useContext, useState } from 'react';
 import Head from 'next/head';
 import { CMSContext } from '@/context/cms';
 import Button from '@/components/Button';
-import Link from 'next/link'
-import { getCmsRecordFromKey, getRecordLanguages, getCmsPages, getCmsNav, RenderNavLinks } from '@/utils/cms'
+import Link from 'next/link';
+import { getCmsRecordFromKey, getRecordLanguages, getCmsPages, getCmsNav, RenderNavLinks } from '@/utils/cms';
+import styles from './Neighbor.module.css'
+const classNames = require('classnames');
 
 const NeighborLayout = ({ children }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -42,9 +44,19 @@ const NeighborLayout = ({ children }) => {
     <header className="usa-header usa-header--basic ">
       <div className="usa-nav-container maxw-widescreen">
         <div className="usa-navbar">
-          <div className="usa-logo" id="brand">
-            <em className="usa-logo__text"><Link href="/"><a href="/" title="Home" aria-label="Home">{brand.body}</a></Link></em>
-          </div>
+          {/* Leftnav includes the main logo and the language switcher. */}
+          <div className={styles.leftnav}>
+            <div className="usa-logo" id="brand">
+              <em className="usa-logo__text"><Link href="/"><a href="/" title="Home" aria-label="Home">{brand.body}</a></Link></em>
+            </div>
+            <select onChange={(e) => setLanguage(e.target.value)} className={`usa-select ${styles.select}`}
+                    aria-label="Language"
+                    name="options" id="options" value={state.language.key}>
+              {languages.map(language => (
+                <option key={language.key} value={language.key}>{language.name}</option>
+              ))}
+            </select>
+          </div> 
           <button className="usa-menu-btn" onClick={() => setIsMenuOpen(true)}>Menu</button>
         </div>
         <nav aria-label="Primary navigation" className="usa-nav" style={menuOpenStyles}>
@@ -91,16 +103,7 @@ const NeighborLayout = ({ children }) => {
                 <address className="usa-footer__address">
                   <div className="usa-footer__contact-info grid-row grid-gap">
                     <div className="grid-col-auto">
-                      <form className="usa-form">
-                        {contact.body_markdown}
-                        <label className="usa-label" htmlFor="options">Choose Language</label>
-                        <select onChange={(e) => setLanguage(e.target.value)} className="usa-select"
-                                name="options" id="options" value={state.language.key}>
-                          {languages.map(language => (
-                            <option key={language.key} value={language.key}>{language.name}</option>
-                          ))}
-                        </select>
-                      </form>
+                      {contact.body_markdown}
                     </div>
                   </div>
                 </address>

@@ -86,3 +86,20 @@
     transform: rotate(360deg);
   }
 }
+
+.usa-header--basic .usa-nav-container.usa-nav-container {
+  align-items: center;
+}
+
+.usa-header--basic .usa-nav {
+  width: auto;
+}
+
+.usa-nav__primary-item {
+  align-items: center;
+  display: flex;
+}
+
+.usa-logo {
+  margin-top: 1rem;
+}

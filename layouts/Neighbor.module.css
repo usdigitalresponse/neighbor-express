@@ -1,0 +1,24 @@
+.select.select {
+  /* Matches the styling for nav bar items, so it looks less out of place. */
+  color: #565c65;
+  font-family: 'Inter', sans-serif !important;
+  font-size: .93rem;
+  font-weight: 700;
+  margin: -0.1rem 0.5rem 0;
+  max-width: 6.2rem;
+}
+
+@media (min-width: 64em) {
+  .select.select {
+    border-width: 0;
+    margin-right: 0;
+  } 
+}
+
+/* Includes logo and language switcher. */
+.leftnav {
+  align-items: center;
+  display: flex;
+  flex: 1 0 0;
+  justify-content: space-between;
+}
