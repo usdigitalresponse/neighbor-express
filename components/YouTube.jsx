@@ -1,4 +1,5 @@
 import Content from './Content';
+import styles from './YouTube.module.css'
 
 const YouTube = ({ block }) => {
   // regex the href so its foolproof
@@ -10,9 +11,11 @@ const YouTube = ({ block }) => {
   return <Content block={block}>
     { block.title && <h2 className="font-heading-xl margin-y-0">{block.title}</h2> }
     { block.body_markdown && <div> {block.body_markdown} </div> }
-    <div className="videoWrapper">
-    	<iframe src={`https://www.youtube.com/embed/${youtube_id}`} frameBorder="0" allowFullScreen
-    			allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"></iframe>
+    <div className={styles.videoContainer}>
+      <div className="videoWrapper">
+      	<iframe src={`https://www.youtube.com/embed/${youtube_id}`} frameBorder="0" allowFullScreen
+      			allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"></iframe>
+      </div>
     </div>
     {/* https://css-tricks.com/fluid-width-video/ */}
     <style jsx>{`
