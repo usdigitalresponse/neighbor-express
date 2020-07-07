@@ -7,6 +7,7 @@ import { Airtable } from '@airtable';
 async function getGalaxyDigitalData(lastRun) {
   const api_key = globalConfig.get("GALAXY_DIGITAL_API_KEY");
 
+  // TODO are there any custom fields they want pulled?
   const url = new URL("volunteer/user/list/", "https://api2.galaxydigital.com")
   const params = url.searchParams;
   params.set('key', api_key);
