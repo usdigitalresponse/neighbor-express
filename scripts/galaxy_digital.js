@@ -65,6 +65,7 @@ function postToAirtable(batch) {
       return;
     }
     records.forEach(function (record) {
+      // TODO handle updates as well?
       console.log(record.getId());
     });
   });
