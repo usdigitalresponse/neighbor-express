@@ -1,0 +1,9 @@
+.videoContainer {
+  padding: 0 10%;
+}
+
+@media (max-width: 63.99em) {
+  .videoContainer {
+    padding: 0 7%;
+  } 
+}
