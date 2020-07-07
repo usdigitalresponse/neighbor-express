@@ -22,28 +22,35 @@ async function getGalaxyDigitalData(lastRun) {
   return response;
 }
 
+/*
+ * Example message
+ * {     
+ *    "id":"613924"
+      "status":"active"
+      "referenceId":""
+      "firstName":"Mario"
+      "lastName":"Kibler"
+      "middleName":""
+      "email":"Mario.B.Kibler@example.com"
+      "mobile":"1-415-555-7124"
+      "phone":"360-555-7196"
+      "company":"ACME"
+      "gender":"Male"
+      "birthdate":"1983-09-27"
+      "address":"2350 Chardonnay Drive"
+      "address2":""
+      "city":"Beaverton"
+      "state":"WA"
+      "postal":"97006"
+      "dateAdded":"2015-03-02T11:00:51-06:00"
+      "dateUpdated":"2016-05-17T14:15:36-05:00"
+      "dateLastLogin":""
+      }
+ * 
+ */
 function convertGalaxyDigitalToAirtableSchema(galaxyDigitalData) {
     return {
-        // "id":"613924"
-        //    "status":"active"
-        //    "referenceId":""
-        //    "firstName":"Mario"
-        //    "lastName":"Kibler"
-        //    "middleName":""
-        //    "email":"Mario.B.Kibler@example.com"
-        //    "mobile":"1-415-555-7124"
-        //    "phone":"360-555-7196"
-        //    "company":"ACME"
-        //    "gender":"Male"
-        //    "birthdate":"1983-09-27"
-        //    "address":"2350 Chardonnay Drive"
-        //    "address2":""
-        //    "city":"Beaverton"
-        //    "state":"WA"
-        //    "postal":"97006"
-        //    "dateAdded":"2015-03-02T11:00:51-06:00"
-        //    "dateUpdated":"2016-05-17T14:15:36-05:00"
-        //    "dateLastLogin":""
+   
     };
 }
 
