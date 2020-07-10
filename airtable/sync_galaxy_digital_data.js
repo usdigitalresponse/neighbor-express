@@ -1,7 +1,7 @@
 // Script used to convert Volunteer data from the 
 // (Galaxy Digital)[http://api2.galaxydigital.com/volunteer/docs/] APIs
 // into the AirTable schemas
-import { globalConfig } from '@airtable/blocks';
+import { globalConfig } from '../sync_data/frontend/node_modules/@airtable/blocks';
 import { Airtable } from '@airtable';
 
 const AIRTABLE_API_KEY = globalConfig.get("AIRTABLE_API");
@@ -22,7 +22,7 @@ async function getGalaxyDigitalVolunteerData(limit, offset) {
   params.set('offset', offset);
 
   // TODO report errors
-  const response = await fetch(url, { method: 'GET' }).then(resp => resp.json()).catch(console.error);
+  const response = await fetch(url, {method: 'GET'}).then(resp => resp.json()).catch(console.error);
   return response;
 }
 
@@ -80,7 +80,7 @@ function updateAirtableRecord(batch) {
 
 // syncVolunteerData queries for all records in Galaxy Digital's API,
 // and creates or updates their records in AirTable
-async function syncVolunteerData() {
+export async function syncVolunteerData() {
   const existingRecords = pullAirtableVolunteers();
   let count = 0;
   let totalCount = 0;
@@ -125,5 +125,3 @@ async function syncVolunteerData() {
 
   console.log(`Total records: ${totalCount}`);
 }
-
-syncVolunteerData();
