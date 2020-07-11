@@ -2,7 +2,7 @@
     "dependencies": {
         "@airtable/blocks": "0.0.48",
         "react": "^16.13.0",
-        "react-dom": "^16.13.0",
+        "react-dom": "^16.13.0"
     },
     "devDependencies": {
         "eslint": "^7.0.0",

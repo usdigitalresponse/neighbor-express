@@ -22,8 +22,8 @@ async function getGalaxyDigitalVolunteerData(limit, offset) {
   params.set('offset', offset);
 
   // TODO report errors
-  const response = await fetch(url, {method: 'GET'}).then(resp => resp.json()).catch(console.error);
-  return response;
+  const response = await fetch(url, {method: 'GET'}).then(resp => resp.json()).catch(return null, error);
+  return response, null;
 }
 
 function convertGalaxyDigitalToAirtableSchema(galaxyDigitalVolunteer) {
@@ -54,17 +54,16 @@ function pullAirtableVolunteers() {
     fetchNextPage();
 
   }, function done(err) {
-    if (err) { console.error(err); return; }
+    if (err) { return null, err; }
   });
 
-  return existingRecords;
+  return existingRecords, null;
 }
 
 function createAirtableRecord(batch) {
   base(DESTINATION_TABLE).create(batch, function (err, records) {
     if (err) {
-      console.error(err);
-      return;
+      return err;
     }
   });
 }
@@ -72,31 +71,42 @@ function createAirtableRecord(batch) {
 function updateAirtableRecord(batch) {
   base(DESTINATION_TABLE).update(batch, function (err, records) {
     if (err) {
-      console.error(err);
-      return;
+      return err;
     }
   });
 }
 
 // syncVolunteerData queries for all records in Galaxy Digital's API,
 // and creates or updates their records in AirTable
+//    - returns successful count, error
 export async function syncVolunteerData() {
-  const existingRecords = pullAirtableVolunteers();
+  const existingRecords, airtableErr = pullAirtableVolunteers();
+  if (airtableErr) {
+    return [0, airtableErr];
+  }
+
   let count = 0;
   let totalCount = 0;
 
   let createBatch = [];
   let updateBatch = [];
-  let galaxyDigitalData = await getGalaxyDigitalVolunteerData(GALAXY_DIGITAL_MAX, count);
+  let galaxyDigitalData, err = await getGalaxyDigitalVolunteerData(GALAXY_DIGITAL_MAX, count);
+  if (err) {
+    return [0, err];
+  }
+
   while (count <= galaxyDigitalData.rows) {
-    // TODO Error handling
     galaxyDigitalData?.data?.forEach(volunteer => {
       if (existingRecords[volunteer.id]) {
         updateBatch.push({"id": existingRecords[volunteer.id], "fields": convertGalaxyDigitalToAirtableSchema(volunteer)});
 
         if (updateBatch.length === AIRTABLE_MAX) {
           totalCount += updateBatch.length;
-          updateAirtableRecord(updateBatch);
+          err = updateAirtableRecord(updateBatch);
+          if (err) {
+            return [totalCount, err];
+          } 
+
           updateBatch = [];
         }
       } else {
@@ -104,24 +114,36 @@ export async function syncVolunteerData() {
 
         if (createBatch.length === AIRTABLE_MAX) {
           totalCount += createBatch.length;
-          createAirtableRecord(createBatch);
+          err = createAirtableRecord(createBatch);
+          if (err) {
+            return [totalCount, err]
+          }
           createBatch = [];
         }
       }
     });
 
     count += GALAXY_DIGITAL_MAX;
-    galaxyDigitalData = await getGalaxyDigitalVolunteerData(GALAXY_DIGITAL_MAX, count);
+    galaxyDigitalData, err = await getGalaxyDigitalVolunteerData(GALAXY_DIGITAL_MAX, count);
+    if (err) {
+      return [totalCount, err];
+    }
   }
 
   if (createBatch.length > 0) {
     totalCount += createBatch.length;
-    createAirtableRecord(createBatch);
+    err = createAirtableRecord(createBatch);
+    if (err) {
+      return [totalCount, err];
+    } 
   }
   if (updateBatch.length > 0) {
     totalCount += updateBatch.length;
-    updateAirtableRecord(updateBatch);
+    err = updateAirtableRecord(updateBatch);
+    if (err) {
+      return [totalCount, err];
+    } 
   }
 
-  console.log(`Total records: ${totalCount}`);
+  return [totalCount, null]
 }

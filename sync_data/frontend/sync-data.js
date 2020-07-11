@@ -8,12 +8,17 @@ export function SyncData() {
   const [syncing, setSyncing] = useState(false);
   const [progress, setProgress] = useState(0);
 
+  const [succesfulCount, setSuccesfulCount] = useState(0);
+  const [syncError, setSyncError] = useState(null);
+
   async function syncData() {
     setCompleted(false);
     setSyncing(true);
-    syncVolunteerData();
-    // const total = messagesToSend.length;
-    //   setProgress(i/total);
+    
+    const [total, err] = syncVolunteerData();
+    setSuccesfulCount(total);
+    setSyncError(err);
+
     setSyncing(false);
     setCompleted(true);
   }
@@ -22,7 +27,8 @@ export function SyncData() {
     <Box>
       <h2> Sync Galaxy Digital Data </h2>
       {(syncing || completed) && <ProgressBar progress={progress}/> }
-      {completed && <p>Successfully updated all volunteer data</p>}
+      {completed && !syncError && <p>Successfully updated all volunteer data</p>}
+      {completed && syncError && <p>`Sync completed for ${succesfulCount} with error ${syncError}`</p>}
       {
           <Box margin={2} display="flex" flexDirection="row" justifyContent="flex-start" alignItems="center">
             <Button marginX={2} variant="primary" onClick={syncData} disabled={syncing}>
