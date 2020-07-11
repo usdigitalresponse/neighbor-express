@@ -23,7 +23,7 @@ async function getGalaxyDigitalVolunteerData(limit, offset) {
 
   // TODO report errors
   const response = await fetch(url, {method: 'GET'}).then(resp => resp.json()).catch(return null, error);
-  return response, null;
+  return [response, null];
 }
 
 function convertGalaxyDigitalToAirtableSchema(galaxyDigitalVolunteer) {
@@ -57,7 +57,7 @@ function pullAirtableVolunteers() {
     if (err) { return null, err; }
   });
 
-  return existingRecords, null;
+  return [existingRecords, null];
 }
 
 function createAirtableRecord(batch) {
