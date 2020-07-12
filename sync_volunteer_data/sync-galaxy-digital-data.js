@@ -1,20 +1,14 @@
 // Script used to convert Volunteer data from the 
 // (Galaxy Digital)[http://api2.galaxydigital.com/volunteer/docs/] APIs
 // into the AirTable schemas
-//
-// Run by calling:
-//    `node sync-galaxy-digital-data.js <AIRTABLE_API_KEY> <AIRTABLE_BASE_ID> <GALAXY_DIGITAL_API_KEY>
+import Airtable from 'airtable';
+import { globalConfig } from '@airtable/blocks';
 
-var Airtable = require('airtable');
-const fetch = require('node-fetch');
+const AIRTABLE_API_KEY = globalConfig.get("AIRTABLE_API");
+const AIRTABLE_BASE_ID = globalConfig.get("AIRTABLE_BASE");
+const GALAXY_DIGITAL_API_KEY = globalConfig.get("GALAXY_DIGITAL_API_KEY");
 
-const apiKeys = process.argv.slice(2);
-
-const AIRTABLE_API_KEY = apiKeys[0];
-const AIRTABLE_BASE_ID = apiKeys[1];
-const GALAXY_DIGITAL_API_KEY = apiKeys[2];
-
-const DESTINATION_TABLE = 'Volunteer Engagement';
+const DESTINATION_TABLE = 'Volunteers';
 const AIRTABLE_MAX = 10;
 const GALAXY_DIGITAL_MAX = 50;
 
@@ -154,6 +148,3 @@ async function syncVolunteerData() {
   console.log(`Total records: ${totalCount}`);
   return totalCount, null;
 }
-
-
-  syncVolunteerData();
