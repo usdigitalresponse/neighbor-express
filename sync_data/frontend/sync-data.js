@@ -1,7 +1,7 @@
 import { Box, Button, ProgressBar} from '@airtable/blocks/ui';
 import React, { useState } from 'react';
 
-import {syncVolunteerData} from '../airtable/sync_galaxy_digital_data'
+import {syncVolunteerData} from '../scripts/sync-galaxy-digital-data';
 
 export function SyncData() {
   const [completed, setCompleted] = useState(false);
