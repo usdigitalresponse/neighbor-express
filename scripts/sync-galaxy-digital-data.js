@@ -1,12 +1,18 @@
 // Script used to convert Volunteer data from the 
 // (Galaxy Digital)[http://api2.galaxydigital.com/volunteer/docs/] APIs
 // into the AirTable schemas
-import { globalConfig } from '../sync_data/frontend/node_modules/@airtable/blocks';
-import { Airtable } from '@airtable';
+//
+// Run by calling:
+//    `node sync-galaxy-digital-data.js <AIRTABLE_API_KEY> <AIRTABLE_BASE_ID> <GALAXY_DIGITAL_API_KEY>
 
-const AIRTABLE_API_KEY = globalConfig.get("AIRTABLE_API");
-const AIRTABLE_BASE_ID = globalConfig.get("AIRTABLE_BASE");
-const GALAXY_DIGITAL_API_KEY= globalConfig.get("GALAXY_DIGITAL_API_KEY");
+var Airtable = require('airtable');
+const fetch = require('node-fetch');
+
+const apiKeys = process.argv.slice(2);
+
+const AIRTABLE_API_KEY = apiKeys[0];
+const AIRTABLE_BASE_ID = apiKeys[1];
+const GALAXY_DIGITAL_API_KEY= apiKeys[2];
 
 const DESTINATION_TABLE = 'Volunteer Engagement';
 const AIRTABLE_MAX = 10;
@@ -15,15 +21,15 @@ const GALAXY_DIGITAL_MAX = 50;
 const base = new Airtable({apiKey: AIRTABLE_API_KEY}).base(AIRTABLE_BASE_ID);
 
 async function getGalaxyDigitalVolunteerData(limit, offset) {
+  let error;
   const url = new URL("volunteer/user/list/", "https://api2.galaxydigital.com")
   const params = url.searchParams;
   params.set('key', GALAXY_DIGITAL_API_KEY);
   params.set('limit', limit);
   params.set('offset', offset);
 
-  // TODO report errors
-  const response = await fetch(url, {method: 'GET'}).then(resp => resp.json()).catch(return null, error);
-  return [response, null];
+  const response = await fetch(url, {method: 'GET'}).then(resp => resp.json()).catch((e) => error = e);
+  return [response, error];
 }
 
 function convertGalaxyDigitalToAirtableSchema(galaxyDigitalVolunteer) {
@@ -79,8 +85,8 @@ function updateAirtableRecord(batch) {
 // syncVolunteerData queries for all records in Galaxy Digital's API,
 // and creates or updates their records in AirTable
 //    - returns successful count, error
-export async function syncVolunteerData() {
-  const existingRecords, airtableErr = pullAirtableVolunteers();
+async function syncVolunteerData() {
+  const [existingRecords, airtableErr] = pullAirtableVolunteers();
   if (airtableErr) {
     return [0, airtableErr];
   }
@@ -90,7 +96,7 @@ export async function syncVolunteerData() {
 
   let createBatch = [];
   let updateBatch = [];
-  let galaxyDigitalData, err = await getGalaxyDigitalVolunteerData(GALAXY_DIGITAL_MAX, count);
+  let [galaxyDigitalData, err] = await getGalaxyDigitalVolunteerData(GALAXY_DIGITAL_MAX, count);
   if (err) {
     return [0, err];
   }
@@ -124,7 +130,7 @@ export async function syncVolunteerData() {
     });
 
     count += GALAXY_DIGITAL_MAX;
-    galaxyDigitalData, err = await getGalaxyDigitalVolunteerData(GALAXY_DIGITAL_MAX, count);
+    [galaxyDigitalData, err] = await getGalaxyDigitalVolunteerData(GALAXY_DIGITAL_MAX, count);
     if (err) {
       return [totalCount, err];
     }
@@ -145,5 +151,9 @@ export async function syncVolunteerData() {
     } 
   }
 
-  return [totalCount, null]
+  console.log(`Total records: ${totalCount}`);
+  return totalCount, null;
 }
+
+
+  syncVolunteerData();
