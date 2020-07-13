@@ -1,12 +1,11 @@
-import { Box, Button, ProgressBar } from "@airtable/blocks/ui";
+import { Box, Button, Loader } from "@airtable/blocks/ui";
 import React, { useState } from "react";
 
-import { SyncVolunteerData } from "../sync-galaxy-digital-data";
+import { SyncVolunteerData } from "./sync-galaxy-digital-data";
 
 export function SyncData() {
   const [completed, setCompleted] = useState(false);
   const [syncing, setSyncing] = useState(false);
-  const [progress, setProgress] = useState(0);
 
   const [succesfulCount, setSuccesfulCount] = useState(0);
   const [syncError, setSyncError] = useState(null);
@@ -26,7 +25,7 @@ export function SyncData() {
   return (
     <Box>
       <h2> Sync Galaxy Digital Data </h2>
-      {(syncing || completed) && <ProgressBar progress={progress} />}
+      {(syncing || completed) && <Loader />}
       {completed && !syncError && (
         <p>Successfully updated all volunteer data</p>
       )}
