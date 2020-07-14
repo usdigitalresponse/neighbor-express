@@ -21,14 +21,17 @@ jobs:
               env: # Or as an environment variable
                   ZEIT_TOKEN: ${{ secrets.ZEIT_TOKEN }}
                   AIRTABLE_API_KEY: ${{secrets.AIRTABLE_API_KEY}}
-                  AIRTABLE_BASE_ID_CONCORD: ${{ secrets.AIRTABLE_BASE_ID_CONCORD }}
-                  AIRTABLE_BASE_ID_WALNUTCREEK: ${{ secrets.AIRTABLE_BASE_ID_WALNUTCREEK }}
-                  AIRTABLE_BASE_ID_PATERSON: ${{ secrets.AIRTABLE_BASE_ID_PATERSON }}
+                  GA_TRACKING_ID: ${{ secrets.GA_TRACKING_ID }}
+                  # Team internal
                   AIRTABLE_BASE_ID_DEMO1: ${{ secrets.AIRTABLE_BASE_ID_DEMO1 }}
                   AIRTABLE_BASE_ID_DEMO2: ${{ secrets.AIRTABLE_BASE_ID_DEMO2 }}
                   AIRTABLE_BASE_ID_DEMO3: ${{ secrets.AIRTABLE_BASE_ID_DEMO3 }}
                   AIRTABLE_BASE_ID_LANDING-PAGE: ${{ secrets.AIRTABLE_BASE_ID_LANDING_PAGE }}
                   AIRTABLE_BASE_ID_CMS: ${{ secrets.AIRTABLE_BASE_ID_CMS }}
+                  # Local cities/states
+                  AIRTABLE_BASE_ID_CONCORD: ${{ secrets.AIRTABLE_BASE_ID_CONCORD }}
+                  AIRTABLE_BASE_ID_DELAWARE: ${{ secrets.AIRTABLE_BASE_ID_DELAWARE }}
+                  AIRTABLE_BASE_ID_PATERSON: ${{ secrets.AIRTABLE_BASE_ID_PATERSON }}
                   AIRTABLE_BASE_ID_SANRAMON: ${{ secrets.AIRTABLE_BASE_ID_SANRAMON }}
-                  GA_TRACKING_ID: ${{ secrets.GA_TRACKING_ID }}
+                  AIRTABLE_BASE_ID_WALNUTCREEK: ${{ secrets.AIRTABLE_BASE_ID_WALNUTCREEK }}
               run: node scripts/update-all.js
