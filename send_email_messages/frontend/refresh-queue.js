@@ -68,7 +68,7 @@ async function formatDeliveryMessageRecord(
 // Compute a list of new queued messages to create, and return it.
 async function computeMessagesToCreate() {
   const deliveryMessages = await computeDeliveryMessages();
-  const volunteerMessages = await computeVolunteerMessages();
+  const volunteerMessages = await computeVolunteerWelcomeMessages();
 
   return {
     messagesToCreate: [
@@ -79,20 +79,63 @@ async function computeMessagesToCreate() {
   };
 }
 
-async function computeVolunteerMessages() {
-  const allMessages = (await base.getTable("Messages").selectRecordsAsync())
-    .records;
-  const allVolunteers = (await base.getTable("Volunteers").selectRecordsAsync())
-    .records;
+// compute a list of volunteer welcome messages to send
+async function computeVolunteerWelcomeMessages() {
+  const EMAIL_TYPE_NAME = "Initial Confirmation: Volunteer";
 
   const output = {
     messagesToCreate: [],
     warnings: [],
   };
+
+  // if these emails aren't enabled in config, don't send them
+  if (!globalConfig.get("enable_volunteer_welcome_email")) return output;
+
+  const allMessages = (await base.getTable("Messages").selectRecordsAsync())
+    .records;
+  const allVolunteers = (await base.getTable("Volunteers").selectRecordsAsync())
+    .records;
+
+  for (const volunteer of allVolunteers) {
+    // see if we've already sent or queued a welcome message for this volunteer;
+    const existingMessage = allMessages.find(
+      (m) =>
+        m.getCellValue("Volunteer") &&
+        m.getCellValue("Volunteer")[0].id === volunteer.id &&
+        // todo: is there a way to do this by ID so we're not relying on name?
+        m.getCellValue("Email type")?.name === EMAIL_TYPE_NAME
+    );
+
+    // If we've already sent or queued, no need to enqueue a new one
+    if (existingMessage) {
+      continue;
+    }
+
+    if (volunteer.getCellValue("Email")) {
+      output.messagesToCreate.push({
+        fields: {
+          Volunteer: [{ id: volunteer.id }],
+          "Email type": { name: EMAIL_TYPE_NAME },
+          Status: { name: "Queued" },
+          Recipient: volunteer.getCellValue("Email"),
+          "Template Data": "{}", // todo: do we need to template any data here?
+        },
+      });
+    } else {
+      // TODO: add a warning about missing email
+    }
+  }
+
+  return output;
 }
 
+// compute a list of messages to send, associated with delivery statuses
 async function computeDeliveryMessages() {
-  let output = {};
+  let output = {
+    messagesToCreate: [],
+    warnings: [],
+  };
+
   const allDeliveries = (await base.getTable("Deliveries").selectRecordsAsync())
     .records;
   const allMessages = (await base.getTable("Messages").selectRecordsAsync())
