@@ -25,6 +25,7 @@
     "react-dom": "^16.13.1",
     "react-process-string": "^1.2.0",
     "react-recipes": "^1.0.2",
+    "react-responsive-carousel": "^3.2.8",
     "react-string-replace": "^0.4.4"
   },
   "engines": {
@@ -45,6 +46,7 @@
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-react": "^7.20.0",
     "eslint-plugin-react-hooks": "^2.5.1",
+    "identity-obj-proxy": "^3.0.0",
     "jest": "^25.5.3"
   }
 }

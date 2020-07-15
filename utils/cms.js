@@ -4,7 +4,7 @@ import Hero from '@/components/Hero';
 import HeroWithButtons from '@/components/HeroWithButtons';
 import Form from '@/components/Form';
 import Button from '@/components/Button';
-import Quote from '@/components/Quote';
+import QuotesCarousel from '@/components/QuotesCarousel';
 import List from '@/components/List';
 import Columns from '@/components/Columns';
 import YouTube from '@/components/YouTube';
@@ -128,7 +128,7 @@ export const RenderCmsBlock = ({ block }) => {
       'block-hero': <Hero block={block} />,
       'block-hero-button': <HeroWithButtons block={block} />,
       'block-form': <Form block={block} />,
-      'block-quote': <Quote block={block} />,
+      'block-quote': <QuotesCarousel block={block} />,
       'block-list': <List block={block} />,
       'block-columns': <Columns block={block} />,
       'block-youtube': <YouTube block={block} />,
