@@ -1,18 +1,17 @@
-import { initializeBlock, Box, useSettingsButton } from '@airtable/blocks/ui';
-import React, { useState } from 'react';
-import StepWizard from 'react-step-wizard';
+import { initializeBlock, Box, useSettingsButton } from "@airtable/blocks/ui";
+import React, { useState } from "react";
+import StepWizard from "react-step-wizard";
 
-import { SettingsComponent } from './settings.js'
-import { RefreshQueueStep } from './refresh-queue.js'
-import { SendMessagesStep } from './send-messages.js'
-
+import { SettingsComponent } from "./settings.js";
+import { RefreshQueueStep } from "./refresh-queue.js";
+import { SendMessagesStep } from "./send-messages.js";
 
 function MainUIComponent() {
   return (
     <Box padding={3}>
       <StepWizard>
-        <RefreshQueueStep/>
-        <SendMessagesStep/>
+        <RefreshQueueStep />
+        <SendMessagesStep />
       </StepWizard>
     </Box>
   );
@@ -20,15 +19,14 @@ function MainUIComponent() {
 
 function ComponentWithSettings() {
   const [isShowingSettings, setIsShowingSettings] = useState(false);
-  useSettingsButton(function() {
+  useSettingsButton(function () {
     setIsShowingSettings(!isShowingSettings);
   });
-  
-  if (isShowingSettings) {
-    return <SettingsComponent exit={() => setIsShowingSettings(false)}/>
-  }
-  return <MainUIComponent />
-}
 
+  if (isShowingSettings) {
+    return <SettingsComponent exit={() => setIsShowingSettings(false)} />;
+  }
+  return <MainUIComponent />;
+}
 
 initializeBlock(() => <ComponentWithSettings />);
