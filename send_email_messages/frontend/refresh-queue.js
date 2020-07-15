@@ -33,7 +33,12 @@ async function getEmailInfoForDelivery(delivery, volunteer) {
   return output;
 }
 
-async function formatMessageRecord(messageType, delivery, volunteer, audience) {
+async function formatDeliveryMessageRecord(
+  messageType,
+  delivery,
+  volunteer,
+  audience
+) {
   const sendgridData = await getEmailInfoForDelivery(delivery, volunteer);
 
   var toEmail;
@@ -61,11 +66,33 @@ async function formatMessageRecord(messageType, delivery, volunteer, audience) {
 }
 
 // Compute a list of new queued messages to create, and return it.
-async function computeMessagesToCreate(addWarning) {
-  let output = {
+async function computeMessagesToCreate() {
+  const deliveryMessages = await computeDeliveryMessages();
+  const volunteerMessages = await computeVolunteerMessages();
+
+  return {
+    messagesToCreate: [
+      ...deliveryMessages.messagesToCreate,
+      ...volunteerMessages.messagesToCreate,
+    ],
+    warnings: [...deliveryMessages.warnings, ...volunteerMessages.warnings],
+  };
+}
+
+async function computeVolunteerMessages() {
+  const allMessages = (await base.getTable("Messages").selectRecordsAsync())
+    .records;
+  const allVolunteers = (await base.getTable("Volunteers").selectRecordsAsync())
+    .records;
+
+  const output = {
     messagesToCreate: [],
     warnings: [],
   };
+}
+
+async function computeDeliveryMessages() {
+  let output = {};
   const allDeliveries = (await base.getTable("Deliveries").selectRecordsAsync())
     .records;
   const allMessages = (await base.getTable("Messages").selectRecordsAsync())
@@ -110,7 +137,7 @@ async function computeMessagesToCreate(addWarning) {
         continue;
       }
 
-      const { message, warning } = await formatMessageRecord(
+      const { message, warning } = await formatDeliveryMessageRecord(
         messageType,
         delivery,
         volunteer,

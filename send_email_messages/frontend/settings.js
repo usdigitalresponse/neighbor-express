@@ -9,6 +9,7 @@ import {
   InputSynced,
   SelectButtonsSynced,
   SelectSynced,
+  Switch,
   Text,
   TextButton,
   useGlobalConfig,
@@ -303,10 +304,29 @@ export function SettingsComponent({ exit }) {
         />
       </Accordion>
       <Accordion title="Email Types">
+        <h4>Delivery Emails</h4>
+        <Text>
+          Here you can configure emails to go out at various stages of a
+          delivery. Emails can be set up for both the delivery recipient and the
+          volunteer.
+        </Text>
         {Object.keys(globalConfig.get("email_types")).map((emailType) => {
           return <EmailTypeSettings key={emailType} emailType={emailType} />;
         })}
         <AddEmailTypeDialog />
+        <h4>Volunteer Emails</h4>
+        <Text>
+          Enable the setting below if you want to send volunteers a welcome
+          email when they first sign up.
+        </Text>
+        <Switch
+          value={globalConfig.get("enableVolunteerSignupEmail")}
+          onChange={(newValue) =>
+            globalConfig.setAsync("enableVolunteerSignupEmail", newValue)
+          }
+          label="Email volunteers on inital signup"
+          width="320px"
+        />
       </Accordion>
       <Accordion title="Template Variables">
         {["Deliveries", "Volunteers"].map((tableName) => {
