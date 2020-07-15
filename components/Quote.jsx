@@ -1,5 +1,6 @@
 import Button from './Button';
 
+/* Displays a single quote. */
 const Quote = ({ block }) => (
   <section className="usa-section usa-section--dark">
     <div className="grid-container">

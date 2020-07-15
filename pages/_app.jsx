@@ -5,6 +5,7 @@ import { CMSContextProvider, CMSContext } from '@/context/cms.js';
 import NProgress from 'nprogress';
 import { getCmsRecordFromKey, processRecords } from '@/utils/cms';
 import './styles.css';
+import styles from 'react-responsive-carousel/lib/styles/carousel.min.css';
 import { NextSeo } from 'next-seo';
 import * as gtag from '../utils/ganalytics';
 
