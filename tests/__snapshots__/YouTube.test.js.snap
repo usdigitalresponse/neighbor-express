@@ -23,15 +23,19 @@ exports[`YouTube block renders correctly 1`] = `
      
   </div>
   <div
-    className="jsx-2037020011 videoWrapper"
+    className="jsx-2037020011 videoContainer"
   >
-    <iframe
-      allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-      allowFullScreen={true}
-      className="jsx-2037020011"
-      frameBorder="0"
-      src="https://www.youtube.com/embed/NzwSF9GEm0E"
-    />
+    <div
+      className="jsx-2037020011 videoWrapper"
+    >
+      <iframe
+        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+        allowFullScreen={true}
+        className="jsx-2037020011"
+        frameBorder="0"
+        src="https://www.youtube.com/embed/NzwSF9GEm0E"
+      />
+    </div>
   </div>
   <JSXStyle
     id="2037020011"
