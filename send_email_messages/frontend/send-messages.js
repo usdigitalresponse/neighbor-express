@@ -16,6 +16,20 @@ async function sendMessage(messageToSend) {
     messageToSend.getCellValue("Template Data")
   );
   const EMAIL_TYPES = globalConfig.get("email_types");
+
+  let templateId;
+  if (
+    messageToSend.getCellValue("Email type") ===
+    "Initial Confirmation: Volunteer"
+  ) {
+    templateId =
+      EMAIL_TYPES[messageToSend.getCellValue("Email type").name][
+        "sendgrid_template"
+      ];
+  } else {
+    templateId = globalConfig.get("volunteer_welcome_email_template_id");
+  }
+
   const sendgridData = {
     personalizations: [
       {
@@ -32,10 +46,7 @@ async function sendMessage(messageToSend) {
       email: "noreply@neighborexpress.org",
     },
     reply_to: globalConfig.get("reply_to"),
-    template_id:
-      EMAIL_TYPES[messageToSend.getCellValue("Email type").name][
-        "sendgrid_template"
-      ],
+    template_id: templateId,
   };
   const token = globalConfig.get("SENDGRID_PROXY_TOKEN");
   const response = await fetch(

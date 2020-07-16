@@ -122,7 +122,9 @@ async function computeVolunteerWelcomeMessages() {
         },
       });
     } else {
-      // TODO: add a warning about missing email
+      warnings.push(
+        `Missing email for volunteer: ${volunteer.getCellValue("Full Name")}`
+      );
     }
   }
 
