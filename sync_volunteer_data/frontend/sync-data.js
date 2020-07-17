@@ -29,7 +29,7 @@ export function SyncData() {
   return (
     <Box>
       <h2> Sync Galaxy Digital Data </h2>
-      {(syncing || completed) && <Loader />}
+      {syncing && !completed && <Loader />}
       {!syncing && (
         <>
           {completed && !syncError && (
