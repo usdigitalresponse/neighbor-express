@@ -1,28 +1,27 @@
-import { initializeBlock, Box, useSettingsButton } from '@airtable/blocks/ui';
-import React, { useState } from 'react';
+import { initializeBlock, Box, useSettingsButton } from "@airtable/blocks/ui";
+import React, { useState } from "react";
 
-import { SettingsComponent } from './settings.js'
-import { SyncData } from './sync-data.js'
-
-function MainUIComponent() {
-  return (
-    <Box padding={3}>
-      <SyncData />
-    </Box>
-  );
-}
+import { SettingsComponent } from "./settings.js";
+import { SyncData } from "./sync-data.js";
 
 function ComponentWithSettings() {
-  const [isShowingSettings, setIsShowingSettings] = useState(false);
-  useSettingsButton(function() {
-    setIsShowingSettings(!isShowingSettings);
+  const [showSettings, setShowSettings] = useState(false);
+  useSettingsButton(function () {
+    setShowSettings(!showSettings);
   });
-  
-  if (isShowingSettings) {
-    return <SettingsComponent exit={() => setIsShowingSettings(false)}/>
-  }
-  return <MainUIComponent />
-}
 
+  return (
+    <>
+      {showSettings && (
+        <SettingsComponent exit={() => setShowSettings(false)} />
+      )}
+      {!showSettings && (
+        <Box padding={3}>
+          <SyncData />
+        </Box>
+      )}
+    </>
+  );
+}
 
 initializeBlock(() => <ComponentWithSettings />);

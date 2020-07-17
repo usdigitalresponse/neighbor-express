@@ -1,10 +1,8 @@
 // Script used to convert Volunteer data from the
 // (Galaxy Digital)[http://api2.galaxydigital.com/volunteer/docs/] APIs
 // into the AirTable schemas
-import { useRecords, useBase } from "@airtable/blocks/ui";
 import { globalConfig } from "@airtable/blocks";
 
-const DESTINATION_TABLE = "Volunteers";
 const AIRTABLE_MAX = 10;
 const GALAXY_DIGITAL_MAX = 50;
 
@@ -16,10 +14,10 @@ async function getGalaxyDigitalVolunteerData(limit, offset) {
   params.set("limit", limit);
   params.set("offset", offset);
 
-  const response = await fetch(url, { method: "GET" })
-    .then((resp) => resp.json())
-    .catch(console.error);
-  return response;
+  let reponse = await fetch(url, { method: "GET", mode: "no-cors" });
+  let data = await reponse.json();
+
+  return data;
 }
 
 function convertGalaxyDigitalToAirtableSchema(galaxyDigitalVolunteer) {
@@ -40,13 +38,13 @@ function convertGalaxyDigitalToAirtableSchema(galaxyDigitalVolunteer) {
 // SyncVolunteerData queries for all records in Galaxy Digital's API,
 // and creates or updates their records in AirTable
 //    - returns successful count, error
-export function SyncVolunteerData({}) {
-  const messagesTable = useBase().getTable(DESTINATION_TABLE);
-  const records = useRecords(messagesTable);
+export function SyncVolunteerData(messagesTable, records) {
   let existingRecords, successfulCount, syncError;
 
   records.forEach(function (record) {
-    existingRecords[record.get("Reference ID")] = record.getId();
+    existingRecords[
+      record.getCellValueAsString("Reference ID")
+    ] = record.getId();
   });
 
   async function syncGalaxyDigitalData(airtableTable, existingRecords) {
@@ -59,8 +57,12 @@ export function SyncVolunteerData({}) {
       GALAXY_DIGITAL_MAX,
       count
     );
+
     if (!galaxyDigitalData) {
-      return [0, new Error("Unable to connect to Galaxy Digital API")];
+      return {
+        total: 0,
+        err: new Error("Unable to connect to Galaxy Digital API"),
+      };
     }
 
     while (count <= galaxyDigitalData.rows) {
@@ -95,10 +97,10 @@ export function SyncVolunteerData({}) {
         count
       );
       if (!galaxyDigitalData) {
-        return [
-          totalCount,
-          new Error("Unable to connect to Galaxy Digital API"),
-        ];
+        return {
+          total: totalCount,
+          err: new Error("Unable to connect to Galaxy Digital API"),
+        };
       }
     }
 
@@ -112,14 +114,16 @@ export function SyncVolunteerData({}) {
     }
 
     console.log(`Total records: ${totalCount}`);
-    return [totalCount, null];
+    return {
+      total: totalCount,
+      err: null,
+    };
   }
 
-  syncGalaxyDigitalData(messagesTable, existingRecords).then(
-    (totalCount, e) => {
-      successfulCount = totalCount;
-      syncError = e;
-    }
-  );
-  return successfulCount, syncError;
+  syncGalaxyDigitalData(messagesTable, existingRecords).then((result) => {
+    console.log(result);
+    successfulCount = result[0];
+    syncError = result[1];
+  });
+  return [successfulCount, syncError];
 }
