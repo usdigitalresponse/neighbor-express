@@ -18,10 +18,7 @@ export function SyncData() {
     setCompleted(false);
     setSyncing(true);
 
-    const { total, err } = await SyncVolunteerData(
-      messagesTable,
-      records
-    );
+    const { total, err } = SyncVolunteerData(messagesTable, records);
     setSuccesfulCount(total);
     setSyncError(err);
 

@@ -14,9 +14,8 @@ async function getGalaxyDigitalVolunteerData(limit, offset) {
   params.set("limit", limit);
   params.set("offset", offset);
 
-  let reponse = await fetch(url, { method: "GET", mode: "no-cors" });
-  let data = await reponse.json();
-
+  let response = await fetch(url, { method: "GET", mode: "no-cors" });
+  let data = await response.json();
   return data;
 }
 
@@ -39,7 +38,7 @@ function convertGalaxyDigitalToAirtableSchema(galaxyDigitalVolunteer) {
 // and creates or updates their records in AirTable
 //    - returns successful count, error
 export function SyncVolunteerData(messagesTable, records) {
-  let existingRecords, successfulCount, syncError;
+  let existingRecords, result;
 
   records.forEach(function (record) {
     existingRecords[
@@ -120,10 +119,7 @@ export function SyncVolunteerData(messagesTable, records) {
     };
   }
 
-  syncGalaxyDigitalData(messagesTable, existingRecords).then((result) => {
-    console.log(result);
-    successfulCount = result[0];
-    syncError = result[1];
-  });
-  return [successfulCount, syncError];
+  return syncGalaxyDigitalData(messagesTable, existingRecords).then(
+    (result) => result
+  );
 }
