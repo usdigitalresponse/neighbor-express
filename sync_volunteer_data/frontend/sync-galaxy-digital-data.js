@@ -38,88 +38,82 @@ function convertGalaxyDigitalToAirtableSchema(galaxyDigitalVolunteer) {
 // and creates or updates their records in AirTable
 //    - returns successful count, error
 export function SyncVolunteerData(messagesTable, records) {
-  let existingRecords, result;
+  let existingRecordsById;
+  let count = 0;
+  let totalCount = 0;
+
+  let createBatch = [];
+  let updateBatch = [];
 
   records.forEach(function (record) {
-    existingRecords[
+    existingRecordsById[
       record.getCellValueAsString("Reference ID")
     ] = record.getId();
   });
 
-  async function syncGalaxyDigitalData(airtableTable, existingRecords) {
-    let count = 0;
-    let totalCount = 0;
+  let galaxyDigitalData = getGalaxyDigitalVolunteerData(
+    GALAXY_DIGITAL_MAX,
+    count
+  );
 
-    let createBatch = [];
-    let updateBatch = [];
-    let galaxyDigitalData = await getGalaxyDigitalVolunteerData(
-      GALAXY_DIGITAL_MAX,
-      count
-    );
-
-    if (!galaxyDigitalData) {
-      return {
-        total: 0,
-        err: new Error("Unable to connect to Galaxy Digital API"),
-      };
-    }
-
-    while (count <= galaxyDigitalData.rows) {
-      galaxyDigitalData?.data?.forEach((volunteer) => {
-        if (existingRecords[volunteer.id]) {
-          updateBatch.push({
-            id: existingRecords[volunteer.id],
-            fields: convertGalaxyDigitalToAirtableSchema(volunteer),
-          });
-
-          if (updateBatch.length === AIRTABLE_MAX) {
-            totalCount += updateBatch.length;
-            airtableTable.updateRecordsAsync(updateBatch);
-            updateBatch = [];
-          }
-        } else {
-          createBatch.push({
-            fields: convertGalaxyDigitalToAirtableSchema(volunteer),
-          });
-
-          if (createBatch.length === AIRTABLE_MAX) {
-            totalCount += createBatch.length;
-            airtableTable.createRecordAsync(createBatch);
-            createBatch = [];
-          }
-        }
-      });
-
-      count += GALAXY_DIGITAL_MAX;
-      galaxyDigitalData = await getGalaxyDigitalVolunteerData(
-        GALAXY_DIGITAL_MAX,
-        count
-      );
-      if (!galaxyDigitalData) {
-        return {
-          total: totalCount,
-          err: new Error("Unable to connect to Galaxy Digital API"),
-        };
-      }
-    }
-
-    if (createBatch.length > 0) {
-      totalCount += createBatch.length;
-      airtableTable.createRecordAsync(createBatch);
-    }
-    if (updateBatch.length > 0) {
-      totalCount += updateBatch.length;
-      airtableTable.updateRecordsAsync(updateBatch);
-    }
-
-    console.log(`Total records: ${totalCount}`);
+  if (!galaxyDigitalData) {
     return {
-      total: totalCount,
-      err: null,
+      total: 0,
+      err: new Error("Unable to connect to Galaxy Digital API"),
     };
   }
 
-  return syncGalaxyDigitalData(messagesTable, existingRecords).then(
-    (result) => result
-  );
+  while (count <= galaxyDigitalData.rows) {
+    galaxyDigitalData?.data?.forEach((volunteer) => {
+      if (existingRecordsById[volunteer.id]) {
+        updateBatch.push({
+          id: existingRecordsById[volunteer.id],
+          fields: convertGalaxyDigitalToAirtableSchema(volunteer),
+        });
+
+        if (updateBatch.length === AIRTABLE_MAX) {
+          totalCount += updateBatch.length;
+          messagesTable.updateRecordsAsync(updateBatch);
+          updateBatch = [];
+        }
+      } else {
+        createBatch.push({
+          fields: convertGalaxyDigitalToAirtableSchema(volunteer),
+        });
+
+        if (createBatch.length === AIRTABLE_MAX) {
+          totalCount += createBatch.length;
+          messagesTable.createRecordAsync(createBatch);
+          createBatch = [];
+        }
+      }
+    });
+
+    count += GALAXY_DIGITAL_MAX;
+    galaxyDigitalData = getGalaxyDigitalVolunteerData(
+      GALAXY_DIGITAL_MAX,
+      count
+    );
+    if (!galaxyDigitalData) {
+      return {
+        total: totalCount,
+        err: new Error("Unable to connect to Galaxy Digital API"),
+      };
+    }
+  }
+
+  if (createBatch.length > 0) {
+    totalCount += createBatch.length;
+    messagesTable.createRecordAsync(createBatch);
+  }
+  if (updateBatch.length > 0) {
+    totalCount += updateBatch.length;
+    messagesTable.updateRecordsAsync(updateBatch);
+  }
+
+  console.log(`Total records: ${totalCount}`);
+  return {
+    total: totalCount,
+    err: null,
+  };
 }
