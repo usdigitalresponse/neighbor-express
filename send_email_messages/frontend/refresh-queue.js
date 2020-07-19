@@ -118,11 +118,15 @@ async function computeVolunteerWelcomeMessages() {
           "Email type": { name: EMAIL_TYPE_NAME },
           Status: { name: "Queued" },
           Recipient: volunteer.getCellValue("Email"),
-          "Template Data": "{}", // todo: do we need to template any data here?
+          "Template Data": JSON.stringify({
+            volunteer: {
+              name: volunteer.getCellValue("Full Name"),
+            },
+          }),
         },
       });
     } else {
-      warnings.push(
+      output.warnings.push(
         `Missing email for volunteer: ${volunteer.getCellValue("Full Name")}`
       );
     }
