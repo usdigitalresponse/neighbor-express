@@ -7,8 +7,10 @@ import {
   Heading,
   Input,
   InputSynced,
+  Label,
   SelectButtonsSynced,
   SelectSynced,
+  Switch,
   Text,
   TextButton,
   useGlobalConfig,
@@ -303,10 +305,51 @@ export function SettingsComponent({ exit }) {
         />
       </Accordion>
       <Accordion title="Email Types">
+        <h4>Delivery Emails</h4>
+        <Text>
+          Here you can configure emails to go out at various stages of a
+          delivery. Emails can be set up for both the delivery recipient and the
+          volunteer.
+        </Text>
         {Object.keys(globalConfig.get("email_types")).map((emailType) => {
           return <EmailTypeSettings key={emailType} emailType={emailType} />;
         })}
         <AddEmailTypeDialog />
+        <Box>
+          <h4>Volunteer Emails</h4>
+          <Text>
+            Enable the setting below if you want to send volunteers a welcome
+            email when they first sign up.
+          </Text>
+          <Switch
+            value={!!globalConfig.get("enable_volunteer_welcome_email")}
+            onChange={(newValue) =>
+              globalConfig.setAsync("enable_volunteer_welcome_email", newValue)
+            }
+            label="Email volunteers on inital signup"
+            width="320px"
+          />
+          {globalConfig.get("enable_volunteer_welcome_email") ? (
+            <>
+              <Label htmlFor="volunteer-welcome-template-id-input">
+                Volunteer welcome email sendgrid template ID
+              </Label>
+              <Input
+                id="volunteer-welcome-template-id-input"
+                value={
+                  globalConfig.get("volunteer_welcome_email_template_id") || ""
+                }
+                onChange={(e) =>
+                  globalConfig.setAsync(
+                    "volunteer_welcome_email_template_id",
+                    e.target.value
+                  )
+                }
+                placeholder="Enter Sendgrid Template ID here"
+              />
+            </>
+          ) : null}
+        </Box>
       </Accordion>
       <Accordion title="Template Variables">
         {["Deliveries", "Volunteers"].map((tableName) => {
