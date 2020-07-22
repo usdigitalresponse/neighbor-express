@@ -347,6 +347,12 @@ export function SettingsComponent({ exit }) {
                 }
                 placeholder="Enter Sendgrid Template ID here"
               />
+              <FieldSetter
+                label="Volunteer name field"
+                description="The field containing volunteers names"
+                keyOrPath="volunteer_name_field"
+                tableName="Volunteers"
+              />
             </>
           ) : null}
         </Box>

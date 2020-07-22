@@ -120,14 +120,18 @@ async function computeVolunteerWelcomeMessages() {
           Recipient: volunteer.getCellValue("Email"),
           "Template Data": JSON.stringify({
             volunteer: {
-              name: volunteer.getCellValue("Full Name"),
+              name: volunteer.getCellValue(
+                globalConfig.get("volunteer_name_field")
+              ),
             },
           }),
         },
       });
     } else {
       output.warnings.push(
-        `Missing email for volunteer: ${volunteer.getCellValue("Full Name")}`
+        `Missing email for volunteer: ${volunteer.getCellValue(
+          globalConfig.get("volunteer_name_field")
+        )}`
       );
     }
   }
