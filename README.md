@@ -118,3 +118,7 @@ You can fork this repository and set up your own Neighbor Express instance using
     * [Github Secrets](https://github.com/usdigitalresponse/neighbor-express/settings/secrets) Add the airtable base ID as a github secret so the git hook can access it
 
 Now, when you merge that PR to master with the latest code, the site will update, and stay updated with all future changes.
+
+# MIT License
+
+Neighbor Express is released under an [MIT License](https://github.com/usdigitalresponse/neighbor-express/blob/master/LICENSE).
