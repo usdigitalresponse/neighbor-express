@@ -8,14 +8,17 @@ const GALAXY_DIGITAL_MAX = 50;
 
 async function getGalaxyDigitalVolunteerData(limit, offset) {
   const GALAXY_DIGITAL_API_KEY = globalConfig.get("GALAXY_DIGITAL_API_KEY");
-  const url = new URL("volunteer/user/list/", "https://api2.galaxydigital.com");
+  const url = new URL(
+    "api/galaxy-digital-proxy",
+    "https://nex-sendgrid-proxy-cc0vb0gpy.vercel.app"
+  );
   const params = url.searchParams;
   params.set("key", GALAXY_DIGITAL_API_KEY);
   params.set("limit", limit);
   params.set("offset", offset);
 
-  let response = await fetch(url, { method: "GET", mode: "no-cors" });
-  let data = await response.json();
+  const response = await fetch(url, { method: "GET", mode: "cors" });
+  const data = await response.json();
   return data;
 }
 
@@ -37,21 +40,19 @@ function convertGalaxyDigitalToAirtableSchema(galaxyDigitalVolunteer) {
 // SyncVolunteerData queries for all records in Galaxy Digital's API,
 // and creates or updates their records in AirTable
 //    - returns successful count, error
-export function SyncVolunteerData(messagesTable, records) {
-  let existingRecordsById;
+export async function SyncVolunteerData(messagesTable, records) {
+  let existingRecordsById = [];
   let count = 0;
   let totalCount = 0;
 
   let createBatch = [];
   let updateBatch = [];
-
   records.forEach(function (record) {
-    existingRecordsById[
-      record.getCellValueAsString("Reference ID")
-    ] = record.getId();
+    existingRecordsById[record.getCellValueAsString("Reference ID")] =
+      record.id;
   });
 
-  let galaxyDigitalData = getGalaxyDigitalVolunteerData(
+  let galaxyDigitalData = await getGalaxyDigitalVolunteerData(
     GALAXY_DIGITAL_MAX,
     count
   );
@@ -83,14 +84,14 @@ export function SyncVolunteerData(messagesTable, records) {
 
         if (createBatch.length === AIRTABLE_MAX) {
           totalCount += createBatch.length;
-          messagesTable.createRecordAsync(createBatch);
+          messagesTable.createRecordsAsync(createBatch);
           createBatch = [];
         }
       }
     });
 
     count += GALAXY_DIGITAL_MAX;
-    galaxyDigitalData = getGalaxyDigitalVolunteerData(
+    galaxyDigitalData = await getGalaxyDigitalVolunteerData(
       GALAXY_DIGITAL_MAX,
       count
     );
@@ -104,7 +105,7 @@ export function SyncVolunteerData(messagesTable, records) {
 
   if (createBatch.length > 0) {
     totalCount += createBatch.length;
-    messagesTable.createRecordAsync(createBatch);
+    messagesTable.createRecordsAsync(createBatch);
   }
   if (updateBatch.length > 0) {
     totalCount += updateBatch.length;

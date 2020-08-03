@@ -14,11 +14,12 @@ export function SyncData() {
   const [succesfulCount, setSuccesfulCount] = useState(0);
   const [syncError, setSyncError] = useState(null);
 
-  function syncData() {
+  async function syncData() {
     setCompleted(false);
     setSyncing(true);
 
-    const { total, err } = SyncVolunteerData(messagesTable, records);
+    const { total, err } = await SyncVolunteerData(messagesTable, records);
+    debugger;
     setSuccesfulCount(total);
     setSyncError(err);
 
