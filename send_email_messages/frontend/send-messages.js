@@ -18,14 +18,9 @@ async function sendMessage(messageToSend) {
   const EMAIL_TYPES = globalConfig.get("email_types");
 
   let templateId;
-  if (
-    messageToSend.getCellValue("Email type") ===
-    "Initial Confirmation: Volunteer"
-  ) {
-    templateId =
-      EMAIL_TYPES[messageToSend.getCellValue("Email type").name][
-        "sendgrid_template"
-      ];
+  const emailType = messageToSend.getCellValue("Email type").name;
+  if (emailType !== "Initial Confirmation: Volunteer") {
+    templateId = EMAIL_TYPES[emailType]["sendgrid_template"];
   } else {
     templateId = globalConfig.get("volunteer_welcome_email_template_id");
   }
