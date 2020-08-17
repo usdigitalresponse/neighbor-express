@@ -19,7 +19,6 @@ export function SyncData() {
     setSyncing(true);
 
     const { total, err } = await SyncVolunteerData(messagesTable, records);
-    debugger;
     setSuccesfulCount(total);
     setSyncError(err);
 

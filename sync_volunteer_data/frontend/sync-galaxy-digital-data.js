@@ -8,10 +8,7 @@ const GALAXY_DIGITAL_MAX = 50;
 
 async function getGalaxyDigitalVolunteerData(limit, offset) {
   const GALAXY_DIGITAL_API_KEY = globalConfig.get("GALAXY_DIGITAL_API_KEY");
-  const url = new URL(
-    "api/galaxy-digital-proxy",
-    "https://nex-sendgrid-proxy-cc0vb0gpy.vercel.app"
-  );
+  const url = new URL("volunteer/user/list/", "https://api2.galaxydigital.com");
   const params = url.searchParams;
   params.set("key", GALAXY_DIGITAL_API_KEY);
   params.set("limit", limit);
