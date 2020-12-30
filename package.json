@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "@actions/exec": "^1.0.4",
-    "airtable": "^0.8.1",
+    "airtable": "^0.10.1",
     "airtable-plus": "^1.0.4",
     "classnames": "^2.2.6",
     "interweave": "^12.5.0",
