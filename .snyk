@@ -1,0 +1,42 @@
+# Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
+version: v1.19.0
+ignore: {}
+# patches apply the minimum changes required to fix a vulnerability
+patch:
+  SNYK-JS-LODASH-567746:
+    - react-string-replace > lodash:
+        patched: '2021-01-05T15:29:19.144Z'
+    - airtable-plus > airtable > lodash:
+        patched: '2021-01-05T15:29:19.144Z'
+    - next > @babel/core > lodash:
+        patched: '2021-01-05T15:29:19.144Z'
+    - next > babel-plugin-transform-define > lodash:
+        patched: '2021-01-05T15:29:19.144Z'
+    - next > @babel/core > @babel/generator > lodash:
+        patched: '2021-01-05T15:29:19.144Z'
+    - next > @babel/core > @babel/types > lodash:
+        patched: '2021-01-05T15:29:19.144Z'
+    - next > @babel/plugin-transform-modules-commonjs > @babel/helper-module-transforms > lodash:
+        patched: '2021-01-05T15:29:19.144Z'
+    - next > @babel/preset-env > @babel/plugin-transform-block-scoping > lodash:
+        patched: '2021-01-05T15:29:19.144Z'
+    - next > styled-jsx > @babel/types > lodash:
+        patched: '2021-01-05T15:29:19.144Z'
+    - next > @babel/core > @babel/generator > @babel/types > lodash:
+        patched: '2021-01-05T15:29:19.144Z'
+    - next > @babel/core > @babel/helpers > @babel/traverse > lodash:
+        patched: '2021-01-05T15:29:19.144Z'
+    - next > @babel/preset-env > @babel/plugin-transform-classes > @babel/helper-define-map > lodash:
+        patched: '2021-01-05T15:29:19.144Z'
+    - next > @babel/preset-env > @babel/plugin-transform-modules-amd > @babel/helper-module-transforms > lodash:
+        patched: '2021-01-05T15:29:19.144Z'
+    - next > @babel/preset-env > @babel/preset-modules > @babel/types > lodash:
+        patched: '2021-01-05T15:29:19.144Z'
+    - next > @babel/plugin-proposal-class-properties > @babel/helper-create-class-features-plugin > @babel/helper-replace-supers > @babel/traverse > lodash:
+        patched: '2021-01-05T15:29:19.144Z'
+    - next > @babel/preset-env > @babel/plugin-proposal-unicode-property-regex > @babel/helper-create-regexp-features-plugin > @babel/helper-regex > lodash:
+        patched: '2021-01-05T15:29:19.144Z'
+    - next > @babel/plugin-proposal-class-properties > @babel/helper-create-class-features-plugin > @babel/helper-function-name > @babel/helper-get-function-arity > @babel/types > lodash:
+        patched: '2021-01-05T15:29:19.144Z'
+    - next > @babel/plugin-proposal-class-properties > @babel/helper-create-class-features-plugin > @babel/helper-replace-supers > @babel/traverse > @babel/generator > lodash:
+        patched: '2021-01-05T15:29:19.144Z'
