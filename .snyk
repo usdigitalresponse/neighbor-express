@@ -40,3 +40,5 @@ patch:
         patched: '2021-01-05T15:29:19.144Z'
     - next > @babel/plugin-proposal-class-properties > @babel/helper-create-class-features-plugin > @babel/helper-replace-supers > @babel/traverse > @babel/generator > lodash:
         patched: '2021-01-05T15:29:19.144Z'
+    - snyk > @snyk/dep-graph > graphlib > lodash:
+        patched: '2021-01-05T15:30:37.581Z'
