@@ -8,7 +8,9 @@
     "build": "next build",
     "start": "next start",
     "test": "jest",
-    "testwatch": "jest --watchAll"
+    "testwatch": "jest --watchAll",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "dependencies": {
     "@actions/exec": "^1.0.4",
@@ -17,7 +19,7 @@
     "classnames": "^2.2.6",
     "interweave": "^12.5.0",
     "markdown-to-jsx": "^6.11.4",
-    "next": "^9.4.4",
+    "next": "^10.0.0",
     "next-seo": "^4.5.0",
     "now": "^18.0.0",
     "nprogress": "^0.2.0",
@@ -26,7 +28,8 @@
     "react-process-string": "^1.2.0",
     "react-recipes": "^1.0.2",
     "react-responsive-carousel": "^3.2.8",
-    "react-string-replace": "^0.4.4"
+    "react-string-replace": "^0.4.4",
+    "snyk": "^1.437.3"
   },
   "engines": {
     "node": "10"
@@ -48,5 +51,6 @@
     "eslint-plugin-react-hooks": "^2.5.1",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^25.5.3"
-  }
+  },
+  "snyk": true
 }
